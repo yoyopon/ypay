@@ -2010,7 +2010,6 @@
 		63D75A3142D979037896013DBCB84E73 /* GULKeychainStorage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GULKeychainStorage.h; path = GoogleUtilities/Environment/Public/GULKeychainStorage.h; sourceTree = "<group>"; };
 		63E3B175E716B2BBC565745D5AC6287F /* FIRAuthSerialTaskQueue.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRAuthSerialTaskQueue.m; path = FirebaseAuth/Sources/Auth/FIRAuthSerialTaskQueue.m; sourceTree = "<group>"; };
 		642DCA4C2AEC1EA26A1BDE240409CC6F /* nanopb-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "nanopb-prefix.pch"; sourceTree = "<group>"; };
-		643786A811D0919B5819F70477DD1AE3 /* google_sign_in_web.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = google_sign_in_web.podspec; path = "../../../../../../../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/ios/google_sign_in_web.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		644A4FB82211062CF19C5EBECCF0A7E2 /* PromisesObjC-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PromisesObjC-umbrella.h"; sourceTree = "<group>"; };
 		6492BE8E15C6D1EB9849826E7323E53D /* Flutter.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = Flutter.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		64C794F7D5E798F873A01F534F20EA4E /* GDTCORTransport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = GDTCORTransport.m; path = GoogleDataTransport/GDTCORLibrary/GDTCORTransport.m; sourceTree = "<group>"; };
@@ -2210,6 +2209,7 @@
 		990D20A87F78A7E855D608CECF8B6208 /* FBSDKErrorReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKErrorReport.h; path = FBSDKCoreKit/FBSDKCoreKit/Internal/Instrument/ErrorReport/FBSDKErrorReport.h; sourceTree = "<group>"; };
 		9A0020A1377A897C3AC9650DFF82173A /* nanopb.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = nanopb.modulemap; sourceTree = "<group>"; };
 		9A472C97BA3E426561E02F36513E1A6E /* _FBSDKTemporaryErrorRecoveryAttempter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _FBSDKTemporaryErrorRecoveryAttempter.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ErrorRecovery/_FBSDKTemporaryErrorRecoveryAttempter.m; sourceTree = "<group>"; };
+		9A518D52296905405705A15FC5BFEC47 /* google_sign_in_web.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = google_sign_in_web.podspec; path = "../../../../../../../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1/ios/google_sign_in_web.podspec"; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9A74758FE5D50EF790EAE9DCB891F97B /* FirebaseInstallations-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FirebaseInstallations-umbrella.h"; sourceTree = "<group>"; };
 		9ADC5FB06E00B0DE068B2980CDD87A5C /* FIRAppInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRAppInternal.h; path = FirebaseCore/Sources/Private/FIRAppInternal.h; sourceTree = "<group>"; };
 		9B38F17A4714263292C7825BCE278931 /* FBLPromise+Async.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "FBLPromise+Async.m"; path = "Sources/FBLPromises/FBLPromise+Async.m"; sourceTree = "<group>"; };
@@ -2459,13 +2459,13 @@
 		D2BF7E6AE4BF9296C423026BC291F40E /* FBSDKKeychainStoreViaBundleID.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKKeychainStoreViaBundleID.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/TokenCaching/FBSDKKeychainStoreViaBundleID.m; sourceTree = "<group>"; };
 		D2E25DFBF975B03DFFDD0222C964146F /* FIRApp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRApp.h; path = FirebaseCore/Sources/Public/FIRApp.h; sourceTree = "<group>"; };
 		D2E9CE8EFABCD288D1BE5BC11C5C931F /* FLTGoogleSignInPlugin.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FLTGoogleSignInPlugin.h; path = "../../../../../../../../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.1/ios/Classes/FLTGoogleSignInPlugin.h"; sourceTree = "<group>"; };
-		D2F72BC3AA1EB659F9D6AFDB9EF884B4 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/LICENSE"; sourceTree = "<group>"; };
 		D307EA3C1FE5494845B8E39C62177290 /* GoogleSignIn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleSignIn.framework; path = Frameworks/GoogleSignIn.framework; sourceTree = "<group>"; };
 		D331145FB1B9490209EE9D17DCD3DA01 /* FIRSendVerificationCodeRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FIRSendVerificationCodeRequest.m; path = FirebaseAuth/Sources/Backend/RPC/FIRSendVerificationCodeRequest.m; sourceTree = "<group>"; };
 		D3402E7197E5E606BDFDBB11E0A9E1B0 /* FBSDKAppEventsUtility.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKAppEventsUtility.m; path = FBSDKCoreKit/FBSDKCoreKit/AppEvents/Internal/FBSDKAppEventsUtility.m; sourceTree = "<group>"; };
 		D3459DB677166FC41CFD8D946782FD81 /* OIDAuthorizationResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = OIDAuthorizationResponse.h; path = Source/AppAuthCore/OIDAuthorizationResponse.h; sourceTree = "<group>"; };
 		D35CBACA55D71FE446699282835E72BC /* FBSDKLoginManagerLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLoginManagerLogger.h; path = FBSDKLoginKit/FBSDKLoginKit/Internal/FBSDKLoginManagerLogger.h; sourceTree = "<group>"; };
 		D371E054D9DCD53496BFAC5FCF3873D0 /* flutter_facebook_login-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "flutter_facebook_login-prefix.pch"; sourceTree = "<group>"; };
+		D38611352E2CE8FA55F6A612476AF4D6 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = "../../../../../../../../Developer/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1/LICENSE"; sourceTree = "<group>"; };
 		D38B15801D984CF120E1565637806632 /* FIRAuthProto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRAuthProto.h; path = FirebaseAuth/Sources/Backend/RPC/Proto/FIRAuthProto.h; sourceTree = "<group>"; };
 		D427C650F90621CD5FCC4489F1A9DA39 /* FIRMultiFactorSession.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FIRMultiFactorSession.h; path = FirebaseAuth/Sources/Public/FIRMultiFactorSession.h; sourceTree = "<group>"; };
 		D434EFFCA7ECE9F5995EE256DE491B99 /* GoogleUtilities-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GoogleUtilities-dummy.m"; sourceTree = "<group>"; };
@@ -3025,15 +3025,6 @@
 			);
 			name = nanopb;
 			path = nanopb;
-			sourceTree = "<group>";
-		};
-		122A5990DE8AC7A9E3C4CCE6BC833B25 /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				643786A811D0919B5819F70477DD1AE3 /* google_sign_in_web.podspec */,
-				D2F72BC3AA1EB659F9D6AFDB9EF884B4 /* LICENSE */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		122C4E2C5F462F44BF8630554B455FB8 /* firebase_auth */ = {
@@ -3608,6 +3599,15 @@
 			);
 			name = GoogleDataTransport;
 			path = GoogleDataTransport;
+			sourceTree = "<group>";
+		};
+		74EABFB88225C74CA7DB4D6A666D38E4 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				9A518D52296905405705A15FC5BFEC47 /* google_sign_in_web.podspec */,
+				D38611352E2CE8FA55F6A612476AF4D6 /* LICENSE */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		7669A6D5BFF2659059B1CB43BC7E9086 /* Support Files */ = {
@@ -5069,7 +5069,7 @@
 		E00C8FB5071E4C0D75B6CD5F874BA318 /* google_sign_in_web */ = {
 			isa = PBXGroup;
 			children = (
-				122A5990DE8AC7A9E3C4CCE6BC833B25 /* Pod */,
+				74EABFB88225C74CA7DB4D6A666D38E4 /* Pod */,
 				7669A6D5BFF2659059B1CB43BC7E9086 /* Support Files */,
 			);
 			name = google_sign_in_web;

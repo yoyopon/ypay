@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ypay/Page/CreateAcc.dart';
+import 'package:ypay/Page/userProfile.dart';
 //import 'package:ypay/LoginSuccess.dart';
 
 class PhoneAuth extends StatefulWidget{
@@ -85,14 +87,15 @@ Widget MobileText()
         //controller: phoneNo,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone,color: Colors.green),
-            hintText: "Phone Number Eg.+95...............",
+            prefixText: "09  ",
+            hintText: "Phone Number",
             hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green)
             )
         ),
         onChanged: (value) {
-          this.phoneNo = value;
+          this.phoneNo = "+959"+value;
         },
       ),
     );
@@ -273,7 +276,7 @@ Widget MobileText()
                   _auth.currentUser().then((user) {
                     if (user != null) {
                       Navigator.of(context).pop();
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginSuccess()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAcc()));
                       //Navigator.of(context).pushReplacementNamed('/homepage');
                     } else {
                       signIn();
