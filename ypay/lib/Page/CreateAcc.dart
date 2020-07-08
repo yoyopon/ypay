@@ -3,7 +3,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ypay/designUI/EyeIcon.dart';
-import 'package:ypay/Page/PhoneAuth.dart';
+//import 'package:ypay/Page/PhoneAuth.dart';
+import 'package:ypay/localization/AppLocalization.dart';
+
+import 'AccConfirmWithPhno.dart';
 
 class CreateAcc extends StatefulWidget{
   CreateAccState createState()=>CreateAccState();
@@ -20,13 +23,15 @@ class CreateAccState extends State<CreateAcc>{
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return MaterialApp(
+        home: Scaffold(
         backgroundColor: Color(0xffFFFFFF),
         appBar: AppBar(
           backgroundColor:Colors.green ,
-          title:  Text("Create Your Account",style: TextStyle(color:Colors.white,fontFamily: "EucrosiaUPC",fontSize: 30)
+          title:  Text(AppLocalizations.of(context).translate("create"),
+          style: TextStyle(color:Colors.white,fontFamily: "myanmar3",fontSize: 20)
           ),
+          leading: IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: (){Navigator.of(context).pop();},),
         ),
         body: Center(
           child:Padding(
