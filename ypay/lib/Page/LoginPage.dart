@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
 import 'package:ypay/Page/userProfile.dart';
+import 'package:ypay/dataService/appLanguage.dart';
 import 'package:ypay/dataService/loginPresenter.dart';
 import 'package:ypay/designUI/EyeIcon.dart';
 import 'package:ypay/Page/CreateAcc.dart';
 import 'package:ypay/Page/ForgetPassword.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
+import 'package:ypay/localization/AppLocalization.dart';
 import 'package:ypay/model/userInfo.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginPage extends StatefulWidget{
   LoginPageState createState()=>LoginPageState();
@@ -14,12 +19,14 @@ class LoginPage extends StatefulWidget{
 
 class LoginPageState extends State<LoginPage> with LoginContract{
 
+  bool loginLoading=false;
   final formKey=new GlobalKey<FormState>();
   final _userIdentity=new TextEditingController();
   final _password=new TextEditingController();
   bool _obscureText = true;
   TextStyle styles=TextStyle(color:Colors.grey,fontFamily: "EucrosiaUPC",fontSize: 25.0);
   LoginPresenter _presenter;
+  String rdnLanguage;
 
   @override
   void initState() {
@@ -27,13 +34,86 @@ class LoginPageState extends State<LoginPage> with LoginContract{
     super.initState();
   }
 
+  int _groupValue=-1;
+  Widget _myRadioButton({String title, int value, Function onChanged}) {
+  return RadioListTile(
+    value: value,
+    groupValue: _groupValue,
+    onChanged: onChanged,
+    title: Text(title),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    var appLanguage = Provider.of<AppLanguage>(context);
+    final navigatorKey = GlobalKey<NavigatorState>();
+    return MaterialApp(
+      navigatorKey: navigatorKey,
+       home:
+        Scaffold(
         backgroundColor: Color(0xffFFFFFF),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            IconButton(icon:Icon(Icons.language),color: Colors.green,
+              onPressed: (){
+                final context = navigatorKey.currentState.overlay.context;
+                
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return AlertDialog(
+                          title: Text("Choose Language"),
+                          content: Column(mainAxisSize: MainAxisSize.min,children: <Widget>[
+                            _myRadioButton(
+                                title: "Burmese",
+                                value: 0,
+                                onChanged: (newValue) {
+                                  setState(() => _groupValue = newValue);
+                                  Navigator.pop(context);
+                                  appLanguage.changeLanguage(new Locale('mm')).then((success){
+                                    Phoenix.rebirth(context);
+                                  });
+                                }
+                              ),
+                            _myRadioButton(
+                              title: "Chinese",
+                              value: 1,
+                              onChanged: (newValue) {
+                                setState(() => _groupValue = newValue);
+                                Navigator.pop(context);
+                                appLanguage.changeLanguage(new Locale('zh'));
+                              }
+                            ),
+                            _myRadioButton(
+                              title: "English",
+                              value: 2,
+                              onChanged: (newValue) {
+                                setState(() => _groupValue = newValue);
+                                Navigator.pop(context);
+                                appLanguage.changeLanguage(new Locale('en'));
+                              }
+                            ),
+                          ],)
+                        );
+                      },
+                    );
+                  },
+                );
+              },
+           )
+        ],),
         body: Center(
-          child:Padding(
+          child:
+          loginLoading==true?
+          SpinKitRotatingCircle(
+            color: Colors.green,
+            size: 50.0,
+          ):
+          Padding(
             padding: const EdgeInsets.all(35.0),
             child: Form(
               key: formKey,
@@ -49,10 +129,11 @@ class LoginPageState extends State<LoginPage> with LoginContract{
     return ListView(
       children: <Widget>[
         //SizedBox(height: 20.0,),
-        Text('Welcome YPay',textAlign: TextAlign.center,
+        Text(AppLocalizations.of(context).translate("welcome"),textAlign: TextAlign.center,
+        //Text(DemoLocalization.of(context).getTranslatedValue("welcome"),textAlign: TextAlign.center,
           style: TextStyle(color:Color(0xff4AB055),
-              fontFamily: "EucrosiaUPC",
-              fontSize: 35,
+              fontFamily: "myanmar3",
+              fontSize: 20,
               fontWeight:FontWeight.bold ),),
         SizedBox(height: 20.0,),
         Image(image: AssetImage('images/bulb.jpg'),
@@ -78,8 +159,8 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         controller: _userIdentity,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box,color: Colors.green),
-            hintText: "Phone Number / Email Address",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("username"),
+            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "myanmar3"),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green)
             )
@@ -114,8 +195,8 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         obscureText: _obscureText,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
-            hintText: "Password",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("pass"),
+            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "myanmar3"),
             suffixIcon: IconButton(
               onPressed: _toggle,
               icon: _obscureText?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -179,7 +260,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
 
         },
         color: Color(0xff4AB055),
-        child: Text("Log In",style: TextStyle(color: Colors.white,fontFamily: "EucrosiaUPC",fontSize: 25),),
+        child: Text(AppLocalizations.of(context).translate("login"),style: TextStyle(color: Colors.white,fontFamily: "myanmar3",fontSize: 15),),
         padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
         shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(32.0),
@@ -197,8 +278,8 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         children: <Widget>[
           FlatButton(
             child: Text(
-                'Forget Password?',
-                style:TextStyle(color: Colors.black45,fontFamily: "EucrosiaUPC",fontSize: 22,)
+                AppLocalizations.of(context).translate("forgetpass"),
+                style:TextStyle(color: Colors.black45,fontFamily: "myanmar3",fontSize: 16,)
             ),
             onPressed: (){
               Navigator.push(
@@ -207,11 +288,11 @@ class LoginPageState extends State<LoginPage> with LoginContract{
               );
             },
           ),
-          Text('|',style: TextStyle(color: Colors.black45,fontFamily: "EucrosiaUPC",fontSize: 35),),
+          Text('|',style: TextStyle(color: Colors.black45,fontFamily: "myanmar3",fontSize: 16),),
           FlatButton(
             child: Text(
-              'Create Account',
-              style: TextStyle(color: Colors.black45,fontFamily: "EucrosiaUPC",fontSize: 22,),
+              AppLocalizations.of(context).translate("createbtn"),
+              style: TextStyle(color: Colors.black45,fontFamily: "myanmar3",fontSize: 16,),
             ),
             onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAcc()));
@@ -244,10 +325,10 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              "OR",
+              AppLocalizations.of(context).translate("or"),
               style: TextStyle(
                   color: Colors.grey,
-                  fontFamily: "EucrosiaUPC",
+                  fontFamily: "myanmar3",
                   fontSize: 20
               ),
             ),
@@ -271,6 +352,9 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           GestureDetector(
               onTap: (){
                 _presenter.loginWithFacebook();
+                setState(() {
+                  loginLoading=true;
+                });
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
@@ -311,6 +395,9 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           GestureDetector(
               onTap: (){
                 _presenter.loginWithGoogleAcc();
+                setState(() {
+                  loginLoading=true;
+                });
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
@@ -335,6 +422,9 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   @override
   void loginSuccess(UserInfo data) {
     if(data!=null){
+      setState(() {
+        loginLoading=false;
+      });
       Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => UserProfile(data)));
     }
@@ -343,6 +433,9 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   @override
   void showError(String msg) {
     MessageHandel.showError(context, "", msg);
+    setState(() {
+        loginLoading=false;
+      });
   }
 
   @override

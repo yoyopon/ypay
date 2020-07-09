@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ypay/dataService/loginRepository.dart';
+import 'package:ypay/main.dart';
 import 'package:ypay/model/userInfo.dart';
 
 abstract class LoginContract{
@@ -46,5 +47,16 @@ class LoginPresenter{
       _contract.showError(onError.toString());
     });
   }
+
+  // void changeLanguage(BuildContext context,Locale type){
+  //   Locale _appLocale ;
+  //     switch (type.languageCode) {
+  //       case "en":_appLocale=new Locale('en','US');break;
+  //       case "my":_appLocale=new Locale('my','MM');break;
+  //       case "zh":_appLocale=new Locale('zh','CN');break;
+  //       default:_appLocale=new Locale('en','US');break;
+  //     }
+  //     MyApp.setLocale(context,_appLocale);
+  // }
 
 }
