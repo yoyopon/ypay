@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:ypay/Login/CreateAcc.dart';
 import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/OtpPage.dart';
+import 'package:ypay/Page/HomePage.dart';
 
 part 'LoginStore.dart';
 
@@ -37,16 +37,15 @@ abstract class LoginStoreBase with Store {
   }
 
   @action
-  Future<void> getCodeWithPhoneNumber(BuildContext context, String phoneNumber) async {
+  Future<void> getCodeWithPhoneNumber(
+      BuildContext context, String phoneNumber) async {
     isLoginLoading = true;
 
     await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         timeout: const Duration(seconds: 60),
         verificationCompleted: (AuthCredential auth) async {
-          await _auth
-              .signInWithCredential(auth)
-              .then((AuthResult value) {
+          await _auth.signInWithCredential(auth).then((AuthResult value) {
             if (value != null && value.user != null) {
               print('Authentication successful');
               onAuthenticationSuccessful(context, value);
@@ -79,58 +78,48 @@ abstract class LoginStoreBase with Store {
         codeSent: (String verificationId, [int forceResendingToken]) async {
           actualCode = verificationId;
           isLoginLoading = false;
-          await Navigator.of(context).push(MaterialPageRoute(builder: (_) => const OtpPage()));
+          await Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const OtpPage()));
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           actualCode = verificationId;
-        }
-    );
+        });
   }
 
   @action
   Future<void> validateOtpAndLogin(BuildContext context, String smsCode) async {
-        try {
-      final AuthCredential credential = PhoneAuthProvider.getCredential(
-        verificationId: actualCode,
-        smsCode: smsCode,
-      );
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-      final FirebaseUser currentUser = await _auth.currentUser();
-      assert(user.uid == currentUser.uid);
-      Navigator.of(context).pop();
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAcc()));
-    } catch (e) {
-      print('Something Wrong');
-    }
-//     isOtpLoading = true;
-//     final AuthCredential _authCredential = PhoneAuthProvider.getCredential(
-//         verificationId: actualCode, smsCode: smsCode);
+    isOtpLoading = true;
+    final AuthCredential _authCredential = PhoneAuthProvider.getCredential(
+        verificationId: actualCode, smsCode: smsCode);
 
-//     await _auth.signInWithCredential(_authCredential).catchError((error) {
-//       isOtpLoading = false;
-//       print('Wrong code ! Please enter the last code received.');
-//       print(smsCode);
-//       print(actualCode);
-// //      otpScaffoldKey.currentState.showSnackBar(SnackBar(
-// //        behavior: SnackBarBehavior.floating,
-// //        backgroundColor: Colors.red,
-// //        content: Text('Wrong code ! Please enter the last code received.', style: TextStyle(color: Colors.white),),
-// //      ));
-//     }).then((AuthResult authResult) {
-//       if (authResult != null && authResult.user != null) {
-//         print('Authentication successful');
-//         onAuthenticationSuccessful(context, authResult);
-//       }
-//     });
+    await _auth.signInWithCredential(_authCredential).catchError((error) {
+      //isOtpLoading = false;
+      print('Wrong code ! Please enter the last code received.');
+      print(smsCode);
+      print(actualCode);
+//      otpScaffoldKey.currentState.showSnackBar(SnackBar(
+//        behavior: SnackBarBehavior.floating,
+//        backgroundColor: Colors.red,
+//        content: Text('Wrong code ! Please enter the last code received.', style: TextStyle(color: Colors.white),),
+//      ));
+    }).then((AuthResult authResult) {
+      if (authResult != null && authResult.user != null) {
+        print('Authentication successful');
+        onAuthenticationSuccessful(context, authResult);
+      }
+    });
   }
 
-  Future<void> onAuthenticationSuccessful(BuildContext context, AuthResult result) async {
+  Future<void> onAuthenticationSuccessful(
+      BuildContext context, AuthResult result) async {
     isLoginLoading = true;
     isOtpLoading = true;
 
     firebaseUser = result.user;
 
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => CreateAcc()), (Route<dynamic> route) => false);
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => HomePage()),
+        (Route<dynamic> route) => false);
 
     isLoginLoading = false;
     isOtpLoading = false;
@@ -139,7 +128,9 @@ abstract class LoginStoreBase with Store {
   @action
   Future<void> signOut(BuildContext context) async {
     await _auth.signOut();
-    await Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => LoginPage()), (Route<dynamic> route) => false);
+    await Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => LoginPage()),
+        (Route<dynamic> route) => false);
     firebaseUser = null;
   }
 }
