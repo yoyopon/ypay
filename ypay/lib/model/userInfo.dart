@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class UserInfo{
   String name;
   String email;
@@ -15,4 +17,6 @@ class UserInfo{
   //   return fbData;
   // }
 
+  static UserInfo userInfo;
+  static Locale currentLocale;
 }
