@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:ypay/Page/CreateAcc.dart';
-import 'package:ypay/Page/LoginPage.dart';
-import 'package:ypay/Page/OtpPage.dart';
+import 'package:ypay/Login/CreateAcc.dart';
+import 'package:ypay/Login/LoginPage.dart';
+import 'package:ypay/Login/OtpPage.dart';
 
 part 'LoginStore.dart';
 

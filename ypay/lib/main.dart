@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ypay/Page/LoginPage.dart';
+import 'package:ypay/Login/LoginPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'localization/appLanguage.dart';
-import 'localization/AppLocalization.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/Providers/BottomNavigationBarProvider.dart';
+import 'package:ypay/Providers/appLanguage.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
   runApp(
-    MyApp(appLanguage: appLanguage,)
+    Phoenix(child: MyApp(appLanguage: appLanguage,))
   );
 }
 
@@ -20,13 +22,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppLanguage>(
-        create: (_) => AppLanguage(),
-        child: Consumer<AppLanguage>(builder: (context, model, child) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage(),),
+      ChangeNotifierProvider<BottomNavigationBarProvider>(create: (_) => BottomNavigationBarProvider(),),
+      ],
+      child: Consumer<AppLanguage>(builder: (context, model, child) {
           return MaterialApp(
             supportedLocales: [
               Locale('en', 'US'),
-              Locale('my', 'MY'),
+              Locale('mm', 'MM'),
               Locale('zh', 'CN'),
 
             ],
@@ -44,9 +48,9 @@ class MyApp extends StatelessWidget {
             home: LoginPage(),
           );
         }
-    ));
+    )
+    );  
   }
-  
 }
 
 
