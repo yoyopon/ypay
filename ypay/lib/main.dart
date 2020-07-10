@@ -1,57 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 import 'package:ypay/Login/LoginPage.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ypay/Providers/AppLocalization.dart';
-import 'package:ypay/Providers/BottomNavigationBarProvider.dart';
-import 'package:ypay/Providers/appLanguage.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
-void main() async {
+//void main() => runApp(MaterialApp(home: MyApp(),));
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  AppLanguage appLanguage = AppLanguage();
-  await appLanguage.fetchLocale();
-  runApp(
-    Phoenix(child: MyApp(appLanguage: appLanguage,))
-  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MaterialApp(home: MyApp()));
+  });
 }
 
-class MyApp extends StatelessWidget {
-  final AppLanguage appLanguage;
-  MyApp({this.appLanguage});
+class MyApp extends StatefulWidget {
+  MyAppState createState() => MyAppState();
+}
 
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage(),),
-      ChangeNotifierProvider<BottomNavigationBarProvider>(create: (_) => BottomNavigationBarProvider(),),
-      ],
-      child: Consumer<AppLanguage>(builder: (context, model, child) {
-          return MaterialApp(
-            supportedLocales: [
-              Locale('en', 'US'),
-              Locale('mm', 'MM'),
-              Locale('zh', 'CN'),
-
-            ],
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate
-            ],
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: LoginPage(),
-          );
-        }
-    )
-    );  
+    // TODO: implement build
+    return LoginPage();
   }
 }
-
-
-

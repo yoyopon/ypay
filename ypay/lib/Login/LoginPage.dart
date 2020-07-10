@@ -1,166 +1,77 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ypay/Page/AccountProfile.dart';
-import 'package:ypay/Page/BottomTabBar.dart';
-import 'package:ypay/Providers/AppLocalization.dart';
-import 'package:ypay/Providers/appLanguage.dart';
-import 'package:ypay/designUI/TextStyle.dart';
-import 'package:ypay/dataService/loginPresenter.dart';
 import 'package:ypay/designUI/EyeIcon.dart';
 import 'package:ypay/Login/CreateAcc.dart';
 import 'package:ypay/Login/ForgetPassword.dart';
-import 'package:ypay/designUI/MessageHandel.dart';
-import 'package:ypay/model/userInfo.dart';
+import 'package:ypay/Login/PhoneAuthfromF&G.dart';
+import 'package:ypay/Page/HomePage.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class LoginPage extends StatefulWidget{
-  LoginPageState createState()=>LoginPageState();
+class LoginPage extends StatefulWidget {
+  LoginPageState createState() => LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage> with LoginContract{
-
-  bool loginLoading=false;
-  final formKey=new GlobalKey<FormState>();
-  final _userIdentity=new TextEditingController();
-  final _password=new TextEditingController();
+class LoginPageState extends State<LoginPage> {
+  final formKey = new GlobalKey<FormState>();
+  final _userIdentity = new TextEditingController();
+  final _password = new TextEditingController();
   bool _obscureText = true;
-  LoginPresenter _presenter;
-  String rdnLanguage;
-  Locale styleLocale;
-
-  @override
-  void initState() {
-    getLocale();
-    _presenter=new LoginPresenter(this, context);
-    super.initState();
-  }
-
-  getLocale() async{
-    var prefs = await SharedPreferences.getInstance();
-    setState(() {
-      UserInfo.currentLocale=styleLocale=prefs.getString("language_code")==null?Locale('en'):Locale(prefs.getString("language_code"));
-    });
-  }
-
-  int _groupValue=-1;
-  Widget _myRadioButton({String title, int value, Function onChanged,TextStyle styles}) {
-  return RadioListTile(
-    value: value,
-    groupValue: _groupValue,
-    onChanged: onChanged,
-    title: Text(title,style: styles,),
-  );
-}
+  TextStyle styles =
+      TextStyle(color: Colors.grey, fontFamily: "EucrosiaUPC", fontSize: 25.0);
 
   @override
   Widget build(BuildContext context) {
-    var appLanguage = Provider.of<AppLanguage>(context);
-    final navigatorKey = GlobalKey<NavigatorState>();
-    ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
-    ScreenUtil().setSp(30);
-    return MaterialApp(
-      navigatorKey: navigatorKey,
-       home:styleLocale==null?CircularProgressIndicator():
-        Scaffold(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Color(0xffFFFFFF),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          actions: <Widget>[
-            IconButton(icon:Icon(Icons.language),color: Colors.green,
-              onPressed: (){
-                final context = navigatorKey.currentState.overlay.context;
-                
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(
-                      builder: (BuildContext context, StateSetter setState) {
-                        return AlertDialog(
-                          title: Text("Choose Language",
-                          style: TextStylePage.getStyle(appLanguage.appLocal,"blue", "header"),),
-                          content: Column(mainAxisSize: MainAxisSize.min,children: <Widget>[
-                            _myRadioButton(
-                                title: "Burmese",
-                                value: 0,
-                                styles: TextStylePage.getStyle(styleLocale,"black", "normal"),
-                                onChanged: (newValue) {
-                                  setState(() => _groupValue = newValue);
-                                  appLanguage.changeLanguage(new Locale('mm'));
-                                  Navigator.pop(context);
-                                  Phoenix.rebirth(context);
-                                }
-                              ),
-                            _myRadioButton(
-                              title: "Chinese",
-                              value: 1,
-                              styles: TextStylePage.getStyle(styleLocale,"black", "normal"),
-                              onChanged: (newValue) {
-                                setState(() => _groupValue = newValue);
-                                appLanguage.changeLanguage(new Locale('zh'));
-                                  Navigator.pop(context);
-                                  Phoenix.rebirth(context);
-                              }
-                            ),
-                            _myRadioButton(
-                              title: "English",
-                              value: 2,
-                              styles: TextStylePage.getStyle(styleLocale,"black", "normal"),
-                              onChanged: (newValue) {
-                                setState(() => _groupValue = newValue);
-                                appLanguage.changeLanguage(new Locale('en'));
-                                  Navigator.pop(context);
-                                  Phoenix.rebirth(context);
-                              }
-                            ),
-                          ],)
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-           )
-        ],),
         body: Center(
-          child:
-          loginLoading==true?
-          SpinKitRotatingCircle(
-            color: Colors.green,
-            size: 50.0,
-          ):
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20.0,vertical:10.0),
+          child: Padding(
+            padding: const EdgeInsets.all(35.0),
             child: Form(
               key: formKey,
               child: ShowList(),
             ),
           ),
         ),
-      )
+      ),
     );
   }
 
-  Widget ShowList(){
+  Widget ShowList() {
     return ListView(
       children: <Widget>[
-        SizedBox(height: 10.0,),
-        Text(AppLocalizations.of(context).translate("welcome"),textAlign: TextAlign.center,
-          style: TextStylePage.getStyle( styleLocale,"blue", "header"),
-          ),
-        SizedBox(height: 10.0,),
-        Image(image: AssetImage('images/bulb.jpg'),
-          height: ScreenUtil().setHeight(220),),
-        SizedBox(height: ScreenUtil().setHeight(20),),
+        //SizedBox(height: 20.0,),
+        Text(
+          'Welcome YPay',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Color(0xff4AB055),
+              fontFamily: "EucrosiaUPC",
+              fontSize: 35,
+              fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
+        Image(
+          image: AssetImage('images/bulb.jpg'),
+          height: 120,
+        ),
+        SizedBox(
+          height: 20.0,
+        ),
         UserName(),
-        SizedBox(height: ScreenUtil().setHeight(20),),
+        SizedBox(
+          height: 20.0,
+        ),
         Password(),
-        SizedBox(height: ScreenUtil().setHeight(40),),
+        SizedBox(
+          height: 30.0,
+        ),
         LoginButton(),
-        SizedBox(height: ScreenUtil().setHeight(20),),
+        SizedBox(
+          height: 20.0,
+        ),
         NextLinksText(),
         OrDivider(),
         OpenWithButton()
@@ -169,20 +80,19 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   }
 
   ///For UserName TextBox
-  Widget UserName(){
+  Widget UserName() {
     return Container(
       child: TextFormField(
         controller: _userIdentity,
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.account_box,color: Colors.green),
-            hintText: AppLocalizations.of(context).translate("username"),
-            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal"),
+            prefixIcon: Icon(Icons.account_box, color: Colors.green),
+            hintText: "Phone Number / Email Address",
+            hintStyle: TextStyle(
+                color: Colors.grey, fontFamily: "Roboto Slab Regular"),
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.green)
-            )
-        ),
-        validator: (value){
-          if(value.isEmpty){
+                borderSide: BorderSide(color: Colors.green))),
+        validator: (value) {
+          if (value.isEmpty) {
             return 'Field must be filled';
           }
           String pattern =
@@ -204,28 +114,30 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   }
 
   ///For Password TextBox
-  Widget Password(){
+  Widget Password() {
     return Container(
       child: TextFormField(
         controller: _password,
         obscureText: _obscureText,
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
-            hintText: AppLocalizations.of(context).translate("pass"),
-            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal"),
+            prefixIcon: Icon(Icons.vpn_key, color: Colors.green),
+            hintText: "Password",
+            hintStyle: TextStyle(
+                color: Colors.grey, fontFamily: "Roboto Slab Regular"),
             suffixIcon: IconButton(
               onPressed: _toggle,
-              icon: _obscureText?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
+              icon: _obscureText
+                  ? Icon(MyFlutterApp.eye_slash_solid,
+                      size: 17, color: Colors.green)
+                  : Icon(Icons.remove_red_eye, size: 20, color: Colors.green),
             ),
             focusedBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.green)
-            )
-        ),
-        validator: (value){
-          if(value.length < 6){
+                borderSide: BorderSide(color: Colors.green))),
+        validator: (value) {
+          if (value.length < 6) {
             return 'Password must be at least 6 characters';
           }
-          if(value.isEmpty){
+          if (value.isEmpty) {
             return 'Password must be filled';
           }
         },
@@ -234,84 +146,101 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   }
 
   ///For Login Buttom
-  Widget LoginButton(){
+  Widget LoginButton() {
     return Container(
       width: MediaQuery.of(context).size.width,
       //height: 40.0,
       child: RaisedButton(
-        onPressed:() async {
-          if(_userIdentity.text=="yinyinmon696@gmail.com"&&_password.text=="123456")
-          {
-            //Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>LoginSuccess()));
-
-          }
-          else
-          {
+        onPressed: () async {
+          if (_userIdentity.text == "yinyinmon696@gmail.com" &&
+              _password.text == "123456") {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
+          } else {
             showDialog(
               builder: (context) => AlertDialog(
-                title: Text('Enter Valid UserName and Password',
-                  style: TextStyle(
-                      fontFamily: "EucrosiaUPC",
-                      fontSize: 35
-                  ),
+                title: Text(
+                  'Enter Valid UserName and Password',
+                  style: TextStyle(fontFamily: "EucrosiaUPC", fontSize: 35),
                 ),
                 actions: <Widget>[
                   FlatButton(
-                    onPressed:() {
-                      _userIdentity.text="";
-                      _password.text="";
+                    onPressed: () {
+                      _userIdentity.text = "";
+                      _password.text = "";
                       Navigator.pop(context);
                       Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context)=>LoginPage(),));
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ));
                     },
-                    child: Text('OK',
-                      style: TextStyle(color:Color(0xff015287),fontFamily: "EucrosiaUPC",fontSize: 25),),
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                          color: Color(0xff015287),
+                          fontFamily: "EucrosiaUPC",
+                          fontSize: 25),
+                    ),
                   )
                 ],
               ),
               context: context,
             );
           }
-
         },
         color: Color(0xff4AB055),
-        child: Text(AppLocalizations.of(context).translate("login"),style: TextStylePage.getStyle(styleLocale,"white", "normal"),),
+        child: Text(
+          "Log In",
+          style: TextStyle(
+              color: Colors.white, fontFamily: "EucrosiaUPC", fontSize: 25),
+        ),
         padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
         shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(32.0),
-            side: BorderSide(color: Color(0xff4AB055))
-        ),
+            side: BorderSide(color: Color(0xff4AB055))),
       ),
     );
   }
 
   ///For Forget Password Link @ Create New Account
-  Widget NextLinksText(){
+  Widget NextLinksText() {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           FlatButton(
-            child: Text(
-                AppLocalizations.of(context).translate("forgetpass"),
-                style:TextStylePage.getStyle(styleLocale,"black", "normal"),
-            ),
-            onPressed: (){
+            child: Text('Forget Password?',
+                style: TextStyle(
+                  color: Colors.black45,
+                  fontFamily: "EucrosiaUPC",
+                  fontSize: 22,
+                )),
+            onPressed: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>ForgetPassword(),)
-              );
+                  MaterialPageRoute(
+                    builder: (context) => ForgetPassword(),
+                  ));
             },
           ),
-          Text('|',style: TextStylePage.getStyle(styleLocale,"black", "normal"),),
+          Text(
+            '|',
+            style: TextStyle(
+                color: Colors.black45, fontFamily: "EucrosiaUPC", fontSize: 35),
+          ),
           FlatButton(
             child: Text(
-              AppLocalizations.of(context).translate("createbtn"),
-              style: TextStylePage.getStyle(styleLocale,"black", "normal"),
+              'Create Account',
+              style: TextStyle(
+                color: Colors.black45,
+                fontFamily: "EucrosiaUPC",
+                fontSize: 22,
+              ),
             ),
-            onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAcc()));
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CreateAcc()));
             },
           ),
         ],
@@ -341,8 +270,9 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
-              AppLocalizations.of(context).translate("or"),
-              style: TextStylePage.getStyle(styleLocale,"black", "normal"),
+              "OR",
+              style: TextStyle(
+                  color: Colors.grey, fontFamily: "EucrosiaUPC", fontSize: 20),
             ),
           ),
           buildDivider(),
@@ -352,18 +282,18 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   }
 
   ///For Open With FaceBook & Google & WeChat
-  Widget OpenWithButton()
-  {
+  Widget OpenWithButton() {
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+//        Padding(
+//          padding: const EdgeInsets.all(40.0),
+//        ),
           GestureDetector(
-              onTap: (){
-                setState(() {
-                  loginLoading=true;
-                });
-                _presenter.loginWithFacebook();
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => PhoneAuthfromFG()));
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
@@ -372,17 +302,21 @@ class LoginPageState extends State<LoginPage> with LoginContract{
                   shape: BoxShape.circle,
                   border: Border.all(
                     width: 1,
-                    color:Color(0xff4AB055,
+                    color: Color(
+                      0xff4AB055,
                     ),
                   ),
                 ),
-                child: Image(image: AssetImage('images/faces.jpg'),
-                  height:ScreenUtil().setHeight(50) ,),
-              )
-          ),
+                child: Image(
+                  image: AssetImage('images/faces.jpg'),
+                  height: 38,
+                ),
+              )),
           GestureDetector(
-              onTap: (){
-                
+              onTap: () {
+                //Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PhoneAuthfromFG()));
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
@@ -391,20 +325,20 @@ class LoginPageState extends State<LoginPage> with LoginContract{
                   shape: BoxShape.circle,
                   border: Border.all(
                     width: 1,
-                    color:Color(0xff4AB055,
+                    color: Color(
+                      0xff4AB055,
                     ),
                   ),
                 ),
-                child: Image(image: AssetImage('images/wechat.png'),
-                  height:ScreenUtil().setHeight(40)  ,),
-              )
-          ),
+                child: Image(
+                  image: AssetImage('images/wechat.png'),
+                  height: 29,
+                ),
+              )),
           GestureDetector(
-              onTap: (){
-                _presenter.loginWithGoogleAcc();
-                setState(() {
-                  loginLoading=true;
-                });
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => PhoneAuthfromFG()));
               },
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
@@ -413,42 +347,18 @@ class LoginPageState extends State<LoginPage> with LoginContract{
                   shape: BoxShape.circle,
                   border: Border.all(
                     width: 1,
-                    color:Color(0xff4AB055,
+                    color: Color(
+                      0xff4AB055,
                     ),
                   ),
                 ),
-                child: Image(image: AssetImage('images/google.jpg'),
-                  height:ScreenUtil().setHeight(40)  ,),
-              )
-          )
+                child: Image(
+                  image: AssetImage('images/google.jpg'),
+                  height: 30,
+                ),
+              ))
         ],
       ),
     );
   }
-
-  @override
-  void loginSuccess(UserInfo data) {
-    if(data!=null){
-      UserInfo.userInfo=data;
-      setState(() {
-        loginLoading=false;
-      });
-
-      Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (BuildContext context) => BottomTabBar()));
-    }
-  }
-
-  @override
-  void showError(String msg) {
-    MessageHandel.showError(context, "", msg);
-    setState(() {
-        loginLoading=false;
-      });
-  }
-
-  @override
-  void showMessage() {
-  }
 }
-

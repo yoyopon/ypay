@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'OtpPage.dart';
+import 'package:ypay/Login/OtpPage.dart';
 import 'package:ypay/Login_AbstractClass/LoginStoreImplement.dart';
 
 class  PhoneAuth extends StatefulWidget{
