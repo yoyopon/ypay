@@ -4,6 +4,7 @@ import 'package:ypay/APIService/SMSVerify.dart';
 import 'package:ypay/Login/SMSMyaThinnKyuu.dart';
 import 'package:ypay/dataService/loginPresenter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class PhoneAuthfromFG extends StatefulWidget {
   PhoneAuthfromFGState createState() => PhoneAuthfromFGState();
@@ -13,13 +14,14 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
   bool loginLoading = false;
   String codeno;
   String phoneNo;
-  final formKey = new GlobalKey<FormState>();
+  static GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
   LoginPresenter _presenter;
 
   @override
   void initState() {
     _presenter = new LoginPresenter(this, context);
+    phoneController.clear();
     super.initState();
   }
 
@@ -109,20 +111,18 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
                 color: Colors.grey, fontFamily: "Roboto Slab Regular"),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green))),
-        onChanged: (value) {
-          //this.phoneNo = '+959'+value;
-        },
+        // onChanged: (value) {
+        //   //this.phoneNo = '+959'+value;
+        // },
+        //onSaved: phoneSubmit(),
+        //onFieldSubmitted: phoneSubmit(),
+        //onSubmitted: phoneSubmit(),
       ),
     );
   }
 
-  ///For Next Buttom
-  Widget NextButtom() {
-    return Container(
-      child: RaisedButton(
-        color: Color(0xff4AB055),
-        onPressed: () {
-          if (formKey.currentState.validate()) {
+  phoneSubmit(){
+    if (formKey.currentState.validate()) {
             setState(() {
               loginLoading = true;
             });
@@ -164,10 +164,16 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
                 );
               } //end of else
             }); //apiservice end
-            // Navigator.pushReplacement(
-            //     context, MaterialPageRoute(builder: (context) => OtpPage()));
+            phoneController.clear();
           }
-        },
+  }
+
+  ///For Next Buttom
+  Widget NextButtom() {
+    return Container(
+      child: RaisedButton(
+        color: Color(0xff4AB055),
+        onPressed: () =>phoneSubmit(),
         child: Text(
           'Next',
           style: TextStyle(
@@ -189,5 +195,10 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
   @override
   void showMessage() {
     // TODO: implement showMessage
+  }
+
+  @override
+  void loginSuccess(UserInfo data) {
+    // TODO: implement loginSuccess
   }
 }

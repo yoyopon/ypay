@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ypay/Page/AccountProfile.dart';
+import 'package:ypay/Page/Cart.dart';
+import 'package:ypay/Page/Categories.dart';
+import 'package:ypay/Page/HomePage.dart';
+import 'package:ypay/Page/Message.dart';
 import 'package:ypay/Providers/BottomNavigationBarProvider.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
@@ -12,7 +16,7 @@ class BottomTabBar extends StatefulWidget {
 
 class _BottomTabBarState extends State<BottomTabBar> {
   var currentTab = [
-    Home(),
+    HomePage(),
     Categories(),
     Message(),
     Cart(),
@@ -25,7 +29,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
       home: Scaffold(
         body:currentTab[provider.currentIndex],
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 0,left: 0,right: 0,top: 5),
+          padding: EdgeInsets.only(bottom: 0,left: 0,right: 0,top: 5),
           child: BottomNavigationBar(
             showUnselectedLabels: true,
             currentIndex: provider.currentIndex,
@@ -61,43 +65,3 @@ class _BottomTabBarState extends State<BottomTabBar> {
   }
 }
 
-class Home extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(child: Text("Home"),),
-      ),
-    );
-  }
-}
-class Categories extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(child: Text("Categories"),),
-      ),
-    );
-  }
-}
-class Message extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(child: Text("Message"),),
-      ),
-    );
-  }
-}
-class Cart extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(child: Text("cart"),),
-      ),
-    );
-  }
-}
