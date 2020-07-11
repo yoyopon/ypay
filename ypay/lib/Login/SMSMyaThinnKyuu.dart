@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
 import 'dart:async';
 
 import 'package:ypay/Page/HomePage.dart';
@@ -168,7 +169,7 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
               loginSuccessIcon = true;
             });
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context, MaterialPageRoute(builder: (context) => BottomTabBar()));
           } else {
             return showDialog(
                 context: context,
@@ -258,7 +259,7 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
 
   ///For CountDown Timer
   Timer _timer;
-  int _start = 2;
+  int _start = 60;
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
