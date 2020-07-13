@@ -2,6 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/dataService/Place.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,166 +24,367 @@ class HomePageState extends State<HomePage> {
 
   ///For ShowList
   Widget ShowList() {
-    return ListView(
-      children: <Widget>[
-        HeaderSlide(),
-        SizedBox(height: 5.0),
-        _buildSearch(),
-        SizedBox(height: 5.0),
-        flatButtom(),
-      ],
-    );
-  }
-
-  ///For Header Slide Bar
-  Widget HeaderSlide() {
-    TextStyle _styles = TextStyle(fontSize: 30, color: Colors.white);
-    TextStyle _style = TextStyle(fontSize: 25, color: Colors.white);
-    return Container(
-      // margin: EdgeInsets.symmetric(vertical: 5.0),
-      height: ScreenUtil().setHeight(250),
-      child: CarouselSlider(
-        options: CarouselOptions(
-          autoPlay: true,
-        ),
-        items: <Widget>[
-          Container(
-              width: 600.0,
-              color: Colors.red,
-              child: Center(
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      'Welcome Ypay',
-                      style: _styles,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'Ypay',
-                      style: _style,
-                    ),
-                    SizedBox(height: 5.0),
-                    FlatButton(onPressed: () {}, child: Text('OK >'))
-                  ],
-                ),
-              )),
-          Container(
-              width: 600.0,
-              color: Colors.yellow,
-              child: Center(
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      'Welcome Ypay',
-                      style: _styles,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'Ypay',
-                      style: _style,
-                    ),
-                    SizedBox(height: 5.0),
-                    FlatButton(onPressed: () {}, child: Text('OK >'))
-                  ],
-                ),
-              )),
-          Container(
-              width: 600.0,
-              color: Colors.green,
-              child: Center(
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      'Welcome Ypay',
-                      style: _styles,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'Ypay',
-                      style: _style,
-                    ),
-                    SizedBox(height: 5.0),
-                    FlatButton(onPressed: () {}, child: Text('OK >'))
-                  ],
-                ),
-              )),
-          Container(
-              width: 600.0,
-              color: Colors.blue,
-              child: Center(
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      'Welcome Ypay',
-                      style: _styles,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'Ypay',
-                      style: _style,
-                    ),
-                    SizedBox(height: 5.0),
-                    FlatButton(onPressed: () {}, child: Text('OK >'))
-                  ],
-                ),
-              )),
-          Container(
-              width: 600.0,
-              color: Colors.black,
-              child: Center(
-                child: ListView(
-                  children: <Widget>[
-                    Text(
-                      'Welcome Ypay',
-                      style: _styles,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'Ypay',
-                      style: _style,
-                    ),
-                    SizedBox(height: 5.0),
-                    FlatButton(onPressed: () {}, child: Text('OK >'))
-                  ],
-                ),
-              )),
+    return SingleChildScrollView(
+      child: ListView(
+        shrinkWrap: true,
+        physics: ScrollPhysics(),
+        children: <Widget>[
+          HeaderSlide(),
+          SizedBox(height: 5.0),
+          _buildSearch(),
+          SizedBox(height: 5.0),
+          flatButtom(),
+          SizedBox(height: 5.0),
+          imageBox(),
+          SizedBox(height: 10.0),
+          imageBoxwithprice()
         ],
       ),
     );
   }
 
+  ///For Header Slide Bar
+  Widget HeaderSlide() {
+    return Container(
+        child: CarouselSlider(
+      options: CarouselOptions(autoPlay: true),
+      items: <Widget>[
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                "images/3.jpg",
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+              margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Mindfulness",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "Mindfulness",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  FlatButton(
+                      textColor: Colors.black,
+                      highlightColor: Colors.black,
+                      splashColor: Colors.green,
+                      color: Colors.green, // <-- this breaks onPressed
+                      // shape:
+                      //     CircleBorder(side: BorderSide(color: Colors.red)),
+                      onPressed: () {},
+                      child: Text('Next >'))
+                ],
+              )),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: 0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                "images/4.jpg",
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Container(
+              margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "Mindfulness",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "Mindfulness",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  FlatButton(
+                      textColor: Colors.black,
+                      highlightColor: Colors.black,
+                      splashColor: Colors.green,
+                      color: Colors.green, // <-- this breaks onPressed
+                      // shape:
+                      //     CircleBorder(side: BorderSide(color: Colors.red)),
+                      onPressed: () {},
+                      child: Text('Next >'))
+                ],
+              )),
+        ),
+      ],
+    ));
+  }
+
   ///For Search Bar
   Widget _buildSearch() => Container(
         padding: EdgeInsets.all(8.0),
-        color: Colors.green,
-        height: 50.0,
-        child: Row(
-          children: <Widget>[
-            Icon(Icons.account_circle),
-            Flexible(
-              flex: 2,
-              child: TextFormField(
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 11.0),
-                decoration: InputDecoration(
-                    contentPadding: new EdgeInsets.symmetric(vertical: 0.0),
-                    border: InputBorder.none,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Icon(
+        child: new Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.account_box,
+                  color: Colors.blue[400],
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Flexible(
+                  flex: 2,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
                         Icons.search,
                         color: Colors.black,
-                      ), // icon is 48px widget.
+                      ),
+                      hintText: "Search",
+                      border: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(color: Colors.black),
+                      ),
                     ),
-                    hintText: 'Search',
-                    hintStyle: TextStyle(fontSize: 20.0, color: Colors.white)),
+                  ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Icon(
+                  Icons.filter_center_focus,
+                  color: Colors.blue[400],
+                )
+              ],
+            )),
+      );
+
+  ///For FlatButtom
+  Widget flatButtom() => Container(
+        color: Colors.orange[500],
+        child: Row(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword()));
+                  },
+                  child: Text('OK')),
+            ),
+            Container(
+              height: ScreenUtil().setHeight(70.0),
+              child: VerticalDivider(
+                color: Colors.white,
               ),
             ),
-            Icon(Icons.filter_center_focus)
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword()));
+                  },
+                  child: Text('OK')),
+            ),
+            Container(
+              height: ScreenUtil().setHeight(70.0),
+              child: VerticalDivider(
+                color: Colors.white,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword()));
+                  },
+                  child: Text('OK')),
+            ),
+            Container(
+              height: ScreenUtil().setHeight(70.0),
+              child: VerticalDivider(
+                color: Colors.white,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword()));
+                  },
+                  child: Text('OK')),
+            ),
+            Container(
+              height: ScreenUtil().setHeight(70.0),
+              child: VerticalDivider(
+                color: Colors.white,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResetPassword()));
+                  },
+                  child: Text('OK')),
+            ),
           ],
         ),
       );
 
-  ///For FlatButtom
-  Widget flatButtom() => Container();
+  ///For Image Box
+  List wonders = [
+    Place(
+        imageUrl:
+            "https://d36tnp772eyphs.cloudfront.net/blogs/1/2018/02/Taj-Mahal.jpg",
+        name: "Taj Mahal",
+        country: "India"),
+    Place(
+        imageUrl:
+            "https://d36tnp772eyphs.cloudfront.net/blogs/1/2018/02/Christ-the-Redeemer.jpg",
+        name: "Christ the Redeemer",
+        country: "Brazil"),
+    Place(
+        imageUrl:
+            "https://d36tnp772eyphs.cloudfront.net/blogs/1/2016/03/petra-jordan9.jpg",
+        name: "Petra",
+        country: "Jordan"),
+    Place(
+        imageUrl:
+            "https://d36tnp772eyphs.cloudfront.net/blogs/1/2018/02/Great-Wall-of-China-view.jpg",
+        name: "The Great Wall of China",
+        country: "China"),
+    Place(
+        imageUrl:
+            "https://d36tnp772eyphs.cloudfront.net/blogs/1/2018/02/View-of-the-Colosseum.jpg",
+        name: "The Colosseum",
+        country: "Rome"),
+    Place(
+        imageUrl:
+            "https://d36tnp772eyphs.cloudfront.net/blogs/1/2018/02/Machu-Picchu-around-sunset.jpg",
+        name: "Machu Picchu",
+        country: "Peru"),
+  ];
+
+  ///For imageBox Design
+  imageBox() => Container(
+        child: GridView.builder(
+          shrinkWrap: true,
+          physics: ScrollPhysics(), //// to disable GridView's scrolling
+          itemCount: wonders.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemBuilder: (context, index) {
+            return CupertinoButton(
+                child: Container(
+                  child: Card(
+                      child: Column(
+                    children: <Widget>[
+                      Text(wonders[index].name),
+                      Text(wonders[index].country),
+                      Container(
+                          child: Image.network(
+                            wonders[index].imageUrl,
+                            fit: BoxFit.cover,
+                          ),
+                          height: 120),
+                    ],
+                  )),
+                ),
+                onPressed: () {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (BuildContext context) => CupertinoAlertDialog(
+                      title: const Text('Card is clicked.'),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          child: const Text('ok'),
+                          onPressed: () {
+                            Navigator.pop(context, 'ok');
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                });
+          },
+        ),
+      );
+
+  final List<String> images = [
+    "https://9to5google.com/wp-content/uploads/sites/4/2018/12/best_android_smartphone_2018.jpg?quality=82&strip=all&w=1600",
+    "https://images-na.ssl-images-amazon.com/images/I/81aF3Ob-2KL._UX679_.jpg",
+    "https://www.boostmobile.com/content/dam/boostmobile/en/products/phones/apple/iphone-7/silver/device-front.png.transform/pdpCarousel/image.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgUgs8_kmuhScsx-J01d8fA1mhlCR5-1jyvMYxqCB8h3LCqcgl9Q",
+    "https://ae01.alicdn.com/kf/HTB11tA5aiAKL1JjSZFoq6ygCFXaw/Unlocked-Samsung-GALAXY-S2-I9100-Mobile-Phone-Android-Wi-Fi-GPS-8-0MP-camera-Core-4.jpg_640x640.jpg",
+    "https://media.ed.edmunds-media.com/gmc/sierra-3500hd/2018/td/2018_gmc_sierra-3500hd_f34_td_411183_1600.jpg",
+    "https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/images/16q1/665019/2016-chevrolet-silverado-2500hd-high-country-diesel-test-review-car-and-driver-photo-665520-s-original.jpg",
+    "https://www.galeanasvandykedodge.net/assets/stock/ColorMatched_01/White/640/cc_2018DOV170002_01_640/cc_2018DOV170002_01_640_PSC.jpg",
+    "https://media.onthemarket.com/properties/6191869/797156548/composite.jpg",
+    "https://media.onthemarket.com/properties/6191840/797152761/composite.jpg",
+  ];
+
+  imageBoxwithprice() => Container(
+        child: StaggeredGridView.countBuilder(
+          shrinkWrap: true,
+          physics: AlwaysScrollableScrollPhysics(),
+          crossAxisCount: 4,
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) => Card(
+            child: Column(
+              children: <Widget>[
+                Image.network(images[index]),
+                Text("Baby Wipes Paper Towels Special 10 packs"),
+                Text(
+                  'Ks 7700',
+                  style: TextStyle(color: Colors.red),
+                ),
+                Text(
+                  'Ks 8800',
+                  style: TextStyle(
+                      color: Colors.grey,
+                      decoration: TextDecoration.lineThrough),
+                )
+              ],
+            ),
+          ),
+          staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+        ),
+      );
 }
