@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ypay/Page/AccountProfile.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/Providers/appLanguage.dart';
@@ -81,12 +80,12 @@ class LoginPageState extends State<LoginPage> with LoginContract{
                       builder: (BuildContext context, StateSetter setState) {
                         return AlertDialog(
                           title: Text("Choose Language",
-                          style: TextStylePage.getStyle(appLanguage.appLocal,"blue", "header"),),
+                          style: TextStylePage.getStyle(appLanguage.appLocal,"blue", "header","none"),),
                           content: Column(mainAxisSize: MainAxisSize.min,children: <Widget>[
                             _myRadioButton(
                                 title: "Burmese",
                                 value: 0,
-                                styles: TextStylePage.getStyle(styleLocale,"black", "normal"),
+                                styles: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
                                 onChanged: (newValue) {
                                   setState(() => _groupValue = newValue);
                                   appLanguage.changeLanguage(new Locale('mm'));
@@ -97,7 +96,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
                             _myRadioButton(
                               title: "Chinese",
                               value: 1,
-                              styles: TextStylePage.getStyle(styleLocale,"black", "normal"),
+                              styles: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
                               onChanged: (newValue) {
                                 setState(() => _groupValue = newValue);
                                 appLanguage.changeLanguage(new Locale('zh'));
@@ -108,7 +107,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
                             _myRadioButton(
                               title: "English",
                               value: 2,
-                              styles: TextStylePage.getStyle(styleLocale,"black", "normal"),
+                              styles: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
                               onChanged: (newValue) {
                                 setState(() => _groupValue = newValue);
                                 appLanguage.changeLanguage(new Locale('en'));
@@ -149,7 +148,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
       children: <Widget>[
         SizedBox(height: 10.0,),
         Text(AppLocalizations.of(context).translate("welcome"),textAlign: TextAlign.center,
-          style: TextStylePage.getStyle( styleLocale,"blue", "header"),
+          style: TextStylePage.getStyle( styleLocale,"blue", "header","none"),
           ),
         SizedBox(height: 10.0,),
         Image(image: AssetImage('images/bulb.jpg'),
@@ -176,7 +175,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box,color: Colors.green),
             hintText: AppLocalizations.of(context).translate("username"),
-            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal"),
+            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal","none"),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green)
             )
@@ -212,7 +211,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
             hintText: AppLocalizations.of(context).translate("pass"),
-            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal"),
+            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal","none"),
             suffixIcon: IconButton(
               onPressed: _toggle,
               icon: _obscureText?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -276,7 +275,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
 
         },
         color: Color(0xff4AB055),
-        child: Text(AppLocalizations.of(context).translate("login"),style: TextStylePage.getStyle(styleLocale,"white", "normal"),),
+        child: Text(AppLocalizations.of(context).translate("login"),style: TextStylePage.getStyle(styleLocale,"white", "normal","none"),),
         padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
         shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(32.0),
@@ -295,7 +294,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           FlatButton(
             child: Text(
                 AppLocalizations.of(context).translate("forgetpass"),
-                style:TextStylePage.getStyle(styleLocale,"black", "normal"),
+                style:TextStylePage.getStyle(styleLocale,"black", "normal","none"),
             ),
             onPressed: (){
               Navigator.push(
@@ -304,11 +303,11 @@ class LoginPageState extends State<LoginPage> with LoginContract{
               );
             },
           ),
-          Text('|',style: TextStylePage.getStyle(styleLocale,"black", "normal"),),
+          Text('|',style: TextStylePage.getStyle(styleLocale,"black", "normal","none"),),
           FlatButton(
             child: Text(
               AppLocalizations.of(context).translate("createbtn"),
-              style: TextStylePage.getStyle(styleLocale,"black", "normal"),
+              style: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
             ),
             onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAcc()));
@@ -342,7 +341,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               AppLocalizations.of(context).translate("or"),
-              style: TextStylePage.getStyle(styleLocale,"black", "normal"),
+              style: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
             ),
           ),
           buildDivider(),

@@ -1,8 +1,8 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/kenny/Developer/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/kenny/Project/ypay_copy"
-export "FLUTTER_TARGET=/Users/kenny/Project/ypay_copy/lib/main.dart"
+export "FLUTTER_APPLICATION_PATH=/Users/kenny/Project/ypay/ypayKEDK/ypay/ypay"
+export "FLUTTER_TARGET=/Users/kenny/Project/ypay/ypayKEDK/ypay/ypay/lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
 export "FLUTTER_FRAMEWORK_DIR=/Users/kenny/Developer/flutter/bin/cache/artifacts/engine/ios"
