@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/Page/SearchPage.dart';
 import 'package:ypay/dataService/Place.dart';
+import 'package:ypay/model/serchlist.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,9 +20,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
-    return MaterialApp(
-      home: SafeArea(child: Scaffold(body: ShowList())),
-    );
+    return Scaffold(body: SafeArea(child: ShowList()));
   }
 
   ///For ShowList
@@ -32,12 +33,16 @@ class HomePageState extends State<HomePage> {
           HeaderSlide(),
           SizedBox(height: 5.0),
           _buildSearch(),
+          //searchbar(),
           SizedBox(height: 5.0),
           flatButtom(),
           SizedBox(height: 5.0),
           imageBox(),
           SizedBox(height: 10.0),
-          imageBoxwithprice()
+          imageBoxwithprice(),
+          SizedBox(height: 10.0),
+
+          //Text('OK')
         ],
       ),
     );
@@ -161,9 +166,22 @@ class HomePageState extends State<HomePage> {
                       border: InputBorder.none,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(color: Colors.black),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                        borderSide: BorderSide(color: Colors.grey),
                       ),
                     ),
+                    onTap: () {
+                      setState(() {
+                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchPage()));
+                      });
+                    },
                   ),
                 ),
                 SizedBox(
@@ -361,7 +379,7 @@ class HomePageState extends State<HomePage> {
   imageBoxwithprice() => Container(
         child: StaggeredGridView.countBuilder(
           shrinkWrap: true,
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: ScrollPhysics(),
           crossAxisCount: 4,
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) => Card(

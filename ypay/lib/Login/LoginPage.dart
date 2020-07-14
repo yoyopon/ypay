@@ -279,42 +279,44 @@ class LoginPageState extends State<LoginPage> with LoginContract {
       //height: 40.0,
       child: RaisedButton(
         onPressed: () async {
-          if (_userIdentity.text == "yinyinmon696@gmail.com" &&
-              _password.text == "123456") {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => BottomTabBar()));
-          } else {
-            showDialog(
-              builder: (context) => AlertDialog(
-                title: Text(
-                  'Enter Valid UserName and Password',
-                  style: TextStyle(fontFamily: "EucrosiaUPC", fontSize: 35),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      _userIdentity.text = "";
-                      _password.text = "";
-                      Navigator.pop(context);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ));
-                    },
-                    child: Text(
-                      'OK',
-                      style: TextStyle(
-                          color: Color(0xff015287),
-                          fontFamily: "EucrosiaUPC",
-                          fontSize: 25),
-                    ),
-                  )
-                ],
-              ),
-              context: context,
-            );
-          }
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => BottomTabBar()));
+          // if (_userIdentity.text == "yinyinmon696@gmail.com" &&
+          //     _password.text == "123456") {
+          //   Navigator.pushReplacement(context,
+          //       MaterialPageRoute(builder: (context) => BottomTabBar()));
+          // } else {
+          //   showDialog(
+          //     builder: (context) => AlertDialog(
+          //       title: Text(
+          //         'Enter Valid UserName and Password',
+          //         style: TextStyle(fontFamily: "EucrosiaUPC", fontSize: 35),
+          //       ),
+          //       actions: <Widget>[
+          //         FlatButton(
+          //           onPressed: () {
+          //             _userIdentity.text = "";
+          //             _password.text = "";
+          //             Navigator.pop(context);
+          //             Navigator.pushReplacement(
+          //                 context,
+          //                 MaterialPageRoute(
+          //                   builder: (context) => LoginPage(),
+          //                 ));
+          //           },
+          //           child: Text(
+          //             'OK',
+          //             style: TextStyle(
+          //                 color: Color(0xff015287),
+          //                 fontFamily: "EucrosiaUPC",
+          //                 fontSize: 25),
+          //           ),
+          //         )
+          //       ],
+          //     ),
+          //     context: context,
+          //   );
+          // }
         },
         color: Color(0xff4AB055),
         child: Text(
