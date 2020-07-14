@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ypay/Page/ConfirmOrder.dart';
 import 'package:ypay/Providers/DetailsProvider.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
@@ -32,12 +33,12 @@ class _DetailsPageState extends State<DetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none");
-    TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"black", "header","none");
+    TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
+    TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"black", "header","none","");
     var provider = Provider.of<DetailsProvider>(context);
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
     return SafeArea(child: Scaffold(
-        appBar: AppBar(title: Text("Details",style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+        appBar: AppBar(title: Text("Details",style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","")),
           leading: IconButton(icon:Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){Navigator.of(context).pop();},),backgroundColor: Colors.white,),
         body: SingleChildScrollView(child: Column(children: <Widget>[
           //Carousel section
@@ -78,18 +79,18 @@ class _DetailsPageState extends State<DetailsPage> {
           //title section
           Padding(
             padding: const EdgeInsets.only(top: 10,left: 10,bottom: 8,),
-            child: Text("Bellflower Forest Super Fairy Two-Piece suit shirt",style:TextStylePage.getStyle(UserInfo.currentLocale,"grey", "header","none")),
+            child: Text("Bellflower Forest Super Fairy Two-Piece suit shirt",style:TextStylePage.getStyle(UserInfo.currentLocale,"grey", "header","none","")),
           ),//end of title section
           Padding(//price section
             padding: const EdgeInsets.only(top: 10,left: 10,bottom: 8,),
             child: Row(children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(right: 30),
-                child: Text("Ks 125,000",style:TextStylePage.getStyle(UserInfo.currentLocale,"red", "price","none")),
+                child: Text("Ks 125,000",style:TextStylePage.getStyle(UserInfo.currentLocale,"red", "price","none","")),
               ),
               Padding(
                 padding: const EdgeInsets.all(0.0),
-                child: Text("Ks 250,000",style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","oldPrice")),
+                child: Text("Ks 250,000",style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","oldPrice","")),
               )
             ],),
           ),//price section end
@@ -261,7 +262,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text("Ks9,600",style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "header","none"),),
+                            child: Text("Ks9,600",style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "header","none",""),),
                           )
                         ],),
                         onTap: (){},
@@ -275,7 +276,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text("Ks9,600",style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "header","none"),),
+                            child: Text("Ks9,600",style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "header","none",""),),
                           )
                         ],),
                         onTap: (){},
@@ -289,7 +290,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text("Ks9,600",style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "header","none"),),
+                            child: Text("Ks9,600",style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "header","none",""),),
                           )
                         ],),
                         onTap: (){},
@@ -301,9 +302,9 @@ class _DetailsPageState extends State<DetailsPage> {
             ],),
           ),
           //store recommended end
-
-          //add to cart
-          Padding(
+        ],),),
+        bottomNavigationBar: 
+         Padding(
             padding: const EdgeInsets.only(left: 20,top: 20,bottom: 20),
             child: Row(children: <Widget>[
               Padding(
@@ -337,15 +338,15 @@ class _DetailsPageState extends State<DetailsPage> {
                     padding: const EdgeInsets.all(10.0),
                     child: InkWell(
                       child: Text("Buy Now",style: style,),
-                      onTap: (){},
+                      onTap: (){
+                        Navigator.push(context,MaterialPageRoute(builder: (context)=>ConfirmOrder()));
+                      },
                     ),
                   ),
                 ),
               )
             ],),
           )
-          //add to cart end
-        ],),),
       ),
     );
   }

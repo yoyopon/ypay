@@ -26,7 +26,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
-    TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none");
+    TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
     return SafeArea(
         child: MaterialApp(
           home: Scaffold(
@@ -52,9 +52,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                Text(UserInfo.userInfo.name,style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "header","none"),),
+                                Text(UserInfo.userInfo.name,style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "header","none","nobold"),),
                                 SizedBox(height: ScreenUtil().setHeight(20.0),),
-                                Text("Member Level : "+"Standard",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none"),),
+                                Text("Member Level : "+"Standard",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold"),),
                                 SizedBox(height: ScreenUtil().setHeight(10.0),),
                                 Text("My growth : "+"1860",style: style1)
                               ],),
@@ -110,7 +110,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Manage Order",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("Manage Order",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -121,7 +121,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Close Order",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("Close Order",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -142,7 +142,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Balance",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("Balance",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -153,7 +153,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Point",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("Point",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -164,7 +164,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Message",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("Message",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -185,7 +185,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("My Profile",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("My Profile",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -198,7 +198,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                             children: <Widget>[
                               Text(UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?
                                 "Edit PhoneNumber":"Change Password",
-                                style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                                style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -211,7 +211,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           InkWell(
                             child: Row(
                             children: <Widget>[
-                              Text("Logout",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none")),
+                              Text("Logout",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.exit_to_app),onPressed: (){},)
                             ],
@@ -223,7 +223,10 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                   return AlertDialog(
                                     title: Text("Are you sure you want to log out?"),
                                     actions: <Widget>[
-                                      FlatButton(child: Text("OK"),onPressed: ()=>logout(),),
+                                      FlatButton(child: Text("OK"),onPressed: (){
+                                        Navigator.of(context).pop();
+                                        logout();
+                                      },),
                                       FlatButton(child: Text("Cancel"),onPressed: (){
                                         Navigator.of(context).pop();
                                       })
@@ -256,7 +259,6 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
     if(UserInfo.userInfo.loginWith=="facebook"){
       _presenter.signOutFromFacebook();
     }
-    Navigator.pop(context);
   }
 
   @override
@@ -267,6 +269,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
 
   @override
   void showError(String msg) {
+    Navigator.of(context).pop();
     MessageHandel.showError(context, "", msg);
   }
 
