@@ -42,6 +42,7 @@ dependencies:
   numeric_keyboard: ^1.0.0
   flutter_phoenix: ^0.1.0
   carousel_slider: ^2.2.1
+  country_icons: ^1.1.1
 
 dev_dependencies:
   flutter_test:

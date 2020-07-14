@@ -12,6 +12,7 @@ import 'package:ypay/designUI/EyeIcon.dart';
 import 'package:ypay/Login/CreateAcc.dart';
 import 'package:ypay/Login/ForgetPassword.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
+import 'package:ypay/model/Languages.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +32,12 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   String rdnLanguage;
   Locale styleLocale;
 
+  List<Languages> lgnList=[
+    Languages(icon:Icon(Icons.check),flag: Image.asset('icons/flags/png/mm.png', package: 'country_icons'), name:"MM"),
+    Languages(icon:Icon(Icons.check), flag:Image.asset('icons/flags/png/cn.png', package: 'country_icons'),name: "CN"),
+    Languages(icon:Icon(Icons.check), flag:Image.asset('icons/flags/png/us.png', package: 'country_icons'),name: "US"),
+  ];
+
   @override
   void initState() {
     getLocale();
@@ -45,22 +52,45 @@ class LoginPageState extends State<LoginPage> with LoginContract{
     });
   }
 
-  int _groupValue=-1;
-  Widget _myRadioButton({String title, int value, Function onChanged,TextStyle styles}) {
-  return RadioListTile(
-    value: value,
-    groupValue: _groupValue,
-    onChanged: onChanged,
-    title: Text(title,style: styles,),
-  );
-}
-
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
     final navigatorKey = GlobalKey<NavigatorState>();
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
     ScreenUtil().setSp(30);
+    Languages languages;
+
+    void popupChange(Languages newlng)async{
+      var prefs = await SharedPreferences.getInstance();
+      await prefs.setString('popupInitial',newlng.name);
+      setState(() {
+        languages=newlng;
+        appLanguage.changeLanguage(languages.name=='MM'?new Locale('mm'):
+          (languages.name=='CN'?new Locale('zh'):new Locale('en')));
+        Phoenix.rebirth(context);
+      });
+    }
+
+    Future<Languages> getInitialPopup() async{
+      Languages lng1;
+      var prefs = await SharedPreferences.getInstance();
+      var lngName=prefs.getString('popupInitial');
+      switch (lngName) {
+        case "MM":lng1=lgnList[0];break;
+        case "CN":lng1=lgnList[1];break;
+        case "US":lng1=lgnList[2];break;
+        default:lng1=lgnList[0];break;
+      }
+      return lng1;
+    }
+
+    Languages getInitLanguage(){
+      getInitialPopup().then((lng){
+        languages=lng;
+      });
+      return languages;
+    }
+
     return MaterialApp(
       navigatorKey: navigatorKey,
        home:styleLocale==null?CircularProgressIndicator():
@@ -69,60 +99,34 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         appBar: AppBar(
           backgroundColor: Colors.white,
           actions: <Widget>[
-            IconButton(icon:Icon(Icons.language),color: Colors.green,
-              onPressed: (){
-                final context = navigatorKey.currentState.overlay.context;
-                
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return StatefulBuilder(
-                      builder: (BuildContext context, StateSetter setState) {
-                        return AlertDialog(
-                          title: Text("Choose Language",
-                          style: TextStylePage.getStyle(appLanguage.appLocal,"blue", "header","none"),),
-                          content: Column(mainAxisSize: MainAxisSize.min,children: <Widget>[
-                            _myRadioButton(
-                                title: "Burmese",
-                                value: 0,
-                                styles: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
-                                onChanged: (newValue) {
-                                  setState(() => _groupValue = newValue);
-                                  appLanguage.changeLanguage(new Locale('mm'));
-                                  Navigator.pop(context);
-                                  Phoenix.rebirth(context);
-                                }
-                              ),
-                            _myRadioButton(
-                              title: "Chinese",
-                              value: 1,
-                              styles: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
-                              onChanged: (newValue) {
-                                setState(() => _groupValue = newValue);
-                                appLanguage.changeLanguage(new Locale('zh'));
-                                  Navigator.pop(context);
-                                  Phoenix.rebirth(context);
-                              }
-                            ),
-                            _myRadioButton(
-                              title: "English",
-                              value: 2,
-                              styles: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
-                              onChanged: (newValue) {
-                                setState(() => _groupValue = newValue);
-                                appLanguage.changeLanguage(new Locale('en'));
-                                  Navigator.pop(context);
-                                  Phoenix.rebirth(context);
-                              }
-                            ),
-                          ],)
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-           )
+           PopupMenuButton(
+                icon: Icon(Icons.language,color: Colors.green,),
+                 initialValue: getInitLanguage(),
+                 itemBuilder: (BuildContext context){
+                   return lgnList.map((Languages lng){
+                     return PopupMenuItem(
+                       value: lng,
+                       child: Row(children: <Widget>[
+                         Padding(
+                           padding: const EdgeInsets.only(right:5),
+                           child: lng.icon,
+                         ),
+                         Padding(
+                           padding: const EdgeInsets.only(right:5),
+                           child: Container(
+                             width: ScreenUtil().setWidth(100),
+                             height: ScreenUtil().setHeight(100),
+                             child: lng.flag),
+                         ),
+                         Text(lng.name,style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),)
+                       ],),
+                     );
+                   }).toList();
+                 },
+                 onSelected: (Languages newlng){
+                   popupChange(newlng);
+                 },
+               ),
         ],),
         body: Center(
           child:
@@ -148,7 +152,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
       children: <Widget>[
         SizedBox(height: 10.0,),
         Text(AppLocalizations.of(context).translate("welcome"),textAlign: TextAlign.center,
-          style: TextStylePage.getStyle( styleLocale,"blue", "header","none"),
+          style: TextStylePage.getStyle( styleLocale,"green", "header","none","nobold"),
           ),
         SizedBox(height: 10.0,),
         Image(image: AssetImage('images/bulb.jpg'),
@@ -175,7 +179,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box,color: Colors.green),
             hintText: AppLocalizations.of(context).translate("username"),
-            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal","none"),
+            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal","none","nobold"),
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green)
             )
@@ -211,7 +215,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
             hintText: AppLocalizations.of(context).translate("pass"),
-            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal","none"),
+            hintStyle: TextStylePage.getStyle(styleLocale,"grey", "normal","none","nobold"),
             suffixIcon: IconButton(
               onPressed: _toggle,
               icon: _obscureText?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -275,7 +279,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
 
         },
         color: Color(0xff4AB055),
-        child: Text(AppLocalizations.of(context).translate("login"),style: TextStylePage.getStyle(styleLocale,"white", "normal","none"),),
+        child: Text(AppLocalizations.of(context).translate("login"),style: TextStylePage.getStyle(styleLocale,"white", "normal","none","nobold"),),
         padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
         shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(32.0),
@@ -294,7 +298,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           FlatButton(
             child: Text(
                 AppLocalizations.of(context).translate("forgetpass"),
-                style:TextStylePage.getStyle(styleLocale,"black", "normal","none"),
+                style:TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),
             ),
             onPressed: (){
               Navigator.push(
@@ -303,11 +307,11 @@ class LoginPageState extends State<LoginPage> with LoginContract{
               );
             },
           ),
-          Text('|',style: TextStylePage.getStyle(styleLocale,"black", "normal","none"),),
+          Text('|',style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),),
           FlatButton(
             child: Text(
               AppLocalizations.of(context).translate("createbtn"),
-              style: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
+              style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),
             ),
             onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>CreateAcc()));
@@ -341,7 +345,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               AppLocalizations.of(context).translate("or"),
-              style: TextStylePage.getStyle(styleLocale,"black", "normal","none"),
+              style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),
             ),
           ),
           buildDivider(),

@@ -13,8 +13,8 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
 
   String categoryText="";int _selectedIndex;
-  TextStyle allstyle=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none");
-  TextStyle selectedstyle=TextStylePage.getStyle(UserInfo.currentLocale,"red", "normal","none");
+  TextStyle allstyle=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
+  TextStyle selectedstyle=TextStylePage.getStyle(UserInfo.currentLocale,"red", "normal","none","");
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _CategoriesState extends State<Categories> {
         child: Container(
           padding: EdgeInsets.all(10),
           child: InkWell(
-            child: Text("Choose Categories",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none"),),
+            child: Text("Choose Categories",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none",""),),
           onTap: (){
           },),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.orange[500]),
@@ -58,7 +58,7 @@ class _CategoriesState extends State<Categories> {
                 });
               },
                 child: Text(CategoriesItems.items[i],
-                style: TextStylePage.getStyle(UserInfo.currentLocale,_selectedIndex!=null&&_selectedIndex==i?"red":"black", "normal","none"),),
+                style: TextStylePage.getStyle(UserInfo.currentLocale,_selectedIndex!=null&&_selectedIndex==i?"red":"black", "normal","none",""),),
               ),
             ),
           );
@@ -73,7 +73,7 @@ class _CategoriesState extends State<Categories> {
       width: ScreenUtil().setWidth(750),
       child: Column(
         children: <Widget>[
-          Text(categoryText==null?"":categoryText,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "header","none"),),
+          Text(categoryText==null?"":categoryText,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "header","none",""),),
           Padding(padding: EdgeInsets.only(top:15),),
           ListView(
             scrollDirection: Axis.vertical,
@@ -136,9 +136,9 @@ class CustomListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-          Text(title,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "normal","none"),),
+          Text(title,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "normal","none","nobold"),),
           SizedBox(height: ScreenUtil().setHeight(20),),
-          Text(price,style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none"),),
+          Text(price,style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none",""),),
           SizedBox(height: ScreenUtil().setHeight(4),),
           Container(
             width: ScreenUtil().setWidth(250),
@@ -146,7 +146,7 @@ class CustomListItem extends StatelessWidget {
                 child: Row(children: <Widget>[
                 Icon(Icons.view_list),
                 Padding(padding: EdgeInsets.only(left:5),),
-                Text('DHJY',style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none")),
+                Text('DHJY',style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","")),
                 Padding(padding: EdgeInsets.only(left:5),),
                 Icon(Icons.keyboard_arrow_right)
               ],),

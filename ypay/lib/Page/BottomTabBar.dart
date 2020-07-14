@@ -25,6 +25,7 @@ class _BottomTabBarState extends State<BottomTabBar> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
+    TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","nobold");
     return MaterialApp(
       home: Scaffold(
         body:currentTab[provider.currentIndex],
@@ -42,23 +43,23 @@ class _BottomTabBarState extends State<BottomTabBar> {
               items: [
               BottomNavigationBarItem(
                 icon: new Icon(Icons.home,),
-                title: new Text('Home',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none"),),
+                title: new Text('Home',style: style),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.category,),
-                title: Text('Categories',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none"),),
+                title: Text('Categories',style: style),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.message,),
-                title: Text('Message',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none"),),
+                title: Text('Message',style: style),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.shopping_cart,),
-                title: Text('Cart',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none"),),
+                title: Text('Cart',style: style),
               ),
               BottomNavigationBarItem(
                 icon: new Icon(Icons.person,),
-                title: new Text('Account',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none"),),
+                title: new Text('Account',style: style),
               ),
             ],
           ),
