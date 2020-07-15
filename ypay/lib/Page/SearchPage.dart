@@ -9,177 +9,235 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  // @override
+  // void initState() {
+  //   isVisible = false;
+  //   super.initState();
+  // }
+
+  bool isVisible = false;
+  final formKey = new GlobalKey<FormState>();
+  TextEditingController search = new TextEditingController();
+  String value = "";
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
+
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              autofocus: true,
-              decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                hintText: "Search",
-                border: InputBorder.none,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                  borderSide: BorderSide(color: Colors.grey),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
-                  borderSide: BorderSide(color: Colors.grey),
+        child: SingleChildScrollView(
+          child: ListView(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: ScreenUtil().setWidth(1000),
+                  height: ScreenUtil().setHeight(100),
+                  child: Row(
+                    children: <Widget>[
+                      new Flexible(
+                        child: TextField(
+                          controller: search,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Colors.black,
+                            ),
+                            suffixIcon: Visibility(
+                              visible: isVisible,
+                              child: IconButton(
+                                  icon: Icon(
+                                    Icons.cancel,
+                                    color: Colors.grey,
+                                  ),
+                                  onPressed: () {
+                                    FocusScopeNode currentFocus =
+                                        FocusScope.of(context);
+                                    if (!currentFocus.hasPrimaryFocus) {
+                                      currentFocus.unfocus();
+                                    }
+                                    search.text = "";
+                                  }),
+                            ),
+                            hintText: "Search",
+                            border: InputBorder.none,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(0.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(0.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                          onChanged: (text) {
+                            if (text != null || text != "") {
+                            } else {
+                              isVisible = false;
+                            }
+                          },
+                        ),
+                      ),
+                      Container(
+                        height: ScreenUtil().setHeight(100),
+                        child: FlatButton(
+                            textColor: Colors.grey,
+                            highlightColor: Colors.black,
+                            //splashColor: Colors.blue,
+                            color:
+                                Colors.grey[200], // <-- this breaks onPressed
+
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Cancel')),
+                      )
+                    ],
+                  ),
                 ),
               ),
-              onTap: () {
-                // setState(() {
-                //   Navigator.pop(context);
-                //   Navigator.pushReplacement(context,
-                //       MaterialPageRoute(builder: (context) => SearchPage()));
-                // });
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    height: 36,
-                    color: Colors.grey[200],
-                    child: normalDropDown(),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                  color: Colors.grey[200],
+                  width: ScreenUtil().setWidth(1000),
+                  height: ScreenUtil().setHeight(100),
+                  child: Row(
+                    children: <Widget>[
+                      normalDropDown(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Sales(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Price(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Filters(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Menu()
+                    ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  FlatButton(
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                    child: Text('Sales'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Price(),
-                  FlatButton(
-                    color: Colors.grey[200],
-                    onPressed: () {},
-                    child: Text('Filters'),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Container(
-                    color: Colors.grey[200],
-                    width: 30,
-                    height: 36,
-                    child: InkWell(
-                        child: Icon(Icons.menu),
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ResetPassword()));
-                        }),
-                  )
-                ],
+                ),
               ),
-            ),
-            InfoList(),
-          ],
+              InfoList(),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  ///For DropDown Buttom
   String dropdownValue = 'All';
-  normalDropDown() => DropdownButton<String>(
-        value: dropdownValue,
-        icon: Icon(Icons.arrow_drop_down),
-        iconSize: 24,
-        style: TextStyle(color: Colors.black),
-        onChanged: (String newValue) {
-          setState(() {
-            dropdownValue = newValue;
-          });
-        },
-        items: <String>['All', 'One', 'Two', 'Free', 'Four']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
+  normalDropDown() => Container(
+        //sssssssssswidth: ScreenUtil().setWidth(105),
+        height: 36,
+        color: Colors.grey[200],
+        child: DropdownButton<String>(
+          value: dropdownValue,
+          icon: Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          style: TextStyle(color: Colors.black),
+          onChanged: (String newValue) {
+            setState(() {
+              dropdownValue = newValue;
+            });
+          },
+          items: <String>['All', 'One', 'Two', 'Free', 'Four']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      );
+
+  ///For Sales Buttom
+  Sales() => Container(
+        //width: ScreenUtil().setWidth(105),
+        height: 36,
+        color: Colors.grey[200],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            hoverColor: Colors.red,
+            child: Text('Sales'),
+            onTap: () {},
+          ),
+        ),
       );
 
   ///For Price Box
   Price() => Container(
-        width: 100.0,
+        //width: ScreenUtil().setWidth(105),
+        height: 36,
+        color: Colors.grey[200],
         child: Row(
           children: <Widget>[
-            Container(
-              height: 36,
-              color: Colors.grey[200],
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text('Price'),
-              ),
-            ),
-            Container(
-              color: Colors.grey[200],
-              height: 37.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.arrow_drop_up,
-                        size: 18.0,
-                      ),
-                      onTap: () {
-                        //int currentValue = int.parse(_controller.text);
-                        setState(() {
-                          // currentValue++;
-                          // _controller.text =
-                          //     (currentValue).toString(); // incrementing value
-                        });
-                      },
-                    ),
+            Text('Price'),
+            Column(
+              children: <Widget>[
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_drop_up,
+                    size: 18.0,
                   ),
-                  InkWell(
-                    child: Icon(
-                      Icons.arrow_drop_down,
-                      size: 18.0,
-                    ),
-                    onTap: () {
-                      //int currentValue = int.parse(_controller.text);
-                      setState(() {
-                        // print("Setting state");
-                        // currentValue--;
-                        // _controller.text = (currentValue > 0 ? currentValue : 0)
-                        //     .toString(); // decrementing value
-                      });
-                    },
+                  onTap: () {},
+                ),
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_drop_down,
+                    size: 18.0,
                   ),
-                ],
-              ),
+                  onTap: () {},
+                ),
+              ],
             ),
           ],
         ),
       );
 
-  ///For InformationList
+  ///For Filters Buttom
+  Filters() => Container(
+        //width: ScreenUtil().setWidth(105),
+        height: 36,
+        color: Colors.grey[200],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            hoverColor: Colors.red,
+            child: Text('Filters'),
+            onTap: () {},
+          ),
+        ),
+      );
 
+  ///For Menu Buttom
+  Menu() => Container(
+        //width: ScreenUtil().setWidth(105),
+        color: Colors.grey[200],
+        height: 36,
+        child: InkWell(
+            child: Icon(Icons.menu),
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => ResetPassword()));
+            }),
+      );
+
+  ///For InformationList
   InfoList() => Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Row(

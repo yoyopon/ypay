@@ -19,6 +19,11 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
     ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
     return Scaffold(body: SafeArea(child: ShowList()));
   }
@@ -33,11 +38,11 @@ class HomePageState extends State<HomePage> {
           HeaderSlide(),
           SizedBox(height: 5.0),
           _buildSearch(),
-          //searchbar(),
           SizedBox(height: 5.0),
           flatButtom(),
           SizedBox(height: 5.0),
-          imageBox(),
+          //imageBox(),
+          promotionitem(),
           SizedBox(height: 10.0),
           imageBoxwithprice(),
           SizedBox(height: 10.0),
@@ -51,235 +56,256 @@ class HomePageState extends State<HomePage> {
   ///For Header Slide Bar
   Widget HeaderSlide() {
     return Container(
+        width: ScreenUtil().setWidth(1100),
+        height: ScreenUtil().setHeight(260),
         child: CarouselSlider(
-      options: CarouselOptions(autoPlay: true),
-      items: <Widget>[
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 0,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                "images/3.jpg",
+          options: CarouselOptions(autoPlay: true),
+          items: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://9to5google.com/wp-content/uploads/sites/4/2018/12/best_android_smartphone_2018.jpg?quality=82&strip=all&w=1600"),
+                  fit: BoxFit.cover,
+                ),
               ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Container(
-              margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "Mindfulness",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    "Mindfulness",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  FlatButton(
-                      textColor: Colors.black,
-                      highlightColor: Colors.black,
-                      splashColor: Colors.green,
-                      color: Colors.green, // <-- this breaks onPressed
-                      // shape:
-                      //     CircleBorder(side: BorderSide(color: Colors.red)),
-                      onPressed: () {},
-                      child: Text('Next >'))
-                ],
+              child: Container(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      "Mindfulness",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "Mindfulness",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    FlatButton(
+                        textColor: Colors.black,
+                        highlightColor: Colors.black,
+                        splashColor: Colors.blue,
+                        color: Colors.blue[400], // <-- this breaks onPressed
+
+                        onPressed: () {},
+                        child: Text('Next >'))
+                  ],
+                ),
               )),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 0,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                "images/4.jpg",
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://9to5google.com/wp-content/uploads/sites/4/2018/12/best_android_smartphone_2018.jpg?quality=82&strip=all&w=1600"),
+                  fit: BoxFit.cover,
+                ),
               ),
-              fit: BoxFit.cover,
+              child: Container(
+                  margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Mindfulness",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "Mindfulness",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      FlatButton(
+                          textColor: Colors.black,
+                          highlightColor: Colors.black,
+                          splashColor: Colors.blue,
+                          color: Colors.blue[400], //
+                          onPressed: () {},
+                          child: Text('Next >'))
+                    ],
+                  )),
             ),
-          ),
-          child: Container(
-              margin: EdgeInsets.fromLTRB(15, 15, 0, 0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "Mindfulness",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Text(
-                    "Mindfulness",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  FlatButton(
-                      textColor: Colors.black,
-                      highlightColor: Colors.black,
-                      splashColor: Colors.green,
-                      color: Colors.green, // <-- this breaks onPressed
-                      // shape:
-                      //     CircleBorder(side: BorderSide(color: Colors.red)),
-                      onPressed: () {},
-                      child: Text('Next >'))
-                ],
-              )),
-        ),
-      ],
-    ));
+          ],
+        ));
   }
 
   ///For Search Bar
-  Widget _buildSearch() => Container(
-        padding: EdgeInsets.all(8.0),
-        child: new Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Row(
-              children: <Widget>[
-                Icon(
-                  Icons.account_box,
-                  color: Colors.blue[400],
-                ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Flexible(
-                  flex: 2,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.black,
-                      ),
-                      hintText: "Search",
-                      border: InputBorder.none,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
+  Widget _buildSearch() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: ScreenUtil().setWidth(1100),
+          height: ScreenUtil().setHeight(100),
+          child: Row(
+            children: <Widget>[
+              Icon(
+                Icons.account_box,
+                color: Colors.blue[400],
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Flexible(
+                flex: 4,
+                child: TextFormField(
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.black,
                     ),
-                    onTap: () {
-                      setState(() {
-                        Navigator.pop(context);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SearchPage()));
-                      });
-                    },
+                    hintText: "Search",
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50.0)),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),
                   ),
+                  onTap: () {
+                    setState(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchPage()));
+                    });
+                  },
                 ),
-                SizedBox(
-                  width: 20.0,
-                ),
-                Icon(
-                  Icons.filter_center_focus,
-                  color: Colors.blue[400],
-                )
-              ],
-            )),
+              ),
+              // SizedBox(
+              //   width: 10.0,
+              // ),
+              IconButton(
+                  icon: Icon(
+                    Icons.filter_center_focus,
+                    color: Colors.blue[400],
+                  ),
+                  onPressed: () {})
+            ],
+          ),
+        ),
       );
 
   ///For FlatButtom
-  Widget flatButtom() => Container(
-        color: Colors.orange[500],
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword()));
-                  },
-                  child: Text('OK')),
-            ),
-            Container(
-              height: ScreenUtil().setHeight(70.0),
-              child: VerticalDivider(
-                color: Colors.white,
+  Widget flatButtom() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          color: Colors.orange[500],
+          width: ScreenUtil().setWidth(1000),
+          height: ScreenUtil().setHeight(80),
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: ScreenUtil().setWidth(110),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPassword()));
+                      },
+                      child: Text('OK')),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword()));
-                  },
-                  child: Text('OK')),
-            ),
-            Container(
-              height: ScreenUtil().setHeight(70.0),
-              child: VerticalDivider(
-                color: Colors.white,
+              Container(
+                height: ScreenUtil().setHeight(70.0),
+                child: VerticalDivider(
+                  color: Colors.white,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword()));
-                  },
-                  child: Text('OK')),
-            ),
-            Container(
-              height: ScreenUtil().setHeight(70.0),
-              child: VerticalDivider(
-                color: Colors.white,
+              Container(
+                width: ScreenUtil().setWidth(110),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPassword()));
+                      },
+                      child: Text('OK')),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword()));
-                  },
-                  child: Text('OK')),
-            ),
-            Container(
-              height: ScreenUtil().setHeight(70.0),
-              child: VerticalDivider(
-                color: Colors.white,
+              Container(
+                height: ScreenUtil().setHeight(70.0),
+                child: VerticalDivider(
+                  color: Colors.white,
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ResetPassword()));
-                  },
-                  child: Text('OK')),
-            ),
-          ],
+              Container(
+                width: ScreenUtil().setWidth(110),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPassword()));
+                      },
+                      child: Text('OK')),
+                ),
+              ),
+              Container(
+                height: ScreenUtil().setHeight(70.0),
+                child: VerticalDivider(
+                  color: Colors.white,
+                ),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(110),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPassword()));
+                      },
+                      child: Text('OK')),
+                ),
+              ),
+              Container(
+                height: ScreenUtil().setHeight(70.0),
+                child: VerticalDivider(
+                  color: Colors.white,
+                ),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(110),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPassword()));
+                      },
+                      child: Text('OK')),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
@@ -319,6 +345,7 @@ class HomePageState extends State<HomePage> {
 
   ///For imageBox Design
   imageBox() => Container(
+        width: ScreenUtil().setWidth(1000),
         child: GridView.builder(
           shrinkWrap: true,
           physics: ScrollPhysics(), //// to disable GridView's scrolling
@@ -335,6 +362,7 @@ class HomePageState extends State<HomePage> {
                       Text(wonders[index].name),
                       Text(wonders[index].country),
                       Container(
+                          width: ScreenUtil().setWidth(500),
                           child: Image.network(
                             wonders[index].imageUrl,
                             fit: BoxFit.cover,
@@ -397,6 +425,38 @@ class HomePageState extends State<HomePage> {
                       color: Colors.grey,
                       decoration: TextDecoration.lineThrough),
                 )
+              ],
+            ),
+          ),
+          staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
+          mainAxisSpacing: 4.0,
+          crossAxisSpacing: 4.0,
+        ),
+      );
+
+  promotionitem() => Container(
+        child: StaggeredGridView.countBuilder(
+          shrinkWrap: true,
+          physics: ScrollPhysics(),
+          crossAxisCount: 4,
+          itemCount: 10,
+          itemBuilder: (BuildContext context, int index) => Card(
+            child: Column(
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Text(
+                      'High',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Commission Area',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+                Image.network(images[index]),
               ],
             ),
           ),
