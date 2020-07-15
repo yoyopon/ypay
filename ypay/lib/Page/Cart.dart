@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ypay/Providers/DetailsProvider.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,11 +12,12 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
 
+  static bool isSelected=false;static bool isChecked=false;
+
   List<ExampleList> exampleList=[
-    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00),
-    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00),
+    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelected,1),
+    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelected,3),
   ];
-  bool isChecked=false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +47,11 @@ class _CartState extends State<Cart> {
                     physics: ScrollPhysics(),
                    itemBuilder: (context,i){
                      return Row(children: <Widget>[
-                       Checkbox(value: isChecked, onChanged: (bool value) {
+                       Checkbox(
+                         value: exampleList[i].isSelected,
+                         onChanged: (bool value) {
                          setState(() {
-                           isChecked=value;
+                           exampleList[i].isSelected=value;
                          });
                        },),
                        Container(width: ScreenUtil().setWidth(200),height: ScreenUtil().setHeight(200),child: exampleList[i].image,),
@@ -69,28 +74,33 @@ class _CartState extends State<Cart> {
                                      Container(
                                        decoration: BoxDecoration(border: Border.all(color:Colors.grey)),
                                        child: InkWell(child: Padding(
-                                         padding: const EdgeInsets.only(left:7,right:7,top:2,bottom:2),
+                                         padding: const EdgeInsets.only(left:8,right:8,top:3,bottom:3),
                                          child: Text("-",style: textBlack,),
                                        ),onTap: (){
-                                         //provider.decrement();
+                                         setState(() {
+                                           exampleList[i].currentIndex--;
+                                         });
                                        },),
                                      ),
                                      Container(
                                        decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey),bottom: BorderSide(color: Colors.grey)),),
                                        child: InkWell(child: Padding(
-                                         padding: const EdgeInsets.only(left:7,right:7,top:2,bottom:2),
-                                         child: Text("1",style: textBlack,),
+                                         padding: const EdgeInsets.only(left:8,right:8,top:3,bottom:3),
+                                         child: Text(
+                                         exampleList[i].currentIndex.toString(),
+                                         style: textBlack,),
                                        ),onTap: (){
-                                         //provider.decrement();
                                        },),
                                      ),
                                      Container(
                                        decoration: BoxDecoration(border: Border.all(color:Colors.grey)),
                                        child: InkWell(child: Padding(
-                                         padding: const EdgeInsets.only(left:7,right:7,top:2,bottom:2),
+                                         padding: const EdgeInsets.only(left:8,right:8,top:3,bottom:3),
                                          child: Text("+",style: textBlack,),
                                        ),onTap: (){
-                                         //provider.decrement();
+                                         setState(() {
+                                           exampleList[i].currentIndex++;
+                                         });
                                        },),
                                      ),
                                  ],),
@@ -166,8 +176,10 @@ class _CartState extends State<Cart> {
 }
 
 class ExampleList{
-  ExampleList(this.image,this.title,this.price);
+  ExampleList(this.image,this.title,this.price,this.isSelected,this.currentIndex);
   final Image image;
   final String title;
   final double price;
+  bool isSelected;
+  int currentIndex;
 }

@@ -18,7 +18,7 @@ class _ConfirmPayMentState extends State<ConfirmPayMent> {
       appBar: AppBar(title: Center(child: Text("Confirm PayMent",style: style1,)),
       leading: InkWell(
         child: Row(children: <Widget>[
-          Icon(Icons.arrow_back_ios),Text("Back",style: style)
+          Icon(Icons.arrow_back_ios,size: 20,),Text("Back",style: style)
         ],),onTap: (){Navigator.pop(context);},
         ),
         actions: <Widget>[

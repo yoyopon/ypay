@@ -15,6 +15,7 @@ class BottomTabBar extends StatefulWidget {
 }
 
 class _BottomTabBarState extends State<BottomTabBar> {
+  int currentIndex=0;
   var currentTab = [
     HomePage(),
     Categories(),
@@ -24,21 +25,25 @@ class _BottomTabBarState extends State<BottomTabBar> {
   ];
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<BottomNavigationBarProvider>(context);
+    //var provider = Provider.of<BottomNavigationBarProvider>(context);
     TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","nobold");
     return MaterialApp(
       home: Scaffold(
-        body:currentTab[provider.currentIndex],
+        body:currentTab[currentIndex],
         bottomNavigationBar: Padding(
           padding: EdgeInsets.only(bottom: 0,left: 0,right: 0,top: 8),
           child: BottomNavigationBar(
             showUnselectedLabels: true,
             selectedItemColor: Color(0xff4AB055),
             unselectedItemColor: Colors.grey,
-            currentIndex: provider.currentIndex,
+            //currentIndex: provider.currentIndex,
+            currentIndex: currentIndex,
             type: BottomNavigationBarType.fixed,
             onTap: (index) {
-              provider.currentIndex = index;
+              //provider.currentIndex = index;
+              setState(() {
+                currentIndex=index;
+              });
             },
               items: [
               BottomNavigationBarItem(

@@ -1,7 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/designUI/TextStyle.dart';
 
 class ForgetPassword extends StatefulWidget{
   ForgetPasswordState createState()=>ForgetPasswordState();
@@ -11,16 +14,18 @@ class ForgetPasswordState extends State<ForgetPassword>{
 
   final formKey=new GlobalKey<FormState>();
   final _userIdentity=new TextEditingController();
-
+  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "header","none","nobold");
+  TextStyle styleGreyNormal=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xffFFFFFF),
         appBar: AppBar(
           backgroundColor:Colors.green ,
-          title:  Text("Find Your Account",style: TextStyle(color:Colors.white,fontFamily: "EucrosiaUPC",fontSize: 30)
+          title:  Text(AppLocalizations.of(context).translate("find"),style: styleWhite
           ),
         ),
         body: Center(
@@ -52,14 +57,9 @@ Widget ShowList(){
 ///For Header Text
 Widget HeaderText(){
   return Container(
-    child:  Text('Please enter your Email Address or \nPhone Number to search for your account',
+    child:  Text(AppLocalizations.of(context).translate("pleaseenter"),
       textAlign: TextAlign.center,
-      style: TextStyle(
-        color: Colors.black54,
-        fontSize: 25,
-        fontFamily: 'EucrosiaUPC',
-
-      ),),
+      style: styleGrey),
 
   );
 }
@@ -71,8 +71,8 @@ Widget HeaderText(){
         controller: _userIdentity,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.account_box,color: Colors.green),
-            hintText: "Phone Number / Email Address",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("username"),
+            hintStyle: styleGreyNormal,
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green)
             )
@@ -99,7 +99,7 @@ Widget HeaderText(){
       child: RaisedButton(
         color: Color(0xff4AB055),
         onPressed: (){
-            Navigator.pushReplacement(context, MaterialPageRoute
+            Navigator.push(context, MaterialPageRoute
               (builder: (context)=>ResetPassword()));
 //          if(_formkey.currentState.validate()){
 //            //rest-api section
@@ -189,12 +189,8 @@ Widget HeaderText(){
 //            );
 //          }
         },
-        child: Text('Confirm',
-          style: TextStyle(
-              fontSize: 30,
-              fontFamily: 'EucrosiaUPC',
-              color: Colors.white
-          ),),
+        child: Text(AppLocalizations.of(context).translate("confirm"),
+          style: styleWhite),
         padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),

@@ -2,9 +2,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/EyeIcon.dart';
+import 'package:ypay/designUI/TextStyle.dart';
 
 class CreateAcc extends StatefulWidget{
   CreateAccState createState()=>CreateAccState();
@@ -18,29 +20,33 @@ class CreateAccState extends State<CreateAcc>{
   final _conpassword=new TextEditingController();
   bool _obscureText=true;
   bool _obscureText1=true;
+  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-        backgroundColor: Color(0xffFFFFFF),
-        appBar: AppBar(
-          backgroundColor:Colors.green ,
-          title:  Text(AppLocalizations.of(context).translate("create"),
-          style: TextStyle(color:Colors.white,fontFamily: "myanmar3",fontSize: 20)
+        home: SafeArea(
+          child: Scaffold(
+          backgroundColor: Color(0xffFFFFFF),
+          appBar: AppBar(
+            backgroundColor:Colors.green ,
+            title:  Text(AppLocalizations.of(context).translate("create"),
+            style: styleWhite
+            ),
+            leading: IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: (){Navigator.of(context).pop();},),
           ),
-          leading: IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: (){Navigator.of(context).pop();},),
-        ),
-        body: Center(
-          child:Padding(
-            padding: const EdgeInsets.all(35.0),
-            child: Form(
-              key: _formKey,
-              child: ShowList(),
+          body: Center(
+            child:Padding(
+              padding: const EdgeInsets.all(35.0),
+              child: Form(
+                key: _formKey,
+                child: ShowList(),
+              ),
             ),
           ),
-        ),
       ),
+        ),
     );
   }
 
@@ -49,10 +55,10 @@ class CreateAccState extends State<CreateAcc>{
     return ListView(
       children: <Widget>[
         SizedBox(height: 20.0),
-        IconPerson(),
+        iconPerson(),
         SizedBox(height: 20.0),
         SizedBox(height: 20.0),
-        FullName(),
+        fullName(),
         SizedBox(height: 20.0),
         Password(),
         SizedBox(height: 20.0),
@@ -64,36 +70,21 @@ class CreateAccState extends State<CreateAcc>{
   }
 
 ///For Header Icon
-  Widget IconPerson(){
+  Widget iconPerson(){
     return Container(
       child: Icon(Icons.account_circle,color: Colors.green,size: 100.0,),
     );
   }
 
-  ///For Create Account Text
-  Widget CreateAccText(){
-    return Container(
-      child:  Text('Create New Account',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black54,
-          fontSize: 40,
-          fontFamily: 'EucrosiaUPC',
-          fontWeight: FontWeight.bold,
-        ),),
-
-    );
-  }
-
   ///For FullName TextBox
-Widget FullName(){
+Widget fullName(){
     return Container(
       child: TextFormField(
         controller: _fullname,
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_box,color: Colors.green),
-          hintText: "FullName",
-          hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+          hintText: AppLocalizations.of(context).translate("fullName"),
+          hintStyle: styleGrey,
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.green)
           )
@@ -118,8 +109,8 @@ Widget FullName(){
         obscureText: _obscureText,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
-            hintText: "Password",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("pass"),
+            hintStyle: styleGrey,
             suffixIcon: IconButton(
             onPressed: toggle,
               icon: _obscureText?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -156,8 +147,8 @@ Widget FullName(){
         obscureText: _obscureText1,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
-            hintText: "Confirm Password",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("confirmPass"),
+            hintStyle: styleGrey,
             suffixIcon: IconButton(
               onPressed: toggle1,
               icon: _obscureText1?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -276,12 +267,8 @@ Widget ConfirmButtom(){
 //            );
 //          }
         },
-        child: Text('Confirm',
-          style: TextStyle(
-              fontSize: 30,
-              fontFamily: 'EucrosiaUPC',
-              color: Colors.white
-          ),),
+        child: Text(AppLocalizations.of(context).translate("confirm"),
+          style: styleWhite),
         padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),

@@ -6,6 +6,7 @@ import '../designUI/TextStyle.dart';
 import '../model/userInfo.dart';
 
 class Categories extends StatefulWidget {
+  const Categories();
   @override
   _CategoriesState createState() => _CategoriesState();
 }

@@ -47,6 +47,9 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
+            // home: UserInfo.prev=="accountInfo"?
+            // ( UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?PhoneAuthfromFG():ResetPassword())
+            // :LoginPage(),
             home: LoginPage(),
           );
         }
