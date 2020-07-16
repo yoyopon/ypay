@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Languages{
-  Languages({this.icon,this.flag,this.name});
-  Icon icon;
+  Languages({this.flag,this.name});
   Image flag;
   String name;
-
 }

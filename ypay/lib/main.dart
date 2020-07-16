@@ -13,7 +13,8 @@ void main() async {
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
   runApp(
-    Phoenix(child: MyApp(appLanguage: appLanguage,))
+    //Phoenix(child: MyApp(appLanguage: appLanguage,))
+   MyApp(appLanguage: appLanguage,)
   );
 }
 
@@ -29,25 +30,30 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider<DetailsProvider>(create: (_) => DetailsProvider(),),
       ],
       child: Consumer<AppLanguage>(builder: (context, model, child) {
-          return MaterialApp(
-            supportedLocales: [
-              Locale('en', 'US'),
-              Locale('mm', 'MM'),
-              Locale('zh', 'CN'),
+          return Phoenix(
+             child: MaterialApp(
+              supportedLocales: [
+                Locale('en', 'US'),
+                Locale('mm', 'MM'),
+                Locale('zh', 'CN'),
 
-            ],
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate
-            ],
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
+              ],
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate
+              ],
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: Colors.blue,
+              ),
+              // home: UserInfo.prev=="accountInfo"?
+              // ( UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?PhoneAuthfromFG():ResetPassword())
+              // :LoginPage(),
+              home: LoginPage(),
             ),
-            home: LoginPage(),
           );
         }
     )

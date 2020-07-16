@@ -16,3 +16,4 @@ class DetailsProvider with ChangeNotifier {
   }
 
 }
+

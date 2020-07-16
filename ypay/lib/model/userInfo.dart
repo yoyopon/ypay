@@ -19,4 +19,5 @@ class UserInfo{
 
   static UserInfo userInfo;
   static Locale currentLocale;
+  static String prev;
 }

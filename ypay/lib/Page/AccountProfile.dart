@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ypay/Login/CreateAcc.dart';
+import 'package:ypay/Login/LoginPage.dart';
+import 'package:ypay/Login/PhoneAuthfromF&G.dart';
+import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/dataService/userProfilePresenter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -200,7 +204,14 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                 "Edit PhoneNumber":"Change Password",
                                 style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
+                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
+                                UserInfo.prev="info";
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                                  UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?
+                                  PhoneNumberEdit():ResetPassword()
+                                  //MyApp()
+                                ));
+                              },)
                             ],
                           ),
                         ),

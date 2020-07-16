@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
+import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
 import 'dart:async';
 
-import 'package:ypay/Page/HomePage.dart';
+import 'package:ypay/designUI/TextStyle.dart';
 
 class SMSVerifyMtq extends StatefulWidget {
-  String verifycode;
+  final String verifycode;
   SMSVerifyMtq(this.verifycode) : super();
 
   @override
@@ -21,15 +23,8 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
     startTimer();
     super.initState();
   }
-
-  // autoverify() {
-  //   this.text = this.widget.verifycode;
-  //   if (this.text != null) {
-  //     //Icon(Icons.check_circle);
-  //     // return Navigator.push(context,
-  //     //     MaterialPageRoute(builder: (context) => SMSVerifyMtq(this.text)));
-  //   }
-  // }
+  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
   bool loginSuccessIcon = false;
 
   @override
@@ -39,11 +34,8 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
         backgroundColor: Color(0xffFFFFFF),
         appBar: AppBar(
           backgroundColor: Colors.green,
-          title: Text("Verification Code Sent",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "EucrosiaUPC",
-                  fontSize: 30)),
+          title: Text(AppLocalizations.of(context).translate("verify"),
+              style: styleWhite),
         ),
         body: Center(
           child: loginSuccessIcon == true
@@ -92,13 +84,9 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
   Widget VerifyText() {
     return Container(
       child: Text(
-        'Enter 6 digits verification code sent to your phone number',
+        AppLocalizations.of(context).translate("enter6digit"),
         textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black54,
-          fontSize: 30,
-          fontFamily: 'EucrosiaUPC',
-        ),
+        style: styleGrey
       ),
     );
   }
@@ -202,12 +190,8 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                'Confirm',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'EucrosiaUPC',
-                    fontSize: 28.0),
+              Text(AppLocalizations.of(context).translate("confirm"),
+                style: styleWhite
               ),
               Container(
                 padding: const EdgeInsets.all(8),

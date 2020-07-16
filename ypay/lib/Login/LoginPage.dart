@@ -30,12 +30,12 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   bool _obscureText = true;
   LoginPresenter _presenter;
   String rdnLanguage;
-  Locale styleLocale;
+  static Locale styleLocale;
 
   List<Languages> lgnList=[
-    Languages(icon:Icon(Icons.check),flag: Image.asset('icons/flags/png/mm.png', package: 'country_icons'), name:"MM"),
-    Languages(icon:Icon(Icons.check), flag:Image.asset('icons/flags/png/cn.png', package: 'country_icons'),name: "CN"),
-    Languages(icon:Icon(Icons.check), flag:Image.asset('icons/flags/png/us.png', package: 'country_icons'),name: "US"),
+    Languages(flag: Image.asset('icons/flags/png/mm.png', package: 'country_icons'), name:"MM - Burmese"),
+    Languages(flag:Image.asset('icons/flags/png/cn.png', package: 'country_icons'),name: "CN - Chinese"),
+    Languages(flag:Image.asset('icons/flags/png/us.png', package: 'country_icons'),name: "EN - English"),
   ];
 
   @override
@@ -60,90 +60,84 @@ class LoginPageState extends State<LoginPage> with LoginContract{
     ScreenUtil().setSp(30);
     Languages languages;
 
-    void popupChange(Languages newlng)async{
-      var prefs = await SharedPreferences.getInstance();
-      await prefs.setString('popupInitial',newlng.name);
+    void popupChange(Languages newlng){
       setState(() {
         languages=newlng;
-        appLanguage.changeLanguage(languages.name=='MM'?new Locale('mm'):
-          (languages.name=='CN'?new Locale('zh'):new Locale('en')));
+        appLanguage.changeLanguage(
+          languages.name=='MM - Burmese'?new Locale('mm'):
+          (languages.name=='CN - Chinese'?new Locale('zh'):new Locale('en')));
+        print(languages.name);
         Phoenix.rebirth(context);
       });
     }
 
-    Future<Languages> getInitialPopup() async{
-      Languages lng1;
-      var prefs = await SharedPreferences.getInstance();
-      var lngName=prefs.getString('popupInitial');
-      switch (lngName) {
-        case "MM":lng1=lgnList[0];break;
-        case "CN":lng1=lgnList[1];break;
-        case "US":lng1=lgnList[2];break;
-        default:lng1=lgnList[0];break;
+    Languages getInitialLanguage(){
+      Languages languages=new Languages();
+      if(styleLocale==Locale('mm')){
+        languages=lgnList[0];
       }
-      return lng1;
-    }
-
-    Languages getInitLanguage(){
-      getInitialPopup().then((lng){
-        languages=lng;
-      });
+      if(styleLocale==Locale('zh')){
+        languages=lgnList[1];
+      }
+      if(styleLocale==Locale('en')){
+        languages=lgnList[2];
+      }
       return languages;
     }
+
 
     return MaterialApp(
       navigatorKey: navigatorKey,
        home:styleLocale==null?CircularProgressIndicator():
-        Scaffold(
-        backgroundColor: Color(0xffFFFFFF),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          actions: <Widget>[
-           PopupMenuButton(
-                icon: Icon(Icons.language,color: Colors.green,),
-                 initialValue: getInitLanguage(),
-                 itemBuilder: (BuildContext context){
-                   return lgnList.map((Languages lng){
-                     return PopupMenuItem(
-                       value: lng,
-                       child: Row(children: <Widget>[
-                         Padding(
-                           padding: const EdgeInsets.only(right:5),
-                           child: lng.icon,
-                         ),
-                         Padding(
-                           padding: const EdgeInsets.only(right:5),
-                           child: Container(
-                             width: ScreenUtil().setWidth(100),
-                             height: ScreenUtil().setHeight(100),
-                             child: lng.flag),
-                         ),
-                         Text(lng.name,style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),)
-                       ],),
-                     );
-                   }).toList();
-                 },
-                 onSelected: (Languages newlng){
-                   popupChange(newlng);
-                 },
-               ),
-        ],),
-        body: Center(
-          child:
-          loginLoading==true?
-          SpinKitRotatingCircle(
-            color: Colors.green,
-            size: 50.0,
-          ):
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal:20.0,vertical:10.0),
-            child: Form(
-              key: formKey,
-              child: ShowList(),
+        SafeArea(
+          child: Scaffold(
+          backgroundColor: Color(0xffFFFFFF),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            actions: <Widget>[
+             PopupMenuButton(
+                  icon: Icon(Icons.language,color: Colors.green,),
+                  //child: img,
+                   initialValue: getInitialLanguage(),
+                   itemBuilder: (BuildContext context){
+                     return lgnList.map((Languages lng){
+                       return PopupMenuItem(
+                         value: lng,
+                         child: Row(children: <Widget>[
+                           Padding(
+                             padding: const EdgeInsets.only(right:5),
+                             child: Container(
+                               width: ScreenUtil().setWidth(100),
+                               height: ScreenUtil().setHeight(100),
+                               child: lng.flag),
+                           ),
+                           Text(lng.name,style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),)
+                         ],),
+                       );
+                     }).toList();
+                   },
+                   onSelected: (Languages newlng){
+                     popupChange(newlng);
+                   },
+                 ),
+          ],),
+          body: Center(
+            child:
+            loginLoading==true?
+            SpinKitRotatingCircle(
+              color: Colors.green,
+              size: 50.0,
+            ):
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal:20.0,vertical:10.0),
+              child: Form(
+                key: formKey,
+                child: ShowList(),
+              ),
             ),
           ),
-        ),
-      )
+      ),
+        )
     );
   }
 
