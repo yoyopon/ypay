@@ -25,37 +25,41 @@ class _BottomTabBarState extends State<BottomTabBar> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<BottomNavigationBarProvider>(context);
+    TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","nobold");
     return MaterialApp(
       home: Scaffold(
         body:currentTab[provider.currentIndex],
         bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(bottom: 0,left: 0,right: 0,top: 5),
+          padding: EdgeInsets.only(bottom: 0,left: 0,right: 0,top: 8),
           child: BottomNavigationBar(
             showUnselectedLabels: true,
+            selectedItemColor: Color(0xff4AB055),
+            unselectedItemColor: Colors.grey,
             currentIndex: provider.currentIndex,
+            type: BottomNavigationBarType.fixed,
             onTap: (index) {
               provider.currentIndex = index;
             },
               items: [
               BottomNavigationBarItem(
-                icon: new Icon(Icons.home,color: Colors.black,),
-                title: new Text('Home',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab"),),
+                icon: new Icon(Icons.home,),
+                title: new Text('Home',style: style),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings,color: Colors.black,),
-                title: Text('Categories',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab"),),
+                icon: Icon(Icons.category,),
+                title: Text('Categories',style: style),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings,color: Colors.black,),
-                title: Text('Message',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab"),),
+                icon: Icon(Icons.message,),
+                title: Text('Message',style: style),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings,color: Colors.black,),
-                title: Text('Cart',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab"),),
+                icon: Icon(Icons.shopping_cart,),
+                title: Text('Cart',style: style),
               ),
               BottomNavigationBarItem(
-                icon: new Icon(Icons.person,color: Colors.black,),
-                title: new Text('Account',style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab"),),
+                icon: new Icon(Icons.person,),
+                title: new Text('Account',style: style),
               ),
             ],
           ),

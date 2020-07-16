@@ -6,5 +6,19 @@
     "forgetpass":"Forget Password?",
     "createbtn":"Create Account",
     "or":"OR",
-    "create":"Create Your Account"
+    "create":"Create Your Account",
+    "find":"Find Your Account",
+    "pleaseenter":"Please enter your Phone Number to search for your account",
+    "confirm":"Confirm",
+    "resetpass":"Reset Your Password",
+    "pleaseenter1":"Please enter new password to reset your password",
+    "confirmPass":"Confirm Password",
+    "fullName":"FullName",
+    "phoneauth":"Phone Authentication",
+    "entermobile":"Enter Mobile Number to confirm your account",
+    "entermobile1":"Enter your Phone Number!",
+    "errmobile":"Must be at least six charaters!",
+    "next":"Next",
+    "verify":"Verification Code Sent",
+    "enter6digit":"Enter 6 digits verification code sent to your phone number"
 }

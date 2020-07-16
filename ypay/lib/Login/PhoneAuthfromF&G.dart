@@ -1,59 +1,96 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:ypay/APIService/SMSVerify.dart';
+import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/SMSMyaThinnKyuu.dart';
-import 'package:ypay/dataService/loginPresenter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/Providers/appLanguage.dart';
+import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
+
+class PhoneNumberEdit extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage(),
+      child: Consumer<AppLanguage>(builder: (context, model, child) {
+        return MaterialApp(
+          supportedLocales: [
+              Locale('en', 'US'),
+              Locale('mm', 'MM'),
+              Locale('zh', 'CN'),
+
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate
+            ],
+            home: PhoneAuthfromFG(),
+        );
+      }),
+    );
+  }
+  
+}
 
 class PhoneAuthfromFG extends StatefulWidget {
   PhoneAuthfromFGState createState() => PhoneAuthfromFGState();
 }
 
-class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
+class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
   bool loginLoading = false;
   String codeno;
   String phoneNo;
-  static GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  //static GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+  final formKey = new GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
-  LoginPresenter _presenter;
+  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "header","none","nobold");
+  TextStyle styleGreyNormal=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
 
   @override
   void initState() {
-    _presenter = new LoginPresenter(this, context);
     phoneController.clear();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xffFFFFFF),
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Text("Phone Authentication",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "EucrosiaUPC",
-                  fontSize: 30)),
-        ),
-        body: Center(
-          child: loginLoading == true
-              ? SpinKitRotatingCircle(
-                  color: Colors.green,
-                  size: 50.0,
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(35.0),
-                  child: Form(
-                    key: formKey,
-                    child: ShowList(),
-                  ),
-                ),
-        ),
-      ),
-    );
+    return MaterialApp(
+          home: SafeArea(
+            child: Scaffold(
+              backgroundColor: Color(0xffFFFFFF),
+              appBar: AppBar(
+                leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+                  UserInfo.prev=="info"?
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomTabBar())):
+                  Navigator.pop(context);
+                },),
+                backgroundColor: Colors.green,
+                title: Text(AppLocalizations.of(context).translate("phoneauth"),
+                    style: styleWhite),
+              ),
+              body: Center(
+                child: loginLoading == true
+                    ? SpinKitRotatingCircle(
+                        color: Colors.green,
+                        size: 50.0,
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(35.0),
+                        child: Form(
+                          key: formKey,
+                          child: ShowList(),
+                        ),
+                      ),
+              ),
+            ),
+          ));
   }
 
   ///For ShowList
@@ -72,14 +109,9 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
   ///For Mobile Text
   Widget MobileText() {
     return Container(
-      child: Text(
-        'Enter Mobile Number to confirm your account',
+      child: Text(AppLocalizations.of(context).translate("entermobile"),
         textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black54,
-          fontSize: 30,
-          fontFamily: 'EucrosiaUPC',
-        ),
+        style: styleGrey
       ),
     );
   }
@@ -92,23 +124,19 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
         keyboardType: TextInputType.phone,
         validator: (value) {
           if (value.isEmpty) {
-            return 'Enter your Phone Number!';
+            return AppLocalizations.of(context).translate("entermobile1");
           }
           if (value.length < 6) {
-            return 'Must be at least six charaters!';
+            return AppLocalizations.of(context).translate("errmobile");
           }
           return null;
         },
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone, color: Colors.green),
             prefixText: '09  ',
-            prefixStyle: TextStyle(
-                color: Colors.black,
-                fontFamily: "Roboto Slab Regular",
-                fontSize: 15.5),
-            hintText: "Phone Number",
-            hintStyle: TextStyle(
-                color: Colors.grey, fontFamily: "Roboto Slab Regular"),
+            prefixStyle: styleGrey,
+            hintText: AppLocalizations.of(context).translate("username"),
+            hintStyle: styleGreyNormal,
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.green))),
         // onChanged: (value) {
@@ -174,10 +202,8 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
       child: RaisedButton(
         color: Color(0xff4AB055),
         onPressed: () =>phoneSubmit(),
-        child: Text(
-          'Next',
-          style: TextStyle(
-              fontSize: 30, fontFamily: 'EucrosiaUPC', color: Colors.white),
+        child: Text(AppLocalizations.of(context).translate("next"),
+          style: styleWhite,
         ),
         padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
         shape: RoundedRectangleBorder(
@@ -185,20 +211,5 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> with LoginContract {
         ),
       ),
     );
-  }
-
-  @override
-  void showError(String msg) {
-    // TODO: implement showError
-  }
-
-  @override
-  void showMessage() {
-    // TODO: implement showMessage
-  }
-
-  @override
-  void loginSuccess(UserInfo data) {
-    // TODO: implement loginSuccess
   }
 }

@@ -1,6 +1,40 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:ypay/Login/LoginPage.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/Providers/appLanguage.dart';
 import 'package:ypay/designUI/EyeIcon.dart';
+import 'package:ypay/designUI/TextStyle.dart';
+import 'package:ypay/model/userInfo.dart';
+
+class ChangePassword extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage(),
+      child: Consumer<AppLanguage>(builder: (context, model, child) {
+        return MaterialApp(
+          supportedLocales: [
+              Locale('en', 'US'),
+              Locale('mm', 'MM'),
+              Locale('zh', 'CN'),
+
+            ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate
+            ],
+            home: ResetPassword(),
+        );
+      }),
+    );
+  }
+  
+}
 
 class ResetPassword extends StatefulWidget{
   ResetPasswordState createState()=>ResetPasswordState();
@@ -13,23 +47,31 @@ class ResetPasswordState extends State<ResetPassword>{
   final _conpassword=new TextEditingController();
   bool _obscureText=true;
   bool _obscureText1=true;
+  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Color(0xffFFFFFF),
-        appBar: AppBar(
-          backgroundColor:Colors.green ,
-          title:  Text("Reset Your Password",style: TextStyle(color:Colors.white,fontFamily: "EucrosiaUPC",fontSize: 30)
+    return MaterialApp(
+        home: SafeArea(
+        child: Scaffold(
+          backgroundColor: Color(0xffFFFFFF),
+          appBar: AppBar(
+            leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
+                  UserInfo.prev=="info"?
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomTabBar())):
+                  Navigator.pop(context);
+                },),
+            backgroundColor:Colors.green ,
+            title:  Text(AppLocalizations.of(context).translate("resetpass"),style: styleWhite),
           ),
-        ),
-        body: Center(
-          child:Padding(
-            padding: const EdgeInsets.all(35.0),
-            child: Form(
-              key: formKey,
-              child: ShowList(),
+          body: Center(
+            child:Padding(
+              padding: const EdgeInsets.all(35.0),
+              child: Form(
+                key: formKey,
+                child: ShowList(),
+              ),
             ),
           ),
         ),
@@ -57,13 +99,9 @@ class ResetPasswordState extends State<ResetPassword>{
   Widget MobileText()
   {
     return Container(
-      child:  Text('Please enter new password to reset your password',
+      child:  Text(AppLocalizations.of(context).translate("pleaseenter1"),
         textAlign: TextAlign.center,
-        style: TextStyle(
-          color: Colors.black54,
-          fontSize: 25,
-          fontFamily: 'EucrosiaUPC',
-        ),),
+        style: styleGrey),
 
     );
   }
@@ -84,8 +122,8 @@ class ResetPasswordState extends State<ResetPassword>{
         obscureText: _obscureText,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
-            hintText: "Password",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("pass"),
+            hintStyle: styleGrey,
             suffixIcon: IconButton(
               onPressed: toggle,
               icon: _obscureText?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -122,8 +160,8 @@ class ResetPasswordState extends State<ResetPassword>{
         obscureText: _obscureText1,
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.vpn_key,color: Colors.green),
-            hintText: "Confirm Password",
-            hintStyle: TextStyle(color: Colors.grey ,fontFamily: "Roboto Slab Regular"),
+            hintText: AppLocalizations.of(context).translate("confirmPass"),
+            hintStyle: styleGrey,
             suffixIcon: IconButton(
               onPressed: toggle1,
               icon: _obscureText1?Icon(MyFlutterApp.eye_slash_solid,size: 17,color: Colors.green):Icon(Icons.remove_red_eye,size: 20,color: Colors.green),
@@ -239,12 +277,8 @@ class ResetPasswordState extends State<ResetPassword>{
 //            );
 //          }
         },
-        child: Text('Confirm',
-          style: TextStyle(
-              fontSize: 30,
-              fontFamily: 'EucrosiaUPC',
-              color: Colors.white
-          ),),
+        child: Text(AppLocalizations.of(context).translate("confirm"),
+          style: styleWhite),
         padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
         shape: RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0),

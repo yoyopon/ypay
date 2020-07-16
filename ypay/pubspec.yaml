@@ -31,7 +31,6 @@ dependencies:
   flushbar: 1.9.1
   google_sign_in: ^4.5.1
   google_sign_in_web: 0.9.1
-  firebase_auth: ^0.16.1
   flutter_spinkit: "^2.1.0"
   flutter_i18n: ^0.5.0
   intl_translation: ^0.17.1
@@ -42,6 +41,8 @@ dependencies:
   numeric_keyboard: ^1.0.0
   flutter_phoenix: ^0.1.0
   carousel_slider: ^2.2.1
+  country_icons: ^1.1.1
+  flutter_staggered_grid_view: ^0.3.0
 
 dev_dependencies:
   flutter_test:
