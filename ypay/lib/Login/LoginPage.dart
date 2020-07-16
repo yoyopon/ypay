@@ -63,8 +63,10 @@ class LoginPageState extends State<LoginPage> with LoginContract{
     void popupChange(Languages newlng){
       setState(() {
         languages=newlng;
-        appLanguage.changeLanguage(languages.name=='MM'?new Locale('mm'):
-          (languages.name=='CN'?new Locale('zh'):new Locale('en')));
+        appLanguage.changeLanguage(
+          languages.name=='MM - Burmese'?new Locale('mm'):
+          (languages.name=='CN - Chinese'?new Locale('zh'):new Locale('en')));
+        print(languages.name);
         Phoenix.rebirth(context);
       });
     }
@@ -83,6 +85,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
       return languages;
     }
 
+
     return MaterialApp(
       navigatorKey: navigatorKey,
        home:styleLocale==null?CircularProgressIndicator():
@@ -94,6 +97,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
             actions: <Widget>[
              PopupMenuButton(
                   icon: Icon(Icons.language,color: Colors.green,),
+                  //child: img,
                    initialValue: getInitialLanguage(),
                    itemBuilder: (BuildContext context){
                      return lgnList.map((Languages lng){

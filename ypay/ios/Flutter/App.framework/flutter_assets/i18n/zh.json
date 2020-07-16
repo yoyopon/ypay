@@ -6,5 +6,19 @@
     "forgetpass":"忘记密码？",
     "createbtn":"创建帐号",
     "or":"要么",
-    "create":"创建您的帐户"
+    "create":"创建您的帐户",
+    "find":"查找您的帐户",
+    "pleaseenter":"请输入您的电话号码以搜索您的帐户",
+    "confirm":"确认",
+    "resetpass":"重置你的密码",
+    "pleaseenter1":"请输入新密码重设密码",
+    "confirmPass":"确认密码",
+    "fullName":"全名",
+    "phoneauth":"电话认证",
+    "entermobile":"输入手机号码以确认您的帐户",
+    "entermobile1":"输入你的电话号码！",
+    "errmobile":"必须至少有六个字符！",
+    "next":"下一个",
+    "verify":"验证码已发送",
+    "enter6digit":"输入发送到您的电话号码的6位数验证码"
 }

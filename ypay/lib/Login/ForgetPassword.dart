@@ -17,6 +17,7 @@ class ForgetPasswordState extends State<ForgetPassword>{
   TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
   TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "header","none","nobold");
   TextStyle styleGreyNormal=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
+  String pageInfo;
   @override
   Widget build(BuildContext context) {
     
