@@ -85,6 +85,9 @@ class _CategoriesState extends State<Categories> {
                 image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(180),),
                 title: 'High Waist thin denim shorts',
                 price: 'Ks,9800',
+                onpresses: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
+                },
               )
             ],
           ),
@@ -114,11 +117,13 @@ class CustomListItem extends StatelessWidget {
     this.image,
     this.title,
     this.price,
+    this.onpresses,
   });
 
   final Image image;
   final String title;
   final String price;
+  final GestureTapCallback onpresses;
 
   @override
   Widget build(BuildContext context) {
@@ -151,14 +156,14 @@ class CustomListItem extends StatelessWidget {
                 Padding(padding: EdgeInsets.only(left:5),),
                 Icon(Icons.keyboard_arrow_right)
               ],),
-              onTap: (){
-                // Navigator.push(context, 
-                //   MaterialPageRoute(builder: (BuildContext context)=>DetailsPage())
-                // );
-                 Navigator.of(context).push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-                  return new DetailsPage();
-                }));
-              },
+             // onTap: (){
+                //  Navigator.of(context).push(MaterialPageRoute<Null>(builder: (BuildContext context) {
+                //   return new DetailsPage();
+                // }));
+                //Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
+                
+             // },
+             onTap: onpresses
             ),
           )
         ],),

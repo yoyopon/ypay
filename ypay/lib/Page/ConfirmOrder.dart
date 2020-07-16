@@ -24,10 +24,29 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
     PayMentDelivery(2,"Ayapay"),
     PayMentDelivery(3,"Cash on Deliver"),
   ];
+  bool visible=false;
   
   @override
+  void initState() {
+    super.initState();
+    commentText.addListener((){
+      setState(() {
+        visible=commentText.text.length>0?true:false;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);String text;bool visible=false;
+    ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
+
+    Widget getClearButton(){
+      if(!visible){
+        return null;
+      }
+      return IconButton(icon: Icon(Icons.clear,color: Colors.grey,),onPressed: (){commentText.clear();},);
+    }
+
     return MaterialApp(home: SafeArea(child: Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Center(child: Text("Confirm Order",style: style1,)),
@@ -77,36 +96,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
-                  child: TextFormField(style: styleGrey,
-                  controller: commentText,
-                    decoration: InputDecoration(
-                      hintText: ("Enter Comment"),
-                      hintStyle: styleGrey,
-                      suffixIcon: Visibility(
-                        visible: visible,
-                        child: IconButton(icon: Icon(Icons.cancel,color: Colors.grey,),onPressed: (){
-                          commentText.text="";
-                        },),
-                      ),
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(10.0),
-                        borderSide: new BorderSide(),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.green)
-                      )
-                    ),
-                    onChanged: (t){
-                      setState(() {
-                        text=t;
-                        visible=text!=null&&t!=""?true:false;
-                      });
-                      print(t);
-                    }
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:6,left: 5,right: 5),
                   child: Container(
                     width: ScreenUtil().setWidth(1000),
                     decoration: BoxDecoration(
@@ -144,22 +133,30 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     ),
                   )
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
-                //   child: TextFormField(style: styleGrey,
-                //     decoration: InputDecoration(
-                //       hintText: ("Enter Comment"),
-                //       hintStyle: styleGrey,
-                //       border: new OutlineInputBorder(
-                //         borderRadius: new BorderRadius.circular(10.0),
-                //         borderSide: new BorderSide(),
-                //       ),
-                //       focusedBorder: UnderlineInputBorder(
-                //           borderSide: BorderSide(color: Colors.green)
-                //       )
-                //     ),
-                //   ),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.only(top:6,left: 5,right: 5),
+                  child: TextFormField(style: styleGrey,
+                  controller: commentText,
+                    decoration: InputDecoration(
+                      hintText: ("Enter Comment"),
+                      hintStyle: styleGrey,
+                      //suffixIcon: getClearButton(),
+                      suffixIcon:Visibility(
+                        visible: visible,
+                        child: IconButton(icon: Icon(Icons.clear,color: Colors.grey,),
+                          onPressed: (){commentText.clear();},
+                        ),
+                      ),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                        borderSide: new BorderSide(),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green)
+                      )
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top:6,bottom: 5,left: 10),
                   child: Icon(Icons.check_circle,color: Colors.green,),
@@ -262,32 +259,21 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 ],),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                color: Colors.blue[400],
-                onPressed: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ConfirmPayMent()));
-                },
-                child: Text("S a v e    C h a n g e s",style:style),
-              ),
-            ),
 
           ],
         ),
       ),
-      // bottomNavigationBar: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child: RaisedButton(
-      //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      //     color: Colors.blue[400],
-      //     onPressed: (){
-      //       Navigator.push(context, MaterialPageRoute(builder: (context)=>ConfirmPayMent()));
-      //     },
-      //     child: Text("S a v e    C h a n g e s",style:style),
-      //   ),
-      // ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RaisedButton(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          color: Colors.blue[400],
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ConfirmPayMent()));
+          },
+          child: Text("S a v e    C h a n g e s",style:style),
+        ),
+      ),
     ),),);
   }
 }

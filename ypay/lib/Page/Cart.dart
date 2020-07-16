@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:ypay/Providers/DetailsProvider.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Cart extends StatefulWidget {
+class Cart extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CartPage();
+  }
+}
+
+class CartPage extends StatefulWidget {
   @override
   _CartState createState() => _CartState();
 }
 
-class _CartState extends State<Cart> {
+class _CartState extends State<CartPage> {
 
   static bool isSelected=false;static bool isChecked=false;
 
