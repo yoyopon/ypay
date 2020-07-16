@@ -9,11 +9,15 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  // @override
-  // void initState() {
-  //   isVisible = false;
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    search.addListener(() {
+      setState(() {
+        isVisible = search.text.length > 0 ? true : false;
+      });
+    });
+    super.initState();
+  }
 
   bool isVisible = false;
   final formKey = new GlobalKey<FormState>();
@@ -59,28 +63,22 @@ class _SearchPageState extends State<SearchPage> {
                                     if (!currentFocus.hasPrimaryFocus) {
                                       currentFocus.unfocus();
                                     }
-                                    search.text = "";
+                                    search.clear();
                                   }),
                             ),
                             hintText: "Search",
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(0.0)),
+                                  BorderRadius.all(Radius.circular(50.0)),
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(0.0)),
+                                  BorderRadius.all(Radius.circular(50.0)),
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                           ),
-                          onChanged: (text) {
-                            if (text != null || text != "") {
-                            } else {
-                              isVisible = false;
-                            }
-                          },
                         ),
                       ),
                       Container(
@@ -101,33 +99,30 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  color: Colors.grey[200],
-                  width: ScreenUtil().setWidth(1000),
-                  height: ScreenUtil().setHeight(100),
-                  child: Row(
-                    children: <Widget>[
-                      normalDropDown(),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(80),
-                      ),
-                      Sales(),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(80),
-                      ),
-                      Price(),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(80),
-                      ),
-                      Filters(),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(80),
-                      ),
-                      Menu()
-                    ],
-                  ),
+              Container(
+                color: Colors.grey[200],
+                width: ScreenUtil().setWidth(1000),
+                height: ScreenUtil().setHeight(100),
+                child: Row(
+                  children: <Widget>[
+                    normalDropDown(),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(80),
+                    ),
+                    Sales(),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(80),
+                    ),
+                    Price(),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(80),
+                    ),
+                    Filters(),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(80),
+                    ),
+                    Menu()
+                  ],
                 ),
               ),
               InfoList(),

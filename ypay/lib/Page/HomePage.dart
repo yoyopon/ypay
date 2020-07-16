@@ -4,10 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:ypay/Login/CreateAcc.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/SearchPage.dart';
 import 'package:ypay/dataService/Place.dart';
-import 'package:ypay/model/serchlist.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -205,15 +205,15 @@ class HomePageState extends State<HomePage> {
   Widget flatButtom() => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          color: Colors.orange[500],
-          width: ScreenUtil().setWidth(1000),
+          color: Colors.blue[300],
+          width: ScreenUtil().setWidth(500),
           height: ScreenUtil().setHeight(80),
           child: Row(
             children: <Widget>[
               Container(
-                width: ScreenUtil().setWidth(110),
+                width: ScreenUtil().setWidth(130),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                   child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -225,7 +225,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(70.0),
+                height: ScreenUtil().setHeight(50.0),
                 child: VerticalDivider(
                   color: Colors.white,
                 ),
@@ -233,7 +233,7 @@ class HomePageState extends State<HomePage> {
               Container(
                 width: ScreenUtil().setWidth(110),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -245,7 +245,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(70.0),
+                height: ScreenUtil().setHeight(50.0),
                 child: VerticalDivider(
                   color: Colors.white,
                 ),
@@ -253,7 +253,7 @@ class HomePageState extends State<HomePage> {
               Container(
                 width: ScreenUtil().setWidth(110),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -265,7 +265,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(70.0),
+                height: ScreenUtil().setHeight(50.0),
                 child: VerticalDivider(
                   color: Colors.white,
                 ),
@@ -273,7 +273,7 @@ class HomePageState extends State<HomePage> {
               Container(
                 width: ScreenUtil().setWidth(110),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -285,7 +285,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(70.0),
+                height: ScreenUtil().setHeight(50.0),
                 child: VerticalDivider(
                   color: Colors.white,
                 ),
@@ -293,7 +293,7 @@ class HomePageState extends State<HomePage> {
               Container(
                 width: ScreenUtil().setWidth(110),
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                   child: InkWell(
                       onTap: () {
                         Navigator.push(
