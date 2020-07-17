@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ypay/Page/DetailsPage.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
 import '../designUI/TextStyle.dart';
 import '../model/userInfo.dart';
 
@@ -36,7 +37,7 @@ class _CategoriesState extends State<Categories> {
         child: Container(
           padding: EdgeInsets.all(10),
           child: InkWell(
-            child: Text("Choose Categories",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none",""),),
+            child: Text(AppLocalizations.of(context).translate("choose"),style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none",""),),
           onTap: (){
           },),
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0),color: Colors.orange[500]),

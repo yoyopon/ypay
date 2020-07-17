@@ -1,42 +1,13 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:ypay/APIService/SMSVerify.dart';
 import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/SMSMyaThinnKyuu.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
-import 'package:ypay/Providers/appLanguage.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
-
-class PhoneNumberEdit extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage(),
-      child: Consumer<AppLanguage>(builder: (context, model, child) {
-        return MaterialApp(
-          supportedLocales: [
-              Locale('en', 'US'),
-              Locale('mm', 'MM'),
-              Locale('zh', 'CN'),
-
-            ],
-            localizationsDelegates: [
-              AppLocalizations.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate
-            ],
-            home: PhoneAuthfromFG(),
-        );
-      }),
-    );
-  }
-  
-}
 
 class PhoneAuthfromFG extends StatefulWidget {
   PhoneAuthfromFGState createState() => PhoneAuthfromFGState();
@@ -46,6 +17,7 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
   bool loginLoading = false;
   String codeno;
   String phoneNo;
+  String pageInfo;
   //static GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   final formKey = new GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
@@ -67,8 +39,6 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
               backgroundColor: Color(0xffFFFFFF),
               appBar: AppBar(
                 leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-                  UserInfo.prev=="info"?
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomTabBar())):
                   Navigator.pop(context);
                 },),
                 backgroundColor: Colors.green,
@@ -169,11 +139,12 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
             ///Call API
             SMSVerify.SMSSent(phoneNo, codeno).then((success) {
               if (success != null) {
+                pageInfo="FWG";
                 Navigator.pop(context);
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SMSVerifyMtq(this.codeno),
+                      builder: (context) => SMSVerifyMtq(this.codeno,this.pageInfo),
                     ));
               } else {
                 showDialog(

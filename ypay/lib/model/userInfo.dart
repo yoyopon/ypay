@@ -6,18 +6,32 @@ class UserInfo{
   String imageUrl;
   String msg;
   String loginWith;
+  String phone;
 
-  UserInfo({this.name,this.email,this.imageUrl,this.msg,this.loginWith});
+  //UserInfo(this.name,this.email,this.imageUrl,this.msg,this.loginWith,this.phone);
 
-  // FbData _fbData;
-  // FbData get fbData{
-  //   if(_fbData==null){
-  //     _fbData=FbData();
-  //   }
-  //   return fbData;
-  // }
+  UserInfo({this.name,this.email,this.imageUrl,this.msg,this.loginWith,this.phone});
 
   static UserInfo userInfo;
   static Locale currentLocale;
-  static String prev;
+
+  Map<String, dynamic> toMapForDb() {
+  var map = Map<String, dynamic>();
+  map['name'] = name;
+  map['email'] = email;
+  map['imageUrl'] = imageUrl;
+  map['msg'] = msg;
+  map['loginWith'] = loginWith;
+  map['phone'] = phone;
+  return map;
+}
+
+UserInfo.fromDb(Map<String, dynamic> map)
+    : name = map['name'],
+      email = map['email'],
+      imageUrl = map['imageUrl'],
+      msg = map['msg'],
+      loginWith = map['loginWith'],
+      phone = map['phone'];
+
 }

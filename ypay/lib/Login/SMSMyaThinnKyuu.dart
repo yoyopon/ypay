@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
 import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
+import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'dart:async';
@@ -11,7 +12,8 @@ import 'package:ypay/designUI/TextStyle.dart';
 
 class SMSVerifyMtq extends StatefulWidget {
   final String verifycode;
-  SMSVerifyMtq(this.verifycode) : super();
+  final String pinfo;
+  SMSVerifyMtq(this.verifycode,this.pinfo) : super();
 
   @override
   SMSVerifyMtqState createState() => SMSVerifyMtqState();
@@ -70,7 +72,7 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
         ),
         ConfirmButtom(),
         SizedBox(
-          height: 30.0,
+          height:15.0,
         ),
         KeyBoard(),
         SizedBox(
@@ -156,7 +158,9 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
             setState(() {
               loginSuccessIcon = true;
             });
+            this.widget.pinfo=="forget"?
             Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => ResetPassword())):Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => BottomTabBar()));
           } else {
             return showDialog(
@@ -175,7 +179,7 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        SMSVerifyMtq(this.widget.verifycode),
+                                        SMSVerifyMtq(this.widget.verifycode,this.widget.pinfo),
                                   ));
                             },
                           ),

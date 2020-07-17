@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/designUI/TextStyle.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -26,8 +29,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
-
+    TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: ListView(
@@ -66,7 +70,8 @@ class _SearchPageState extends State<SearchPage> {
                                     search.clear();
                                   }),
                             ),
-                            hintText: "Search",
+                            hintText: AppLocalizations.of(context).translate("search"),
+                            hintStyle: styleGrey,
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                               borderRadius:

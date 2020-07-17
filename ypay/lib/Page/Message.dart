@@ -1,12 +1,6 @@
 
 import 'package:flutter/material.dart';
-
-class Message extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MessagePage();
-  }
-}
+import 'package:ypay/Providers/AppLocalization.dart';
 
 class MessagePage extends StatefulWidget {
   @override
@@ -18,7 +12,7 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Center(child: Text("Message"),),
+        body: Center(child: Text(AppLocalizations.of(context).translate("msg")),),
       ),
     );
   }

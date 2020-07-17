@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ypay/Login/CreateAcc.dart';
-import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/Page/MyProfile.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/dbHelper/DatabaseHelper.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/dataService/userProfilePresenter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,6 +22,7 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> with UserProfileContract{
   Widget orangeSection;Widget firstBlock;Widget secondBlock;Widget thirdBlock;
   UserProfilePresenter _presenter;
+
   @override
   void initState() {
     _presenter=new UserProfilePresenter(this, context);
@@ -33,7 +35,8 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
     TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
     return SafeArea(
         child: MaterialApp(
-          home: Scaffold(
+          home:
+          Scaffold(
           body: SingleChildScrollView(
                child: Column(
                 children: <Widget>[
@@ -48,7 +51,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           children: <Widget>[
                             Container(
                               child: Image(
-                                image: UserInfo.userInfo.imageUrl==""?AssetImage('images/bulb.jpg'):NetworkImage(UserInfo.userInfo.imageUrl),
+                                image: UserInfo.userInfo.imageUrl==""||UserInfo.userInfo.imageUrl==null?AssetImage('images/bulb.jpg'):NetworkImage(UserInfo.userInfo.imageUrl),
                                 width: ScreenUtil().setWidth(250),height:ScreenUtil().setHeight(250),),),
                             Padding(padding: EdgeInsets.only(left:20.0),),
                             Container(
@@ -58,9 +61,10 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                 children: <Widget>[
                                 Text(UserInfo.userInfo.name,style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "header","none","nobold"),),
                                 SizedBox(height: ScreenUtil().setHeight(20.0),),
-                                Text("Member Level : "+"Standard",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold"),),
+                                Text(AppLocalizations.of(context).translate("member")
+                                  +"Standard",style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold"),),
                                 SizedBox(height: ScreenUtil().setHeight(10.0),),
-                                Text("My growth : "+"1860",style: style1)
+                                Text(AppLocalizations.of(context).translate("growth")+":"+"1860",style: style1)
                               ],),
                             )
                           ],
@@ -69,33 +73,33 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                       Container(
                         color: Colors.orange[500],
                         child: Padding(
-                          padding: EdgeInsets.only(top: 10,left: 20,bottom: 15,right: 20),
+                          padding: EdgeInsets.only(top: 10,left: 20,bottom: 15,right: 10),
                           child: Row(children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(left:10,right:10),
+                              padding: const EdgeInsets.only(left:10,right:7),
                               child: Column(children: <Widget>[
-                                Text("Balance",style: style1),Text("000",style: style1)
+                                Text(AppLocalizations.of(context).translate("balance"),style: style1),Text("000",style: style1)
                               ],),
                             ),
                             Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
                             Padding(
                               padding: const EdgeInsets.only(left:10,right:10),
                               child: Column(children: <Widget>[
-                                Text(" Point ",style: style1),Text("000",style: style1)
+                                Text(AppLocalizations.of(context).translate("point"),style: style1),Text("000",style: style1)
                               ],),
                             ),
                             Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
                             Padding(
                               padding: const EdgeInsets.only(left:10,right:10),
                               child: Column(children: <Widget>[
-                                Text(" Order ",style: style1),Text("000",style: style1)
+                                Text(AppLocalizations.of(context).translate("order"),style: style1),Text("000",style: style1)
                               ],),
                             ),
                             Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
                             Padding(
                               padding: const EdgeInsets.only(left:10,right:10),
                               child: Column(children: <Widget>[
-                                Text("Message",style: style1),Text("000",style: style1)
+                                Text(AppLocalizations.of(context).translate("msg"),style: style1),Text("000",style: style1)
                               ],),
                             )
                           ],),
@@ -114,7 +118,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Manage Order",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("manage"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -125,7 +129,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Close Order",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("close"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -146,7 +150,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Balance",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("balance"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -157,7 +161,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Point",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("point"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -168,7 +172,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("Message",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("msg"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -189,9 +193,11 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           padding: const EdgeInsets.only(top:0,bottom:0,left:10),
                           child: Row(
                             children: <Widget>[
-                              Text("My Profile",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("myprofile"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
+                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>MyProfile()));
+                              },)
                             ],
                           ),
                         ),
@@ -201,14 +207,13 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           child: Row(
                             children: <Widget>[
                               Text(UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?
-                                "Edit PhoneNumber":"Change Password",
+                                AppLocalizations.of(context).translate("editphone"):AppLocalizations.of(context).translate("changepass"),
                                 style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
-                                UserInfo.prev="info";
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                   UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?
-                                  PhoneNumberEdit():ResetPassword()
+                                  PhoneAuthfromFG():ChangePassword()
                                   //MyApp()
                                 ));
                               },)
@@ -222,29 +227,13 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           InkWell(
                             child: Row(
                             children: <Widget>[
-                              Text("Logout",style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Text(AppLocalizations.of(context).translate("logout"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.exit_to_app),onPressed: (){},)
                             ],
                           ),
                             onTap: (){
-                              showDialog(
-                                context: context,
-                                builder: (context){
-                                  return AlertDialog(
-                                    title: Text("Are you sure you want to log out?"),
-                                    actions: <Widget>[
-                                      FlatButton(child: Text("OK"),onPressed: (){
-                                        Navigator.of(context).pop();
-                                        logout();
-                                      },),
-                                      FlatButton(child: Text("Cancel"),onPressed: (){
-                                        Navigator.of(context).pop();
-                                      })
-                                    ],
-                                  );
-                                }
-                              );
+                              openAlertBox();
                             },
                           )
                         )
@@ -274,8 +263,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
 
   @override
   void logOutSuccess() {
-    Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+     _presenter.deleteFromDB();
   }
 
   @override
@@ -287,5 +275,108 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   @override
   void showMessage() {
   }
+
+  @override
+  void deleteSuccess() {
+    UserInfo.userInfo=null;
+    Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+  }
+
+  ///For Alert Dialog Box
+  openAlertBox() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            contentPadding: EdgeInsets.only(top: 10.0),
+            content: Container(
+              width: 300.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(
+                        Icons.power_settings_new,
+                        size: 70.0,
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                      child: Text(
+                          AppLocalizations.of(context).translate("logoutalert"))),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.5),
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            logout();
+                          },
+                          child: Text(
+                            'Logout',
+                            style: TextStyle(
+                                fontFamily: "Roboto Slab Regular",
+                                fontSize: 15.0,
+                                color: Colors.white),
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    // width: ScreenUtil().setWidth(400),
+                    // height: ScreenUtil().setHeight(60),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.5),
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                                fontFamily: "Roboto Slab Regular",
+                                fontSize: 15.0,
+                                color: Colors.black54),
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
 
 }

@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:ypay/Login/CreateAcc.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/SearchPage.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/Place.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final formKey = new GlobalKey<State>();
+  TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,8 @@ class HomePageState extends State<HomePage> {
       currentFocus.unfocus();
     }
     ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
-    return Scaffold(body: SafeArea(child: ShowList()));
+    return MaterialApp(home: SafeArea(
+      child:Scaffold (body: ShowList())));
   }
 
   ///For ShowList
@@ -165,7 +169,8 @@ class HomePageState extends State<HomePage> {
                       Icons.search,
                       color: Colors.black,
                     ),
-                    hintText: "Search",
+                    hintText: AppLocalizations.of(context).translate("search"),
+                    hintStyle: styleGrey,
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
