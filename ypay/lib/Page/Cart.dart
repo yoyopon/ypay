@@ -115,7 +115,7 @@ class _CartState extends State<CartPage> {
                                  child: InkWell(
                                    child: Padding(
                                      padding: const EdgeInsets.all(8.0),
-                                     child: Text("Delete",style: textBlack,),
+                                     child: Icon(Icons.delete,color: Colors.orange[500],),
                                    ),onTap:(){}
                                  ),
                                )

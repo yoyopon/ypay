@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/designUI/TextStyle.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -26,8 +29,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
-
+    TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: ListView(
@@ -66,7 +70,8 @@ class _SearchPageState extends State<SearchPage> {
                                     search.clear();
                                   }),
                             ),
-                            hintText: "Search",
+                            hintText: AppLocalizations.of(context).translate("search"),
+                            hintStyle: styleGrey,
                             border: InputBorder.none,
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
@@ -82,18 +87,26 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                       ),
                       Container(
+                        width: ScreenUtil().setWidth(200),
                         height: ScreenUtil().setHeight(100),
-                        child: FlatButton(
-                            textColor: Colors.grey,
-                            highlightColor: Colors.black,
-                            //splashColor: Colors.blue,
-                            color:
-                                Colors.grey[200], // <-- this breaks onPressed
-
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Cancel')),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: new BorderRadius.circular(25.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(13.5),
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                    fontFamily: "Roboto Slab Regular",
+                                    fontSize: 15.0,
+                                    color: Colors.black54),
+                              )),
+                        ),
                       )
                     ],
                   ),
@@ -139,23 +152,26 @@ class _SearchPageState extends State<SearchPage> {
         //sssssssssswidth: ScreenUtil().setWidth(105),
         height: 36,
         color: Colors.grey[200],
-        child: DropdownButton<String>(
-          value: dropdownValue,
-          icon: Icon(Icons.arrow_drop_down),
-          iconSize: 24,
-          style: TextStyle(color: Colors.black),
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-            });
-          },
-          items: <String>['All', 'One', 'Two', 'Free', 'Four']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+          child: DropdownButton<String>(
+            value: dropdownValue,
+            icon: Icon(Icons.arrow_drop_down),
+            iconSize: 24,
+            style: TextStyle(color: Colors.black),
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue;
+              });
+            },
+            items: <String>['All', 'One', 'Two', 'Free', 'Four']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
         ),
       );
 

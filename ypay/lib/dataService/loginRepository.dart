@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ypay/dbHelper/DatabaseHelper.dart';
 import 'package:ypay/model/userInfo.dart';
 
 class LoginRepostory{
@@ -18,12 +19,12 @@ class LoginRepostory{
       facebookLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
      switch (facebookLoginResult.status) {
       case FacebookLoginStatus.error:
-        fbData.email=fbData.imageUrl=fbData.name=fbData.loginWith="";
+        fbData.email=fbData.imageUrl=fbData.name=fbData.loginWith=fbData.phone="";
         fbData.msg="Login Error";
         break;
 
       case FacebookLoginStatus.cancelledByUser:
-        fbData.email=fbData.imageUrl=fbData.name=fbData.loginWith="";
+        fbData.email=fbData.imageUrl=fbData.name=fbData.loginWith=fbData.phone="";
         fbData.msg="Login Cancelled By User";
         break;
       case FacebookLoginStatus.loggedIn:
@@ -38,8 +39,11 @@ class LoginRepostory{
         fbData.imageUrl=profile['picture']['data']['url'].toString();
         fbData.msg="Login Success";
         fbData.loginWith="facebook";
+        fbData.phone="phone";
         break;
     }
+    var dbHelper = DBHelper();
+    dbHelper.saveUserInfo(fbData);
     return fbData;
   }
 
@@ -57,11 +61,14 @@ class LoginRepostory{
       info.imageUrl=_googleSignIn.currentUser.photoUrl;
       info.msg="Login Success";
       info.loginWith="google";
+      info.phone="phone";
     }catch(e){
-      info.name=info.email=info.imageUrl=info.loginWith="";
+      info.name=info.email=info.imageUrl=info.loginWith=info.phone="";
       info.msg=e.toString();
       print(e.toString());
     }
+    var dbHelper = DBHelper();
+    dbHelper.saveUserInfo(info);
     return info;
   }
 

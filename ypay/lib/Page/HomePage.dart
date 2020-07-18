@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:ypay/Login/CreateAcc.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/SearchPage.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/Place.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final formKey = new GlobalKey<State>();
+  TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,8 @@ class HomePageState extends State<HomePage> {
       currentFocus.unfocus();
     }
     ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
-    return Scaffold(body: SafeArea(child: ShowList()));
+    return MaterialApp(home: SafeArea(
+      child:Scaffold (body: ShowList())));
   }
 
   ///For ShowList
@@ -163,9 +167,10 @@ class HomePageState extends State<HomePage> {
                   decoration: InputDecoration(
                     prefixIcon: Icon(
                       Icons.search,
-                      color: Colors.black,
+                      color: Colors.grey,
                     ),
-                    hintText: "Search",
+                    hintText: AppLocalizations.of(context).translate("search"),
+                    hintStyle: styleGrey,
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -403,61 +408,103 @@ class HomePageState extends State<HomePage> {
     "https://media.onthemarket.com/properties/6191840/797152761/composite.jpg",
   ];
 
+///For Image Box With Price
   imageBoxwithprice() => Container(
         child: StaggeredGridView.countBuilder(
           shrinkWrap: true,
           physics: ScrollPhysics(),
           crossAxisCount: 4,
           itemCount: 10,
-          itemBuilder: (BuildContext context, int index) => Card(
-            child: Column(
-              children: <Widget>[
-                Image.network(images[index]),
-                Text("Baby Wipes Paper Towels Special 10 packs"),
-                Text(
-                  'Ks 7700',
-                  style: TextStyle(color: Colors.red),
+          itemBuilder: (BuildContext context, int index) => CupertinoButton(
+                      child: Container(
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Image.network(images[index]),
+                    Text("Baby Wipes Paper Towels Special 10 packs"),
+                    Text(
+                      'Ks 7700',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    Text(
+                      'Ks 8800',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          decoration: TextDecoration.lineThrough),
+                    )
+                  ],
                 ),
-                Text(
-                  'Ks 8800',
-                  style: TextStyle(
-                      color: Colors.grey,
-                      decoration: TextDecoration.lineThrough),
-                )
-              ],
+              ),
+              
             ),
+            onPressed: () {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (BuildContext context) => CupertinoAlertDialog(
+                      title: const Text('Card is clicked.'),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          child: const Text('ok'),
+                          onPressed: () {
+                            Navigator.pop(context, 'ok');
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
           ),
           staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
           mainAxisSpacing: 4.0,
           crossAxisSpacing: 4.0,
         ),
       );
-
+///For Promotion Item
   promotionitem() => Container(
         child: StaggeredGridView.countBuilder(
           shrinkWrap: true,
           physics: ScrollPhysics(),
           crossAxisCount: 4,
           itemCount: 10,
-          itemBuilder: (BuildContext context, int index) => Card(
-            child: Column(
-              children: <Widget>[
-                Row(
+          itemBuilder: (BuildContext context, int index) => CupertinoButton(
+                      child: Container(
+              child: Card(
+                child: Column(
                   children: <Widget>[
-                    Text(
-                      'High',
-                      style: TextStyle(color: Colors.red),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'High',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Commission Area',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Commission Area',
-                      style: TextStyle(color: Colors.black),
-                    ),
+                    Image.network(images[index]),
                   ],
                 ),
-                Image.network(images[index]),
-              ],
+              ),
             ),
+            onPressed: () {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (BuildContext context) => CupertinoAlertDialog(
+                      title: const Text('Card is clicked.'),
+                      actions: <Widget>[
+                        CupertinoDialogAction(
+                          child: const Text('ok'),
+                          onPressed: () {
+                            Navigator.pop(context, 'ok');
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                }
           ),
           staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
           mainAxisSpacing: 4.0,
