@@ -8,10 +8,9 @@ class UserInfo{
   String loginWith;
   String phone;
 
-  //UserInfo(this.name,this.email,this.imageUrl,this.msg,this.loginWith,this.phone);
-
   UserInfo({this.name,this.email,this.imageUrl,this.msg,this.loginWith,this.phone});
 
+  static String prevFormsgPage;
   static UserInfo userInfo;
   static Locale currentLocale;
 

@@ -7,7 +7,7 @@ import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'dart:async';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 
 class SMSVerifyMtq extends StatefulWidget {
@@ -23,8 +23,24 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
   @override
   void initState() {
     startTimer();
+    hideWidget();
     super.initState();
   }
+///For Visible Invalid Code
+  bool viewVisible = true;
+
+  void showWidget() {
+    setState(() {
+      viewVisible = true;
+    });
+  }
+
+  void hideWidget() {
+    setState(() {
+      viewVisible = false;
+    });
+  }
+
   TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
   TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
   bool loginSuccessIcon = false;
@@ -54,7 +70,7 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
       ),
     );
   }
-
+///For ShowList
   Widget ShowList() {
     return ListView(
       children: <Widget>[
@@ -64,15 +80,19 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
         ),
         CodeBox(),
         SizedBox(
-          height: 20.0,
+          height: 5.0,
         ),
-        TimerBox(),
+        invalidCode(),
         SizedBox(
-          height: 20.0,
+          height: 5.0,
+        ),
+        timerBox(),
+        SizedBox(
+          height: 6.0,
         ),
         ConfirmButtom(),
         SizedBox(
-          height:15.0,
+          height: 10.0,
         ),
         KeyBoard(),
         SizedBox(
@@ -145,6 +165,24 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
     );
   }
 
+  ///For Invalid Code
+  invalidCode() => Visibility(
+      maintainSize: true,
+      maintainAnimation: true,
+      maintainState: true,
+      visible: viewVisible,
+      child: Container(
+          width: ScreenUtil().setWidth(100),
+          height: ScreenUtil().setHeight(80),
+          //color: Colors.green,
+          child: Center(
+              child: Text('Invalid Code',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 23,
+                      fontFamily: 'EucrosiaUPC')))));
+
   ///For Confirm Buttom
   Widget ConfirmButtom() {
     return Container(
@@ -163,27 +201,7 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
                 context, MaterialPageRoute(builder: (context) => ResetPassword())):Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => BottomTabBar()));
           } else {
-            return showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                        title: Text(
-                          'Invalid Code',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('OK'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SMSVerifyMtq(this.widget.verifycode,this.widget.pinfo),
-                                  ));
-                            },
-                          ),
-                        ]));
+            return showWidget();
           }
         },
         color: Colors.green,
@@ -236,11 +254,28 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
   }
 
   ///For Timer Box
-  Widget TimerBox() {
-    return Container(
-      child: Text(
-        "$_start" + ' s',
-        style: TextStyle(color: Colors.red),
+  Widget timerBox() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(250, 0, 10, 0),
+      child: Container(
+        width: ScreenUtil().setWidth(50),
+        height: ScreenUtil().setHeight(80),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: new BorderRadius.circular(10.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              "$_start" + ' s',
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ),
       ),
     );
   }

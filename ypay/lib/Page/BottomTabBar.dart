@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Page/AccountProfile.dart';
 import 'package:ypay/Page/Cart.dart';
 import 'package:ypay/Page/Categories.dart';
@@ -28,6 +29,7 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
   void initState() {
     _presenter=new BottomBarPresenter(this, context);
     getUserInfo();
+    getStoredLocale();
     super.initState();
   }
 
@@ -35,6 +37,13 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
     _presenter.getUserData();
     setState(() {
       userLoading=true;
+    });
+  }
+
+  getStoredLocale()async{
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      UserInfo.currentLocale=prefs.getString("language_code")==null?Locale('en'):Locale(prefs.getString("language_code"));
     });
   }
 

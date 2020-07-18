@@ -4,10 +4,8 @@ import 'package:ypay/APIService/SMSVerify.dart';
 import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/SMSMyaThinnKyuu.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/TextStyle.dart';
-import 'package:ypay/model/userInfo.dart';
 
 class PhoneAuthfromFG extends StatefulWidget {
   PhoneAuthfromFGState createState() => PhoneAuthfromFGState();
@@ -104,7 +102,7 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone, color: Colors.green),
             prefixText: '09  ',
-            prefixStyle: styleGrey,
+           // prefixStyle: styleGrey,
             hintText: AppLocalizations.of(context).translate("username"),
             hintStyle: styleGreyNormal,
             focusedBorder: UnderlineInputBorder(

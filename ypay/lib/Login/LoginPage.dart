@@ -132,7 +132,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           body: Center(
             child:
             loginLoading==true?
-            SpinKitRotatingCircle(
+            SpinKitChasingDots(
               color: Colors.green,
               size: 50.0,
             ):
@@ -435,12 +435,13 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   void loginSuccess(UserInfo data) {
     if(data!=null){
       UserInfo.userInfo=data;
-      setState(() {
-        loginLoading=false;
-      });
       Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => BottomTabBar()));
     }
+    loginLoading=false;
+    setState(() {
+      
+    });
   }
 
   @override

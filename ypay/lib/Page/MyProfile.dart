@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/designUI/TextStyle.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class MyProfile extends StatefulWidget {
   @override
@@ -10,6 +13,8 @@ class MyProfile extends StatefulWidget {
 class _MyProfileState extends State<MyProfile> {
   Color gradientStart = Colors.blue[400]; //Change start gradient color here
   Color gradientEnd = Colors.orange[500]; //Change end gradient color here
+  TextStyle styleWhite=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
+  TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold");
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
@@ -17,12 +22,9 @@ class _MyProfileState extends State<MyProfile> {
       child: Scaffold(
         backgroundColor: Color(0xffFFFFFF),
         appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: Text("My Profile",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: "EucrosiaUPC",
-                  fontSize: 30)),
+          backgroundColor: Colors.orange[500],
+          title: Text(AppLocalizations.of(context).translate("myprofile"),
+              style: styleWhite),
         ),
         body: Column(
           children: <Widget>[
@@ -50,8 +52,7 @@ class _MyProfileState extends State<MyProfile> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: NetworkImage(
-                              'https://image.winudf.com/v2/image/Y29tLnN1YWRhaDA2MTEuYW5pbWVnaXJsa2F3YWlpYXBwX3NjcmVlbl8yXzE1MjM4OTA0OTRfMDI0/screen-2.jpg?fakeurl=1&type=.jpg'),
+                          image: NetworkImage(UserInfo.userInfo.imageUrl),
                           fit: BoxFit.fill),
                     ),
                   ),
@@ -70,12 +71,6 @@ class _MyProfileState extends State<MyProfile> {
             SizedBox(height: 20.0),
             phonenumber(),
             horizonaldivider(),
-            RaisedButton(
-              onPressed: () {
-                openAlertBox();
-              },
-              child: Text('Dialog'),
-            )
           ],
         ),
       ),
@@ -99,12 +94,12 @@ class _MyProfileState extends State<MyProfile> {
                 width: 20.0,
               ),
               Container(
-                  width: ScreenUtil().setWidth(200), child: Text('Username')),
+                  width: ScreenUtil().setWidth(200), child: Text(AppLocalizations.of(context).translate("fullName"),style: styleBlack,)),
               SizedBox(
                 width: ScreenUtil().setWidth(50),
               ),
               Expanded(
-                child: Text('Khin Eaindra Kyaw'),
+                child: Text(UserInfo.userInfo.name),
               )
             ],
           ),
@@ -129,12 +124,12 @@ class _MyProfileState extends State<MyProfile> {
               ),
               Container(
                   width: ScreenUtil().setWidth(200),
-                  child: Text('Email Address')),
+                  child: Text(AppLocalizations.of(context).translate("email"),style: styleBlack,)),
               SizedBox(
                 width: ScreenUtil().setWidth(50),
               ),
               Expanded(
-                child: Text('khineaindrakyaw@gmail.com'),
+                child: Text(UserInfo.userInfo.email),
               )
             ],
           ),
@@ -159,7 +154,7 @@ class _MyProfileState extends State<MyProfile> {
               ),
               Container(
                   width: ScreenUtil().setWidth(200),
-                  child: Text('Phone Number')),
+                  child: Text(AppLocalizations.of(context).translate("username"),style: styleBlack,)),
               SizedBox(
                 width: ScreenUtil().setWidth(50),
               ),
@@ -181,102 +176,6 @@ class _MyProfileState extends State<MyProfile> {
         ),
       );
 
-  ///For Alert Dialog Box
-  openAlertBox() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
-            contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-              width: 300.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(
-                        Icons.power_settings_new,
-                        size: 70.0,
-                        color: Colors.red,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                      child: Text(
-                          'Are you sure you want to logout from your account?')),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    // width: ScreenUtil().setWidth(400),
-                    // height: ScreenUtil().setHeight(60),
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(13.5),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Logout',
-                            style: TextStyle(
-                                fontFamily: "Roboto Slab Regular",
-                                fontSize: 15.0,
-                                color: Colors.white),
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    // width: ScreenUtil().setWidth(400),
-                    // height: ScreenUtil().setHeight(60),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(13.5),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                                fontFamily: "Roboto Slab Regular",
-                                fontSize: 15.0,
-                                color: Colors.black54),
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 }
 
 class CustomClipPath extends CustomClipper<Path> {

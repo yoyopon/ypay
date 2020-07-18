@@ -39,5 +39,7 @@
     "editphone":"Edit Phone Number",
     "changepass":"Change Password",
     "logout":"Logout",
-    "logoutalert":"Are you sure you want to log out?"
+    "logoutalert":"Are you sure you want to log out?",
+    "cancel":"Cancel",
+    "email":"Email Address"
 }

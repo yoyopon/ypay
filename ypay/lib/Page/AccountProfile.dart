@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/Page/Message.dart';
 import 'package:ypay/Page/MyProfile.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
-import 'package:ypay/dbHelper/DatabaseHelper.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/dataService/userProfilePresenter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,9 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> with UserProfileContract{
   Widget orangeSection;Widget firstBlock;Widget secondBlock;Widget thirdBlock;
   UserProfilePresenter _presenter;
+  TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
+  TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold");
+  bool loadingLogOut=false;
 
   @override
   void initState() {
@@ -32,10 +36,13 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
-    TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
     return SafeArea(
         child: MaterialApp(
-          home:
+          home:loadingLogOut==true?
+          SpinKitChasingDots(
+              color: Colors.blue[400],
+              size: 50.0,
+            ):
           Scaffold(
           body: SingleChildScrollView(
                child: Column(
@@ -73,36 +80,60 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                       Container(
                         color: Colors.orange[500],
                         child: Padding(
-                          padding: EdgeInsets.only(top: 10,left: 20,bottom: 15,right: 10),
-                          child: Row(children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left:10,right:7),
-                              child: Column(children: <Widget>[
-                                Text(AppLocalizations.of(context).translate("balance"),style: style1),Text("000",style: style1)
-                              ],),
-                            ),
-                            Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
-                            Padding(
-                              padding: const EdgeInsets.only(left:10,right:10),
-                              child: Column(children: <Widget>[
-                                Text(AppLocalizations.of(context).translate("point"),style: style1),Text("000",style: style1)
-                              ],),
-                            ),
-                            Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
-                            Padding(
-                              padding: const EdgeInsets.only(left:10,right:10),
-                              child: Column(children: <Widget>[
-                                Text(AppLocalizations.of(context).translate("order"),style: style1),Text("000",style: style1)
-                              ],),
-                            ),
-                            Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
-                            Padding(
-                              padding: const EdgeInsets.only(left:10,right:10),
-                              child: Column(children: <Widget>[
-                                Text(AppLocalizations.of(context).translate("msg"),style: style1),Text("000",style: style1)
-                              ],),
-                            )
-                          ],),
+                          padding: EdgeInsets.only(top: 10,left: 10,bottom: 15,right: 10),
+                          child: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Wrap(children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal:10),
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(150.0),
+                                      child: Column(children: <Widget>[
+                                        Text(AppLocalizations.of(context).translate("balance"),style: style1),Text("000",style: style1)
+                                      ],),
+                                    ),
+                                  ),
+                                  Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal:10),
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(120.0),
+                                      child: Column(children: <Widget>[
+                                        Text(AppLocalizations.of(context).translate("point"),style: style1),Text("000",style: style1)
+                                      ],),
+                                    ),
+                                  ),
+                                  Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal:10),
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(125.0),
+                                      child: Column(children: <Widget>[
+                                        Text(AppLocalizations.of(context).translate("order"),style: style1),Text("000",style: style1)
+                                      ],),
+                                    ),
+                                  ),
+                                  Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal:10),
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(150.0),
+                                      child: InkWell(
+                                        child: Column(children: <Widget>[
+                                          Text(AppLocalizations.of(context).translate("msg"),style: style1,),Text("000",style: style1)
+                                        ],),
+                                        onTap: (){
+                                          UserInfo.prevFormsgPage="acc";
+                                          Navigator.push(context,MaterialPageRoute(builder: (context)=>MessagePage()));
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -130,49 +161,6 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           child: Row(
                             children: <Widget>[
                               Text(AppLocalizations.of(context).translate("close"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
-                              Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
-                            ],
-                          ),
-                        )
-                      ],),
-                    )
-                  ],),
-                  ),
-                ),
-                Container(
-                  child: Padding(padding: EdgeInsets.only(left:10,right: 10,top: 5),
-                  child: Column(children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(border: Border.all(color:Colors.grey),borderRadius: BorderRadius.circular(5.0)),
-                      child: Column(children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top:0,bottom:0,left:10),
-                          child: Row(
-                            children: <Widget>[
-                              Text(AppLocalizations.of(context).translate("balance"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
-                              Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
-                            ],
-                          ),
-                        ),
-                        Divider(color: Colors.grey,),
-                        Padding(
-                          padding: const EdgeInsets.only(top:0,bottom:0,left:10),
-                          child: Row(
-                            children: <Widget>[
-                              Text(AppLocalizations.of(context).translate("point"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
-                              Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
-                            ],
-                          ),
-                        ),
-                        Divider(color: Colors.grey,),
-                        Padding(
-                          padding: const EdgeInsets.only(top:0,bottom:0,left:10),
-                          child: Row(
-                            children: <Widget>[
-                              Text(AppLocalizations.of(context).translate("msg"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
                               IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
                             ],
@@ -259,6 +247,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
     if(UserInfo.userInfo.loginWith=="facebook"){
       _presenter.signOutFromFacebook();
     }
+    setState(() {
+      loadingLogOut=true;
+    });
   }
 
   @override
@@ -276,11 +267,21 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   void showMessage() {
   }
 
-  @override
-  void deleteSuccess() {
-    UserInfo.userInfo=null;
+  Future<void> gotoNextPage(){
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+  }
+
+  @override
+  void deleteSuccess()async{
+   await new Future.delayed(const Duration(seconds: 3));
+    gotoNextPage().then((success){
+      setState(() {
+        loadingLogOut=false;
+      });
+      UserInfo.userInfo=null;
+      UserInfo.currentLocale=null;
+    });
   }
 
   ///For Alert Dialog Box
@@ -318,7 +319,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                   Padding(
                       padding: EdgeInsets.only(left: 30.0, right: 30.0),
                       child: Text(
-                          AppLocalizations.of(context).translate("logoutalert"))),
+                          AppLocalizations.of(context).translate("logoutalert"),style: styleBlack,)),
                   SizedBox(
                     height: 10.0,
                   ),
@@ -335,11 +336,8 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                             logout();
                           },
                           child: Text(
-                            'Logout',
-                            style: TextStyle(
-                                fontFamily: "Roboto Slab Regular",
-                                fontSize: 15.0,
-                                color: Colors.white),
+                            AppLocalizations.of(context).translate("logout"),
+                            style: style1,
                           )),
                     ),
                   ),
@@ -360,11 +358,8 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                             Navigator.pop(context);
                           },
                           child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                                fontFamily: "Roboto Slab Regular",
-                                fontSize: 15.0,
-                                color: Colors.black54),
+                             AppLocalizations.of(context).translate("cancel"),
+                            style: styleBlack,
                           )),
                     ),
                   ),
