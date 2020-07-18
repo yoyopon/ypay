@@ -58,8 +58,6 @@ class ResetPasswordState extends State<ResetPassword>{
           backgroundColor: Color(0xffFFFFFF),
           appBar: AppBar(
             leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){
-                  UserInfo.prev=="info"?
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomTabBar())):
                   Navigator.pop(context);
                 },),
             backgroundColor:Colors.green ,

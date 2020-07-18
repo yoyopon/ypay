@@ -85,6 +85,14 @@ class LoginPageState extends State<LoginPage> with LoginContract{
       return languages;
     }
 
+    Widget img=Padding(
+      padding: EdgeInsets.all(13),
+    child:  
+    styleLocale==Locale('zh')?
+    Image.asset('images/chinaRound.png',):
+    (styleLocale==Locale('mm')?Image.asset('images/mmRound.png'):Image.asset('images/usaRound.png'))
+    );
+
 
     return MaterialApp(
       navigatorKey: navigatorKey,
@@ -96,8 +104,8 @@ class LoginPageState extends State<LoginPage> with LoginContract{
             backgroundColor: Colors.white,
             actions: <Widget>[
              PopupMenuButton(
-                  icon: Icon(Icons.language,color: Colors.green,),
-                  //child: img,
+                  //icon: Icon(Icons.language,color: Colors.green,),
+                  child: img,
                    initialValue: getInitialLanguage(),
                    itemBuilder: (BuildContext context){
                      return lgnList.map((Languages lng){
@@ -124,7 +132,7 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           body: Center(
             child:
             loginLoading==true?
-            SpinKitRotatingCircle(
+            SpinKitChasingDots(
               color: Colors.green,
               size: 50.0,
             ):
@@ -427,13 +435,13 @@ class LoginPageState extends State<LoginPage> with LoginContract{
   void loginSuccess(UserInfo data) {
     if(data!=null){
       UserInfo.userInfo=data;
-      setState(() {
-        loginLoading=false;
-      });
-
       Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => BottomTabBar()));
     }
+    loginLoading=false;
+    setState(() {
+      
+    });
   }
 
   @override

@@ -31,12 +31,42 @@ class _DetailsPageState extends State<DetailsPage> {
       return result;
     }
 
+  List<Sizes> sizes=[
+    Sizes(name: "Small",color: Colors.grey),
+    Sizes(name: "Medium",color: Colors.grey),
+    Sizes(name: "Large",color: Colors.grey),
+    Sizes(name: "XL",color: Colors.grey),
+    Sizes(name: "XXL",color: Colors.grey),
+    Sizes(name: "XXXL",color: Colors.grey),];
   @override
   Widget build(BuildContext context) {
     TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
     TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"black", "header","none","");
     var provider = Provider.of<DetailsProvider>(context);
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
+
+    Widget getTextWidgets()
+    {
+      List<Widget> list = new List<Widget>();
+      for(var i = 0; i < sizes.length; i++){
+          list.add(
+            Padding(padding: const EdgeInsets.all(10.0),
+              child: Container(
+                padding: const EdgeInsets.all(7.0),
+                decoration: BoxDecoration(border: Border.all(color: sizes[i].color)),
+                child: InkWell(child:
+                  Text(sizes[i].name,style: style,),onTap: (){
+                    setState(() {
+                      sizes[i].color=Colors.orange[500];
+                    });
+                  },)
+              ),
+            )
+          );
+      }
+      return new Wrap(children: list); 
+    }
+
     return SafeArea(child: Scaffold(
         appBar: AppBar(title: Text("Details",style:TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","")),
           leading: IconButton(icon:Icon(Icons.arrow_back,color: Colors.black,),onPressed: (){Navigator.of(context).pop();},),backgroundColor: Colors.white,),
@@ -105,55 +135,8 @@ class _DetailsPageState extends State<DetailsPage> {
                     child: Text("Size",style: style,),
                   ),
                   Expanded(
-                      child: Wrap(children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                          child: InkWell(child: Text("Small",style: style,),onTap: (){},)
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                          child: InkWell(child: Text("Medium",style: style,),onTap: (){},)
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                          child: InkWell(child: Text("Large",style: style,),onTap: (){},)
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                          child: InkWell(child: Text("XL",style: style,),onTap: (){},)
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                          child: InkWell(child: Text("XXL",style: style,),onTap: (){},)
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Container(
-                          padding: const EdgeInsets.all(7.0),
-                          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-                          child: InkWell(child: Text("XXXL",style: style,),onTap: (){},)
-                        ),
-                      ),
+                      child: Wrap(children: <Widget>[ 
+                      getTextWidgets()
                     ],),
                   ),
                 ],
@@ -350,4 +333,10 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
     );
   }
+}
+
+class Sizes{
+  String name;
+  Color color;
+  Sizes({this.name,this.color});
 }

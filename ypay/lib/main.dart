@@ -2,28 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ypay/Login/LoginPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/Providers/BottomNavigationBarProvider.dart';
 import 'package:ypay/Providers/DetailsProvider.dart';
 import 'package:ypay/Providers/appLanguage.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dbHelper/DatabaseHelper.dart';
+import 'model/userInfo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
+  var dbHelper = DBHelper();
+  UserInfo info=await dbHelper.getUserInfo();
   runApp(
     //Phoenix(child: MyApp(appLanguage: appLanguage,))
-   MyApp(appLanguage: appLanguage,)
+   MyApp(appLanguage: appLanguage,userInfo:info)
   );
 }
 
 class MyApp extends StatelessWidget {
-  final AppLanguage appLanguage;
-  MyApp({this.appLanguage});
-
+  final AppLanguage appLanguage;final UserInfo userInfo;
+  MyApp({this.appLanguage,this.userInfo});
+  
   @override
   Widget build(BuildContext context) {
+    //ScreenUtil().setSp(30);
     return MultiProvider(providers: [
       ChangeNotifierProvider<AppLanguage>(create: (_) => AppLanguage(),),
       ChangeNotifierProvider<BottomNavigationBarProvider>(create: (_) => BottomNavigationBarProvider(),),
@@ -49,10 +56,8 @@ class MyApp extends StatelessWidget {
               theme: ThemeData(
                 primarySwatch: Colors.blue,
               ),
-              // home: UserInfo.prev=="accountInfo"?
-              // ( UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?PhoneAuthfromFG():ResetPassword())
-              // :LoginPage(),
-              home: LoginPage(),
+              home: //LoginPage()
+              userInfo!=null?BottomTabBar():LoginPage(),
             ),
           );
         }
