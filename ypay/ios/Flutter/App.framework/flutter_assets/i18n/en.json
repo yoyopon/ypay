@@ -40,5 +40,6 @@
     "changepass":"Change Password",
     "logout":"Logout",
     "logoutalert":"Are you sure you want to log out?",
-    "cancel":"Cancel"
+    "cancel":"Cancel",
+    "email":"Email Address"
 }

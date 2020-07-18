@@ -40,5 +40,6 @@
     "changepass":"更改密码",
     "logout":"登出",
     "logoutalert":"您确定要注销吗？",
-    "cancel":"取消"
+    "cancel":"取消",
+    "email":"电子邮件地址"
 }

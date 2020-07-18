@@ -72,7 +72,8 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
         home: Scaffold(
           //body:currentTab[provider.currentIndex],
           body: 
-          UserInfo.userInfo==null?
+          //UserInfo.userInfo==null?
+          userLoading==true?
           SpinKitRotatingCircle(
               color: Colors.green,
               size: 50.0,

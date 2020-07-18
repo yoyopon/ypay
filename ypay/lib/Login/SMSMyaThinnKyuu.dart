@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
-import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
@@ -9,6 +8,7 @@ import 'package:ypay/Providers/AppLocalization.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ypay/designUI/TextStyle.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class SMSVerifyMtq extends StatefulWidget {
   final String verifycode;
@@ -41,8 +41,8 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
     });
   }
 
-  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
-  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
+  TextStyle styleWhite=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
   bool loginSuccessIcon = false;
 
   @override

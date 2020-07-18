@@ -82,55 +82,52 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                         child: Padding(
                           padding: EdgeInsets.only(top: 10,left: 10,bottom: 15,right: 10),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
-                              Expanded(
-                                child: Wrap(children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal:10),
-                                    child: Container(
-                                      width: ScreenUtil().setWidth(150.0),
-                                      child: Column(children: <Widget>[
-                                        Text(AppLocalizations.of(context).translate("balance"),style: style1),Text("000",style: style1)
-                                      ],),
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:10),
+                                child: Container(
+                                  //width: ScreenUtil().setWidth(150.0),
+                                  child: Column(children: <Widget>[
+                                    Text(AppLocalizations.of(context).translate("balance"),style: style1),Text("000",style: style1)
+                                  ],),
+                                ),
+                              ),
+                              Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:10),
+                                child: Container(
+                                  //width: ScreenUtil().setWidth(120.0),
+                                  child: Column(children: <Widget>[
+                                    Text(AppLocalizations.of(context).translate("point"),style: style1),Text("000",style: style1)
+                                  ],),
+                                ),
+                              ),
+                              Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:10),
+                                child: Container(
+                                  //width: ScreenUtil().setWidth(125.0),
+                                  child: Column(children: <Widget>[
+                                    Text(AppLocalizations.of(context).translate("order"),style: style1),Text("000",style: style1)
+                                  ],),
+                                ),
+                              ),
+                              Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:10),
+                                child: Container(
+                                 // width: ScreenUtil().setWidth(150.0),
+                                  child: InkWell(
+                                    child: Column(children: <Widget>[
+                                      Text(AppLocalizations.of(context).translate("msg"),style: style1,),Text("000",style: style1)
+                                    ],),
+                                    onTap: (){
+                                      UserInfo.prevFormsgPage="acc";
+                                      Navigator.push(context,MaterialPageRoute(builder: (context)=>MessagePage()));
+                                    },
                                   ),
-                                  Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal:10),
-                                    child: Container(
-                                      width: ScreenUtil().setWidth(120.0),
-                                      child: Column(children: <Widget>[
-                                        Text(AppLocalizations.of(context).translate("point"),style: style1),Text("000",style: style1)
-                                      ],),
-                                    ),
-                                  ),
-                                  Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal:10),
-                                    child: Container(
-                                      width: ScreenUtil().setWidth(125.0),
-                                      child: Column(children: <Widget>[
-                                        Text(AppLocalizations.of(context).translate("order"),style: style1),Text("000",style: style1)
-                                      ],),
-                                    ),
-                                  ),
-                                  Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal:10),
-                                    child: Container(
-                                      width: ScreenUtil().setWidth(150.0),
-                                      child: InkWell(
-                                        child: Column(children: <Widget>[
-                                          Text(AppLocalizations.of(context).translate("msg"),style: style1,),Text("000",style: style1)
-                                        ],),
-                                        onTap: (){
-                                          UserInfo.prevFormsgPage="acc";
-                                          Navigator.push(context,MaterialPageRoute(builder: (context)=>MessagePage()));
-                                        },
-                                      ),
-                                    ),
-                                  )
-                                ],),
+                                ),
                               ),
                             ],
                           ),
@@ -221,6 +218,10 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                             ],
                           ),
                             onTap: (){
+                              print(UserInfo.currentLocale.toString());
+                              setState(() {
+                                
+                              });
                               openAlertBox();
                             },
                           )
@@ -238,6 +239,94 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
     );
 
 
+  }
+
+  ///For Alert Dialog Box
+  openAlertBox() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(32.0))),
+            contentPadding: EdgeInsets.only(top: 10.0),
+            content: Container(
+              width: 300.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Icon(
+                        Icons.power_settings_new,
+                        size: 70.0,
+                        color: Colors.red,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Padding(
+                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
+                      child: Text(
+                          AppLocalizations.of(context).translate("logoutalert"),
+                          style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold"),)),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.5),
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            logout();
+                          },
+                          child: Text(
+                            AppLocalizations.of(context).translate("logout"),
+                            style: TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold")
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: new BorderRadius.circular(25.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(13.5),
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                             AppLocalizations.of(context).translate("cancel"),
+                            style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   void logout(){
@@ -275,102 +364,13 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   @override
   void deleteSuccess()async{
    await new Future.delayed(const Duration(seconds: 3));
+   UserInfo.userInfo=null;
+    UserInfo.currentLocale=null;
     gotoNextPage().then((success){
       setState(() {
         loadingLogOut=false;
       });
-      UserInfo.userInfo=null;
-      UserInfo.currentLocale=null;
     });
-  }
-
-  ///For Alert Dialog Box
-  openAlertBox() {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(32.0))),
-            contentPadding: EdgeInsets.only(top: 10.0),
-            content: Container(
-              width: 300.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(
-                        Icons.power_settings_new,
-                        size: 70.0,
-                        color: Colors.red,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Padding(
-                      padding: EdgeInsets.only(left: 30.0, right: 30.0),
-                      child: Text(
-                          AppLocalizations.of(context).translate("logoutalert"),style: styleBlack,)),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(13.5),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.of(context).pop();
-                            logout();
-                          },
-                          child: Text(
-                            AppLocalizations.of(context).translate("logout"),
-                            style: style1,
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    // width: ScreenUtil().setWidth(400),
-                    // height: ScreenUtil().setHeight(60),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: new BorderRadius.circular(25.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(13.5),
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                             AppLocalizations.of(context).translate("cancel"),
-                            style: styleBlack,
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
   }
 
 

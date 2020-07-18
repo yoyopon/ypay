@@ -1,11 +1,11 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:ypay/APIService/SMSVerify.dart';
-import 'package:ypay/Login/LoginPage.dart';
 import 'package:ypay/Login/SMSMyaThinnKyuu.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/TextStyle.dart';
+import 'package:ypay/model/userInfo.dart';
 
 class PhoneAuthfromFG extends StatefulWidget {
   PhoneAuthfromFGState createState() => PhoneAuthfromFGState();
@@ -19,9 +19,9 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
   //static GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   final formKey = new GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
-  TextStyle styleWhite=TextStylePage.getStyle(LoginPageState.styleLocale,"white", "normal","none","nobold");
-  TextStyle styleGrey=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "header","none","nobold");
-  TextStyle styleGreyNormal=TextStylePage.getStyle(LoginPageState.styleLocale,"grey", "normal","none","nobold");
+  TextStyle styleWhite=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "header","none","nobold");
+  TextStyle styleGreyNormal=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
 
   @override
   void initState() {
