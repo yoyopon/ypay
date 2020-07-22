@@ -44,19 +44,18 @@ class _MyProfileState extends State<MyProfile> {
                           'https://thumbs.gfycat.com/FlawedAnimatedBlackfootedferret-size_restricted.gif'),
                       fit: BoxFit.fill),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(125, 40, 125, 23),
-                  child: Container(
-                    width: ScreenUtil().setWidth(20),
-                    height: ScreenUtil().setHeight(20),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(UserInfo.userInfo.imageUrl),
-                          fit: BoxFit.fill),
+                child: Center(
+                    child: Stack(
+                      alignment: const Alignment(0.5, 0.5),
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              'https://image.winudf.com/v2/image/Y29tLnN1YWRhaDA2MTEuYW5pbWVnaXJsa2F3YWlpYXBwX3NjcmVlbl8yXzE1MjM4OTA0OTRfMDI0/screen-2.jpg?fakeurl=1&type=.jpg'),
+                          radius: 70,
+                        ),
+                      ],
                     ),
-                  ),
-                ),
+                  )
               ),
               clipper: CustomClipPath(),
             ),

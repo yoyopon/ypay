@@ -44,6 +44,7 @@ class DBHelper {
       userInfo.loginWith=list[0]["loginWith"];
       userInfo.phone=list[0]["phone"];
       print(userInfo.name);
+      print(list.length.toString());
       return userInfo;
     }
     else{

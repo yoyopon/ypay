@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:ypay/Login/LoginPage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,22 +17,26 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
-  var dbHelper = DBHelper();
-  UserInfo info;//=await dbHelper.getUserInfo();
-  dbHelper.getUserInfo().then((res){
-    info=res;
-    print(info.name);
-  });
-  //await new Future.delayed(const Duration(seconds: 3));
+  // var dbHelper = DBHelper();
+  // UserInfo info;
+  // dbHelper.getUserInfo().then((res){
+  //   info=res;
+  //   print(info.name);
+  // });
+  // await new Future.delayed(const Duration(seconds: 5));
   runApp(
-    Phoenix(child: MyApp(appLanguage: appLanguage,userInfo: info,))
+    Phoenix(
+      // child: MyApp(appLanguage: appLanguage,userInfo: info,)
+      child: MyApp(appLanguage: appLanguage)
+     // child: SplashScreen(appLanguage: appLanguage,userInfo: info,)
+    )
    //MyApp(appLanguage: appLanguage,userInfo:info)
   );
 }
 
 class MyApp extends StatelessWidget {
-  final AppLanguage appLanguage;final UserInfo userInfo;
-  MyApp({this.appLanguage,this.userInfo});
+  final AppLanguage appLanguage;
+  MyApp({this.appLanguage});
   
   @override
   Widget build(BuildContext context) {
@@ -61,13 +67,55 @@ class MyApp extends StatelessWidget {
              primarySwatch: Colors.blue,
            ),
            home: //LoginPage()
-           userInfo!=null?BottomTabBar():LoginPage(),
+           //userInfo!=null?BottomTabBar():LoginPage(),
+           Splashscreen()
             );
         }
       ),
     );  
   }
 }
+
+class Splashscreen extends StatefulWidget {
+
+  @override
+  _SplashscreenState createState() => _SplashscreenState();
+}
+
+class _SplashscreenState extends State<Splashscreen> {
+
+  UserInfo info;
+  void getUserInfo()async{
+    var dbHelper = DBHelper();
+    dbHelper.getUserInfo().then((res){
+      info=res;
+      print(info.name);
+    });
+  }
+
+  @override
+  void initState() {
+    getUserInfo();
+    super.initState();
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => 
+            info!=null?BottomTabBar():LoginPage()
+        )));
+  }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: SpinKitFadingFour(color: Colors.orange[400],size: 70.0,),
+        ),
+      ),
+    );
+  }
+}
+
 
 
 

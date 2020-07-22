@@ -112,30 +112,32 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
               ),
-              Container(
-                color: Colors.grey[200],
-                width: ScreenUtil().setWidth(1000),
-                height: ScreenUtil().setHeight(100),
-                child: Row(
-                  children: <Widget>[
-                    normalDropDown(),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(80),
-                    ),
-                    Sales(),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(80),
-                    ),
-                    Price(),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(80),
-                    ),
-                    Filters(),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(80),
-                    ),
-                    Menu()
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.grey[200],
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      normalDropDown(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Sales(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Price(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Filters(),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(80),
+                      ),
+                      Menu()
+                    ],
+                  ),
                 ),
               ),
               InfoList(),

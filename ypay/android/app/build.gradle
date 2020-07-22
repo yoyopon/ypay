@@ -70,3 +70,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
+configurations{
+compile.exclude group:'com.google.zxing'
+}

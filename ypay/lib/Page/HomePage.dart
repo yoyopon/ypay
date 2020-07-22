@@ -9,6 +9,9 @@ import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/Place.dart';
 import 'package:ypay/model/userInfo.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
+import 'dart:async';
+import 'dart:typed_data';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,6 +21,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final formKey = new GlobalKey<State>();
   TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
+  TextEditingController _searchtext = new TextEditingController();
+  Uint8List bytes = Uint8List(0);
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +64,7 @@ class HomePageState extends State<HomePage> {
   ///For Header Slide Bar
   Widget HeaderSlide() {
     return Container(
-        width: ScreenUtil().setWidth(1100),
-        height: ScreenUtil().setHeight(260),
+        height: MediaQuery.of(context).size.height / 5,
         child: CarouselSlider(
           options: CarouselOptions(autoPlay: true),
           items: <Widget>[
@@ -77,6 +81,7 @@ class HomePageState extends State<HomePage> {
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
                       "Mindfulness",
@@ -163,6 +168,7 @@ class HomePageState extends State<HomePage> {
               Flexible(
                 flex: 4,
                 child: TextFormField(
+                  controller: _searchtext,
                   autofocus: false,
                   decoration: InputDecoration(
                     prefixIcon: Icon(
@@ -199,11 +205,29 @@ class HomePageState extends State<HomePage> {
                     Icons.filter_center_focus,
                     color: Colors.blue[400],
                   ),
-                  onPressed: () {})
+                  onPressed: () {
+                    _scan();
+                  })
             ],
           ),
         ),
       );
+
+      ///For Scan
+  Future _scan() async {
+    String barcode = await scanner.scan();
+    this._searchtext.text = barcode;
+  }
+
+  Future _scanPhoto() async {
+    String barcode = await scanner.scanPhoto();
+    this._searchtext.text = barcode;
+  }
+
+  Future _scanPath(String path) async {
+    String barcode = await scanner.scanPath(path);
+    this._searchtext.text = barcode;
+  }
 
   ///For FlatButtom
   Widget flatButtom() => Padding(
@@ -470,6 +494,7 @@ class HomePageState extends State<HomePage> {
                       child: Container(
               child: Card(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Row(
                       children: <Widget>[

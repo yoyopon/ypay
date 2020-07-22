@@ -71,28 +71,31 @@ class _CategoriesState extends State<Categories> {
         ),
     );
 
-    rigthMenuSection=Container(
-      width: ScreenUtil().setWidth(750),
-      child: Column(
-        children: <Widget>[
-          Text(categoryText==null?"":categoryText,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "header","none",""),),
-          Padding(padding: EdgeInsets.only(top:15),),
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            physics: ScrollPhysics(),
-            children: <CustomListItem>[
-              CustomListItem(
-                image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(180),),
-                title: 'High Waist thin denim shorts',
-                price: 'Ks,9800',
-                onpresses: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
-                },
-              )
-            ],
-          ),
-        ],
+    rigthMenuSection=Expanded(
+      child: Container(
+       width: ScreenUtil().setWidth(700),
+        child: 
+        Column(
+          children: <Widget>[
+            Text(categoryText==null?"":categoryText,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "header","none",""),),
+            Padding(padding: EdgeInsets.only(top:15),),
+            ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              children: <CustomListItem>[
+                CustomListItem(
+                  image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
+                  title: 'High Waist thin denim shorts',
+                  price: 'Ks,9800',
+                  onpresses: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
+                  },
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
 
@@ -103,7 +106,7 @@ class _CategoriesState extends State<Categories> {
             padding: const EdgeInsets.all(8.0),
             child: Row(children: <Widget>[
               leftMenuSection,
-              Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.grey)),
+              Container(height: ScreenUtil().setHeight(70.0),child: VerticalDivider(color: Colors.grey)),
               rigthMenuSection
             ],),
           ),
@@ -137,7 +140,7 @@ class CustomListItem extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       ClipRRect(child: image,),
-      SizedBox(width: ScreenUtil().setWidth(5),),
+      SizedBox(width: ScreenUtil().setWidth(10),),
       Flexible(
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

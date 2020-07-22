@@ -362,8 +362,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   }
 
   @override
-  void deleteSuccess()async{
-   await new Future.delayed(const Duration(seconds: 3));
+  void deleteSuccess(){
    UserInfo.userInfo=null;
     UserInfo.currentLocale=null;
     gotoNextPage().then((success){

@@ -12,6 +12,7 @@ import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/Providers/BottomNavigationBarProvider.dart';
 import 'package:ypay/Providers/appLanguage.dart';
 import 'package:ypay/dataService/bottomBarPresenter.dart';
+import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -124,16 +125,16 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
   void loadUserSuccess(UserInfo data) {
     if(data!=null){
       UserInfo.userInfo=data;
-      userLoading=false;
+      
     }
     setState(() {
-      
+      userLoading=false;
     });
   }
 
   @override
   void showError(String msg) {
-    // TODO: implement showError
+    MessageHandel.showError(context, "", msg.toString());
   }
 }
 
