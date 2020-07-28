@@ -137,6 +137,32 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
                   child: TextFormField(style: styleGrey,
                   controller: commentText,
+                  maxLines: 4,
+                    decoration: InputDecoration(
+                      hintText: ("Enter Address"),
+                      hintStyle: styleGrey,
+                      //suffixIcon: getClearButton(),
+                      suffixIcon:Visibility(
+                        visible: visible,
+                        child: IconButton(icon: Icon(Icons.clear,color: Colors.grey,),
+                          onPressed: (){commentText.clear();},
+                        ),
+                      ),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                        borderSide: new BorderSide(),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green)
+                      )
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top:6,left: 5,right: 5),
+                  child: TextFormField(style: styleGrey,
+                  controller: commentText,
+                  maxLines: 4,
                     decoration: InputDecoration(
                       hintText: ("Enter Comment"),
                       hintStyle: styleGrey,

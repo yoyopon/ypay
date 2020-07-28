@@ -42,7 +42,7 @@ class ResetPassword extends StatefulWidget{
 
 class ResetPasswordState extends State<ResetPassword>{
 
-  final formKey=new GlobalKey<FormState>();
+  final resetformKey=new GlobalKey<FormState>();
   final _password=new TextEditingController();
   final _conpassword=new TextEditingController();
   bool _obscureText=true;
@@ -67,7 +67,7 @@ class ResetPasswordState extends State<ResetPassword>{
             child:Padding(
               padding: const EdgeInsets.all(35.0),
               child: Form(
-                key: formKey,
+                key: resetformKey,
                 child: ShowList(),
               ),
             ),

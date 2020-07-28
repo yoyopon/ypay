@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ypay/dataService/loginRepository.dart';
+import 'package:ypay/dbHelper/DatabaseHelper.dart';
 import 'package:ypay/main.dart';
 import 'package:ypay/model/userInfo.dart';
 
@@ -24,7 +25,10 @@ class LoginPresenter{
         switch(result.msg){
           case "Login Error": _contract.showError(result.msg);break;
           case "Login Cancelled By User": _contract.showError(result.msg);break;
-          case "Login Success":_contract.loginSuccess(result);
+          case "Login Success":
+          var dbHelper = DBHelper();
+          dbHelper.saveUserInfo(result);
+          _contract.loginSuccess(result);break;
         }
       }
     }).catchError((e)
@@ -37,6 +41,8 @@ class LoginPresenter{
     _repostory.googleSignin().then((result){
       if(result!=null){
         if(result.msg=="Login Success"){
+          var dbHelper = DBHelper();
+          dbHelper.saveUserInfo(result);
           _contract.loginSuccess(result);
         }
         else{

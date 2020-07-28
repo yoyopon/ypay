@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/Message.dart';
 import 'package:ypay/Page/MyProfile.dart';
+import 'package:ypay/Page/ProfilePhotoChange.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/dataService/userProfilePresenter.dart';
@@ -56,10 +58,14 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                         padding: const EdgeInsets.only(left: 20,top: 20,bottom: 15),
                         child: Row(
                           children: <Widget>[
-                            Container(
+                            InkWell(
                               child: Image(
                                 image: UserInfo.userInfo.imageUrl==""||UserInfo.userInfo.imageUrl==null?AssetImage('images/bulb.jpg'):NetworkImage(UserInfo.userInfo.imageUrl),
-                                width: ScreenUtil().setWidth(250),height:ScreenUtil().setHeight(250),),),
+                                width: ScreenUtil().setWidth(250),height:ScreenUtil().setHeight(250),),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePhotoChange()));
+                              },
+                            ),
                             Padding(padding: EdgeInsets.only(left:20.0),),
                             Container(
                                 child: Column(
@@ -195,7 +201,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                 AppLocalizations.of(context).translate("editphone"):AppLocalizations.of(context).translate("changepass"),
                                 style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
+                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: ()async{
+                                var prefs = await SharedPreferences.getInstance();
+                                prefs.setString("previousPage", "AccountProfile");
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>
                                   UserInfo.userInfo.loginWith=="google"||UserInfo.userInfo.loginWith=="facebook"?
                                   PhoneAuthfromFG():ChangePassword()
@@ -356,20 +364,16 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   void showMessage() {
   }
 
-  Future<void> gotoNextPage(){
-    Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
-  }
-
   @override
-  void deleteSuccess(){
+  void deleteSuccess()async{
    UserInfo.userInfo=null;
     UserInfo.currentLocale=null;
-    gotoNextPage().then((success){
-      setState(() {
+    Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
+      await Future.delayed(Duration(seconds: 3));
+     setState(() {
         loadingLogOut=false;
       });
-    });
   }
 
 

@@ -1,19 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:numeric_keyboard/numeric_keyboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ypay/dbHelper/DatabaseHelper.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 
 class SMSVerifyMtq extends StatefulWidget {
   final String verifycode;
   final String pinfo;
-  SMSVerifyMtq(this.verifycode,this.pinfo) : super();
+  final String phoneNo;
+  SMSVerifyMtq(this.verifycode,this.pinfo,this.phoneNo) : super();
 
   @override
   SMSVerifyMtqState createState() => SMSVerifyMtqState();
@@ -198,8 +201,8 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
             });
             this.widget.pinfo=="forget"?
             Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => ResetPassword())):Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => BottomTabBar()));
+                context, MaterialPageRoute(builder: (context) => ResetPassword())):
+            goBackToHome();
           } else {
             return showWidget();
           }
@@ -232,6 +235,19 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
         ),
       ),
     );
+  }
+
+  goBackToHome()async{
+    var prefs = await SharedPreferences.getInstance();
+    String prev=prefs.getString("previousPage");
+    if(prev=="AccountProfile"){
+      //UserInfo info=new UserInfo();
+     // UserInfo.userInfo.phone=this.widget.phoneNo;
+      DBHelper dbHelper=DBHelper();
+      dbHelper.updatePhoneNumber(UserInfo.userInfo, this.widget.phoneNo);
+      Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => BottomTabBar()));
+    }
   }
 
   ///For KeyBoard
@@ -271,9 +287,9 @@ class SMSVerifyMtqState extends State<SMSVerifyMtq> {
               Navigator.pop(context);
             },
             child: Text(
-              "$_start" + ' s',
-              style: TextStyle(color: Colors.red),
-            ),
+            "$_start" + ' s',
+            style: TextStyle(color: Colors.red),
+              ),
           ),
         ),
       ),

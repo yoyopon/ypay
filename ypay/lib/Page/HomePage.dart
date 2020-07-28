@@ -2,9 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:ypay/Login/ResetPassword.dart';
-import 'package:ypay/Page/SearchPage.dart';
+import 'package:ypay/Page/searchItems.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/Place.dart';
@@ -33,7 +34,9 @@ class HomePageState extends State<HomePage> {
     }
     ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
     return MaterialApp(home: SafeArea(
-      child:Scaffold (body: ShowList())));
+      child:Scaffold (body:
+      ShowList()
+    )));
   }
 
   ///For ShowList
@@ -188,12 +191,7 @@ class HomePageState extends State<HomePage> {
                     ),
                   ),
                   onTap: () {
-                    setState(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SearchPage()));
-                    });
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => SearchItems()));
                   },
                 ),
               ),
@@ -212,7 +210,6 @@ class HomePageState extends State<HomePage> {
           ),
         ),
       );
-
       ///For Scan
   Future _scan() async {
     String barcode = await scanner.scan();
@@ -433,59 +430,61 @@ class HomePageState extends State<HomePage> {
   ];
 
 ///For Image Box With Price
-  imageBoxwithprice() => Container(
-        child: StaggeredGridView.countBuilder(
-          shrinkWrap: true,
-          physics: ScrollPhysics(),
-          crossAxisCount: 4,
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) => CupertinoButton(
-                      child: Container(
-              child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Image.network(images[index]),
-                    Text("Baby Wipes Paper Towels Special 10 packs"),
-                    Text(
-                      'Ks 7700',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    Text(
-                      'Ks 8800',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          decoration: TextDecoration.lineThrough),
-                    )
-                  ],
-                ),
+  imageBoxwithprice() => new StaggeredGridView.countBuilder(
+    shrinkWrap: true,
+    physics: ScrollPhysics(),
+    
+    crossAxisCount: 4,
+    itemCount: 10,
+    itemBuilder: (BuildContext context, int index) => CupertinoButton(
+                child: Container(
+        child: Card(
+          child: Column(
+            children: <Widget>[
+              Image.network(images[index]),
+              Text("Baby Wipes Paper Towels Special 10 packs"),
+              Text(
+                'Ks 7700',
+                style: TextStyle(color: Colors.red),
               ),
-              
-            ),
-            onPressed: () {
-                  showCupertinoDialog(
-                    context: context,
-                    builder: (BuildContext context) => CupertinoAlertDialog(
-                      title: const Text('Card is clicked.'),
-                      actions: <Widget>[
-                        CupertinoDialogAction(
-                          child: const Text('ok'),
-                          onPressed: () {
-                            Navigator.pop(context, 'ok');
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                }
+              Text(
+                'Ks 8800',
+                style: TextStyle(
+                    color: Colors.grey,
+                    decoration: TextDecoration.lineThrough),
+              )
+            ],
           ),
-          staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
         ),
-      );
+        
+      ),
+      onPressed: () {
+            showCupertinoDialog(
+              context: context,
+              builder: (BuildContext context) => CupertinoAlertDialog(
+                title: const Text('Card is clicked.'),
+                actions: <Widget>[
+                  CupertinoDialogAction(
+                    child: const Text('ok'),
+                    onPressed: () {
+                      Navigator.pop(context, 'ok');
+                    },
+                  ),
+                ],
+              ),
+            );
+          }
+    ),
+    staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
+    mainAxisSpacing: 4.0,
+    crossAxisSpacing: 4.0,
+  );
 ///For Promotion Item
   promotionitem() => Container(
+
+    
         child: StaggeredGridView.countBuilder(
+          
           shrinkWrap: true,
           physics: ScrollPhysics(),
           crossAxisCount: 4,
@@ -494,21 +493,12 @@ class HomePageState extends State<HomePage> {
                       child: Container(
               child: Card(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'High',
-                          style: TextStyle(color: Colors.red),
+                    Text(
+                          'High Commission Area',
+                          //style: TextStyle(color: Colors.red),
                         ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Commission Area',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ],
-                    ),
                     Image.network(images[index]),
                   ],
                 ),

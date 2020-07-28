@@ -102,32 +102,36 @@ class LoginPageState extends State<LoginPage> with LoginContract{
           backgroundColor: Color(0xffFFFFFF),
           appBar: AppBar(
             backgroundColor: Colors.white,
+            elevation: 0.9,
             actions: <Widget>[
-             PopupMenuButton(
-                  //icon: Icon(Icons.language,color: Colors.green,),
-                  child: img,
-                   initialValue: getInitialLanguage(),
-                   itemBuilder: (BuildContext context){
-                     return lgnList.map((Languages lng){
-                       return PopupMenuItem(
-                         value: lng,
-                         child: Row(children: <Widget>[
-                           Padding(
-                             padding: const EdgeInsets.only(right:5),
-                             child: Container(
-                               width: ScreenUtil().setWidth(100),
-                               height: ScreenUtil().setHeight(100),
-                               child: lng.flag),
-                           ),
-                           Text(lng.name,style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),)
-                         ],),
-                       );
-                     }).toList();
-                   },
-                   onSelected: (Languages newlng){
-                     popupChange(newlng);
-                   },
-                 ),
+             Visibility(
+               visible: !loginLoading,
+              child: PopupMenuButton(
+                    //icon: Icon(Icons.language,color: Colors.green,),
+                    child: img,
+                     initialValue: getInitialLanguage(),
+                     itemBuilder: (BuildContext context){
+                       return lgnList.map((Languages lng){
+                         return PopupMenuItem(
+                           value: lng,
+                           child: Row(children: <Widget>[
+                             Padding(
+                               padding: const EdgeInsets.only(right:5),
+                               child: Container(
+                                 width: ScreenUtil().setWidth(100),
+                                 height: ScreenUtil().setHeight(100),
+                                 child: lng.flag),
+                             ),
+                             Text(lng.name,style: TextStylePage.getStyle(styleLocale,"black", "normal","none","nobold"),)
+                           ],),
+                         );
+                       }).toList();
+                     },
+                     onSelected: (Languages newlng){
+                       popupChange(newlng);
+                     },
+                   ),
+             ),
           ],),
           body: Center(
             child:

@@ -87,7 +87,8 @@ class _CategoriesState extends State<Categories> {
                 CustomListItem(
                   image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
                   title: 'High Waist thin denim shorts',
-                  price: 'Ks,9800',
+                  pricetext: 'Ks',
+                  priceValue: 9800,
                   onpresses: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
                   },
@@ -120,13 +121,15 @@ class CustomListItem extends StatelessWidget {
   const CustomListItem({
     this.image,
     this.title,
-    this.price,
+    this.pricetext,
+    this.priceValue,
     this.onpresses,
   });
 
   final Image image;
   final String title;
-  final String price;
+  final String pricetext;
+  final double priceValue;
   final GestureTapCallback onpresses;
 
   @override
@@ -148,7 +151,7 @@ class CustomListItem extends StatelessWidget {
           children: <Widget>[
           Text(title,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "normal","none","nobold"),),
           SizedBox(height: ScreenUtil().setHeight(20),),
-          Text(price,style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none",""),),
+          Text(pricetext+","+priceValue.toString(),style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none",""),),
           SizedBox(height: ScreenUtil().setHeight(4),),
           Container(
             width: ScreenUtil().setWidth(250),

@@ -14,7 +14,7 @@ class TextStylePage{
       fontSize: text=="header"?ScreenUtil().setSp(60,allowFontScalingSelf: true):
         (text=="bottomtab"?ScreenUtil().setSp(25,allowFontScalingSelf: true):
         (text=="price"?ScreenUtil().setSp(80,allowFontScalingSelf: true):
-        ScreenUtil().setSp(36,allowFontScalingSelf: true))),
+        ScreenUtil().setSp(35,allowFontScalingSelf: true))),
       fontWeight: text=="header"||priceBold=="bold"?FontWeight.bold:FontWeight.normal,
       decoration: price=="oldPrice"?TextDecoration.lineThrough:TextDecoration.none,
     );

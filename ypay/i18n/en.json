@@ -41,5 +41,9 @@
     "logout":"Logout",
     "logoutalert":"Are you sure you want to log out?",
     "cancel":"Cancel",
-    "email":"Email Address"
+    "email":"Email Address",
+    "pic":"Profile Photo",
+    "changepic":"Change Profile Photo",
+    "takepic":"Take Photo",
+    "choosepic":"Choose From Gallery"
 }

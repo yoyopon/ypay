@@ -42,8 +42,6 @@ class LoginRepostory{
         fbData.phone="phone";
         break;
     }
-    var dbHelper = DBHelper();
-    dbHelper.saveUserInfo(fbData);
     return fbData;
   }
 
@@ -67,8 +65,8 @@ class LoginRepostory{
       info.msg=e.toString();
       print(e.toString());
     }
-    var dbHelper = DBHelper();
-    dbHelper.saveUserInfo(info);
+    // var dbHelper = DBHelper();
+    // dbHelper.saveUserInfo(info);
     return info;
   }
 

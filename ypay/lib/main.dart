@@ -109,7 +109,12 @@ class _SplashscreenState extends State<Splashscreen> {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: SpinKitFadingFour(color: Colors.orange[400],size: 70.0,),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+            Image(image: AssetImage('images/bulb.jpg'),height: MediaQuery.of(context).size.width*1/4,),
+            SpinKitFadingFour(color: Colors.orange[400],size: 30.0,),
+          ],)
         ),
       ),
     );

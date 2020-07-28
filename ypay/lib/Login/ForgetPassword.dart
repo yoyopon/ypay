@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ypay/APIService/SMSVerify.dart';
 import 'package:ypay/Login/LoginPage.dart';
-import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Login/SMSMyaThinnKyuu.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/TextStyle.dart';
@@ -17,7 +16,7 @@ class ForgetPassword extends StatefulWidget{
 
 class ForgetPasswordState extends State<ForgetPassword>{
 
-  final formKey=new GlobalKey<FormState>();
+  final forgetformKey=new GlobalKey<FormState>();
   ///yym
   final phoneController=new TextEditingController();
   bool loginLoading=false;
@@ -48,7 +47,7 @@ class ForgetPasswordState extends State<ForgetPassword>{
                     : Padding(
             padding: const EdgeInsets.all(30.0),
             child: Form(
-              key: formKey,
+              key: forgetformKey,
               child: ShowList(),
             ),
           ),
@@ -98,7 +97,7 @@ Widget HeaderText(){
         decoration: InputDecoration(
             prefixIcon: Icon(Icons.phone, color: Colors.green),
             prefixText: '09  ',
-            prefixStyle: styleGrey,
+            prefixStyle: styleGreyNormal,
             hintText: AppLocalizations.of(context).translate("username"),
             hintStyle: styleGreyNormal,
             focusedBorder: UnderlineInputBorder(
@@ -115,7 +114,7 @@ Widget HeaderText(){
 
   ///For phone submit function
   phoneSubmit(){
-    if (formKey.currentState.validate()) {
+    if (forgetformKey.currentState.validate()) {
             setState(() {
               loginLoading = true;
             });
@@ -139,7 +138,7 @@ Widget HeaderText(){
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SMSVerifyMtq(this.codeno,this.pageInfo),
+                      builder: (context) => SMSVerifyMtq(this.codeno,this.pageInfo,this.phoneNo),
                     ));
               } else {
                 showDialog(

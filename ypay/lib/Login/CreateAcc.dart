@@ -14,7 +14,7 @@ class CreateAcc extends StatefulWidget{
 
 class CreateAccState extends State<CreateAcc>{
 
-  static final _formKey=new GlobalKey<FormState>();
+  static final createformKey=new GlobalKey<FormState>();
   final _fullname=new TextEditingController();
   final _password=new TextEditingController();
   final _conpassword=new TextEditingController();
@@ -34,13 +34,13 @@ class CreateAccState extends State<CreateAcc>{
             title:  Text(AppLocalizations.of(context).translate("create"),
             style: styleWhite
             ),
-            leading: IconButton(icon: Icon(Icons.arrow_back_ios),onPressed: (){Navigator.of(context).pop();},),
+            leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: (){Navigator.of(context).pop();},),
           ),
           body: Center(
             child:Padding(
               padding: const EdgeInsets.all(35.0),
               child: Form(
-                key: _formKey,
+                key: createformKey,
                 child: ShowList(),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io' as io;
+import 'dart:io';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -43,13 +44,51 @@ class DBHelper {
       userInfo.msg=list[0]["msg"];
       userInfo.loginWith=list[0]["loginWith"];
       userInfo.phone=list[0]["phone"];
-      print(userInfo.name);
-      print(list.length.toString());
-      return userInfo;
+      if(userInfo.name==""||userInfo.email==""||userInfo.imageUrl==""||userInfo.msg==""||userInfo.loginWith==""||userInfo.phone==""){
+        String sql="Delete From UserInfo";
+        await dbClient.execute(sql);
+        print(list.length.toString());
+        return null;
+      }
+      else{
+        print(userInfo.name);
+        print(list.length.toString());
+        return userInfo;
+      } 
     }
     else{
       return null;
     }
+  }
+
+  Future<bool> updatePhoneNumber(UserInfo info,String phone)async{
+    try{
+      var dbClient = await db;
+      String sql="Select * from UserInfo where email='${info.email}'";
+      List<Map>  list = await dbClient.rawQuery(sql);
+      if(list.length>0){
+        int res=await dbClient.rawUpdate("update UserInfo set phone=?",['$phone']);
+          return res>0?true:false;
+      }
+    }catch(ex){
+      return null;
+    }
+
+  }
+
+  Future<bool> updatePhoto(UserInfo info,File image)async{
+    // try{
+    //   var dbClient = await db;
+    //   String sql="Select * from UserInfo where email='${info.email}'";
+    //   List<Map>  list = await dbClient.rawQuery(sql);
+    //   if(list.length>0){
+    //     int res=await dbClient.rawUpdate("update UserInfo set imageUrl=?",['$phone']);
+    //       return res>0?true:false;
+    //   }
+    // }catch(ex){
+    //   return null;
+    // }
+
   }
 
 

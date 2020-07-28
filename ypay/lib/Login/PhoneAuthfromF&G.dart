@@ -17,7 +17,7 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
   String phoneNo;
   String pageInfo;
   //static GlobalKey<FormState> formKey = new GlobalKey<FormState>();
-  final formKey = new GlobalKey<FormState>();
+  final phoneAuthformKey = new GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
   TextStyle styleWhite=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
   TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "header","none","nobold");
@@ -52,7 +52,7 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
                     : Padding(
                         padding: const EdgeInsets.all(35.0),
                         child: Form(
-                          key: formKey,
+                          key: phoneAuthformKey,
                           child: ShowList(),
                         ),
                       ),
@@ -118,7 +118,7 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
   }
 
   phoneSubmit(){
-    if (formKey.currentState.validate()) {
+    if (phoneAuthformKey.currentState.validate()) {
             setState(() {
               loginLoading = true;
             });
@@ -142,7 +142,7 @@ class PhoneAuthfromFGState extends State<PhoneAuthfromFG> {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SMSVerifyMtq(this.codeno,this.pageInfo),
+                      builder: (context) => SMSVerifyMtq(this.codeno,this.pageInfo,this.phoneNo),
                     ));
               } else {
                 showDialog(

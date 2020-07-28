@@ -33,24 +33,25 @@ class _MyProfileState extends State<MyProfile> {
                 width: MediaQuery.of(context).size.width,
                 height: ScreenUtil().setHeight(400),
                 decoration: new BoxDecoration(
-                  // gradient: new LinearGradient(
-                  //     colors: [gradientStart, gradientEnd],
-                  //     begin: const FractionalOffset(1, 0.0),
-                  //     end: const FractionalOffset(0.0, 1),
-                  //     stops: [0.0, 1.0],
-                  //     tileMode: TileMode.clamp),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          'https://thumbs.gfycat.com/FlawedAnimatedBlackfootedferret-size_restricted.gif'),
-                      fit: BoxFit.fill),
+                  gradient: new LinearGradient(
+                      colors: [gradientStart, gradientEnd],
+                      begin: const FractionalOffset(1, 0.0),
+                      end: const FractionalOffset(0.0, 1),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp),
+                  // image: DecorationImage(
+                  //     image: NetworkImage(
+                  //         'https://thumbs.gfycat.com/FlawedAnimatedBlackfootedferret-size_restricted.gif'),
+                  //     fit: BoxFit.fill),
                 ),
                 child: Center(
                     child: Stack(
                       alignment: const Alignment(0.5, 0.5),
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              'https://image.winudf.com/v2/image/Y29tLnN1YWRhaDA2MTEuYW5pbWVnaXJsa2F3YWlpYXBwX3NjcmVlbl8yXzE1MjM4OTA0OTRfMDI0/screen-2.jpg?fakeurl=1&type=.jpg'),
+                          // backgroundImage: NetworkImage(
+                          //     'https://image.winudf.com/v2/image/Y29tLnN1YWRhaDA2MTEuYW5pbWVnaXJsa2F3YWlpYXBwX3NjcmVlbl8yXzE1MjM4OTA0OTRfMDI0/screen-2.jpg?fakeurl=1&type=.jpg'),
+                          backgroundImage: NetworkImage(UserInfo.userInfo.imageUrl),
                           radius: 70,
                         ),
                       ],
@@ -158,7 +159,7 @@ class _MyProfileState extends State<MyProfile> {
                 width: ScreenUtil().setWidth(50),
               ),
               Expanded(
-                child: Text('09-111111111'),
+                child: Text(UserInfo.userInfo.phone),
               )
             ],
           ),
