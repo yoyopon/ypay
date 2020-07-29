@@ -51,7 +51,9 @@ class _MyProfileState extends State<MyProfile> {
                         CircleAvatar(
                           // backgroundImage: NetworkImage(
                           //     'https://image.winudf.com/v2/image/Y29tLnN1YWRhaDA2MTEuYW5pbWVnaXJsa2F3YWlpYXBwX3NjcmVlbl8yXzE1MjM4OTA0OTRfMDI0/screen-2.jpg?fakeurl=1&type=.jpg'),
-                          backgroundImage: NetworkImage(UserInfo.userInfo.imageUrl),
+                          backgroundImage: 
+                          UserInfo.fileImage!=null?ExactAssetImage(UserInfo.fileImage.path):
+                          NetworkImage(UserInfo.userInfo.imageUrl),
                           radius: 70,
                         ),
                       ],

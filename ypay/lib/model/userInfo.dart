@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 class UserInfo{
@@ -13,6 +14,7 @@ class UserInfo{
   static String prevFormsgPage;
   static UserInfo userInfo;
   static Locale currentLocale;
+  static File fileImage;
 
   Map<String, dynamic> toMapForDb() {
   var map = Map<String, dynamic>();

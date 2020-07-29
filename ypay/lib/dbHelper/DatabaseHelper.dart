@@ -77,17 +77,17 @@ class DBHelper {
   }
 
   Future<bool> updatePhoto(UserInfo info,File image)async{
-    // try{
-    //   var dbClient = await db;
-    //   String sql="Select * from UserInfo where email='${info.email}'";
-    //   List<Map>  list = await dbClient.rawQuery(sql);
-    //   if(list.length>0){
-    //     int res=await dbClient.rawUpdate("update UserInfo set imageUrl=?",['$phone']);
-    //       return res>0?true:false;
-    //   }
-    // }catch(ex){
-    //   return null;
-    // }
+    try{
+      var dbClient = await db;
+      String sql="Select * from UserInfo where email='${info.email}'";
+      List<Map>  list = await dbClient.rawQuery(sql);
+      if(list.length>0){
+        int res=await dbClient.rawUpdate("update UserInfo set imageUrl=?",['$image']);
+          return res>0?true:false;
+      }
+    }catch(ex){
+      return null;
+    }
 
   }
 

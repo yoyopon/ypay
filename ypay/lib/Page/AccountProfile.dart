@@ -60,7 +60,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           children: <Widget>[
                             InkWell(
                               child: Image(
-                                image: UserInfo.userInfo.imageUrl==""||UserInfo.userInfo.imageUrl==null?AssetImage('images/bulb.jpg'):NetworkImage(UserInfo.userInfo.imageUrl),
+                                image: 
+                                UserInfo.fileImage!=null?ExactAssetImage(UserInfo.fileImage.path):
+                                UserInfo.userInfo.imageUrl==""||UserInfo.userInfo.imageUrl==null?AssetImage('images/bulb.jpg'):NetworkImage(UserInfo.userInfo.imageUrl),
                                 width: ScreenUtil().setWidth(250),height:ScreenUtil().setHeight(250),),
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfilePhotoChange()));
@@ -274,7 +276,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                       Icon(
                         Icons.power_settings_new,
                         size: 70.0,
-                        color: Colors.red,
+                        color: Colors.orange[500],
                       ),
                     ],
                   ),
@@ -291,7 +293,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.orange[500],
                       borderRadius: new BorderRadius.circular(25.0),
                     ),
                     child: Padding(
@@ -365,12 +367,12 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   }
 
   @override
-  void deleteSuccess()async{
+  void deleteSuccess(){
    UserInfo.userInfo=null;
     UserInfo.currentLocale=null;
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
-      await Future.delayed(Duration(seconds: 3));
+      //await Future.delayed(Duration(seconds: 3));
      setState(() {
         loadingLogOut=false;
       });

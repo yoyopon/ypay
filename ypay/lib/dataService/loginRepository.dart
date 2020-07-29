@@ -65,8 +65,6 @@ class LoginRepostory{
       info.msg=e.toString();
       print(e.toString());
     }
-    // var dbHelper = DBHelper();
-    // dbHelper.saveUserInfo(info);
     return info;
   }
 

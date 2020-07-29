@@ -26,7 +26,6 @@ class _CartState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle headerStyle=TextStylePage.getStyle(UserInfo.currentLocale,"white", "header","none","");
     TextStyle textblue=TextStylePage.getStyle(UserInfo.currentLocale,"blue", "normal","none","");
     TextStyle textBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
     TextStyle textPrice=TextStylePage.getStyle(UserInfo.currentLocale,"red", "normal","none","");
@@ -36,7 +35,7 @@ class _CartState extends State<CartPage> {
     return MaterialApp(
       home: SafeArea(
           child: Scaffold(
-          appBar: AppBar(title: Center(child: Text("Cart",style: headerStyle,)),
+          appBar: AppBar(title: Center(child: Text("Cart",style: textWhite,)),
             actions: <Widget>[
               Icon(Icons.menu)
             ],
@@ -46,7 +45,7 @@ class _CartState extends State<CartPage> {
             child: Container(
              child: Column(
                children: <Widget>[
-                 ListView.builder(
+                 ListView.separated(
                    scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: ScrollPhysics(),
@@ -115,7 +114,7 @@ class _CartState extends State<CartPage> {
                                  child: InkWell(
                                    child: Padding(
                                      padding: const EdgeInsets.all(8.0),
-                                     child: Icon(Icons.delete,color: Colors.orange[500],),
+                                     child: Icon(Icons.delete,color: Colors.red,),
                                    ),onTap:(){}
                                  ),
                                )
@@ -126,6 +125,9 @@ class _CartState extends State<CartPage> {
                      ],);
                    },
                    itemCount: exampleList.length,
+                   separatorBuilder: (context,index){
+                     return Divider(color: Colors.grey,);
+                   },
                  ),
                 Padding(
                   padding: const EdgeInsets.only(top:20),

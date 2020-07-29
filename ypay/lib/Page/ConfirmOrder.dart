@@ -14,8 +14,8 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","");
   TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
   TextStyle styleBlue=TextStylePage.getStyle(UserInfo.currentLocale,"blue", "normal","none","");
-  TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "header","none","");
   TextStyle styleBold=TextStylePage.getStyle(UserInfo.currentLocale,"red", "normal","none","bold");
+  TextStyle styleSmall=TextStylePage.getStyle(UserInfo.currentLocale,"white", "bottomtab","none","");
   PayMentDelivery selectedValue;
   var commentText = TextEditingController();
   final formKey=new GlobalKey<FormState>();
@@ -49,12 +49,10 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
 
     return MaterialApp(home: SafeArea(child: Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Center(child: Text("Confirm Order",style: style1,)),
-      leading: InkWell(
-        child: Row(children: <Widget>[
-          Icon(Icons.arrow_back_ios,size:20,),Text("Back",style: style)
-        ],),onTap: (){Navigator.pop(context);},
-        ),
+      appBar: AppBar(title: Center(child: Text("Confirm Order",style: style,)),
+      leading: IconButton(icon:Icon(Icons.arrow_back,),onPressed: (){
+        Navigator.of(context).pop();
+      },),
         actions: <Widget>[
           Icon(Icons.menu)
         ],

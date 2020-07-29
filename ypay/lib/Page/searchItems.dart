@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:ypay/Page/Categories.dart';
 import 'package:ypay/Page/DetailsPage.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
@@ -20,8 +21,9 @@ class _SearchItemsState extends State<SearchItems> {
   String dropdownValue="All";
   List<String> dropdownItems1=["All","One","Two","Three","Four"];
   List<CustomListItem> resultLists=[];
+  List<CustomListItem> sortList=[];
   List<CustomListItem> searchResult=[];
-  
+  bool sort=false;
 
   @override
   void initState() {
@@ -32,28 +34,10 @@ class _SearchItemsState extends State<SearchItems> {
       });
     });
   }
+  TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","nobold");
 
   @override
   Widget build(BuildContext context) {
-    onpress(){
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
-    }
-    resultLists=[
-    new CustomListItem(
-      image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
-      title: 'High Waist thin denim shorts',
-      pricetext: 'Ks',
-      priceValue: 9800,
-      onpresses: onpress,
-    ),
-    new CustomListItem(
-      image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
-      title: 'Long Sleeve long dreeses For ladies',
-      pricetext: 'Ks',
-      priceValue: 8900,
-      onpresses: onpress,
-    ),
-  ];
     return MaterialApp(
       home: SafeArea(child: Scaffold(
         body: ListView(children: <Widget>[
@@ -78,11 +62,13 @@ class _SearchItemsState extends State<SearchItems> {
     return Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
             Container(
               //height: 40.0,
               width: MediaQuery.of(context).size.width*3/4,
               child: TextField(
+                autofocus: true,
                 controller: searchItemsController,
                 decoration: InputDecoration(
                   prefixIcon:Icon(Icons.search,color: Colors.grey,),
@@ -145,7 +131,7 @@ class _SearchItemsState extends State<SearchItems> {
             value: dropdownValue,
             icon: Icon(Icons.arrow_drop_down),
             iconSize: 24,
-            style: TextStyle(color: Colors.black),
+            style: style,
             onChanged: (String newValue) {
               setState(() {
                 dropdownValue = newValue;
@@ -159,18 +145,34 @@ class _SearchItemsState extends State<SearchItems> {
             }).toList(),
           ),
           Container(
-            child: InkWell(child: Text("Sale"),onTap: (){},),
+            child: InkWell(child: Text("Sale",style: style,),onTap: (){},),
           ),
           Container(
             child: Row(children: <Widget>[
-              Text("Price"),Column(children: <Widget>[
-                InkWell(child: Icon(Icons.arrow_drop_up),onTap: (){sortByMax();},),
-                InkWell(child: Icon(Icons.arrow_drop_down),onTap: (){sortByMin();},)
+              Text("Price",style: style,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                InkWell(child: Icon(Icons.arrow_drop_up),onTap: (){
+                  setState(() {
+                    sort=true;
+                  });
+                  sortByMax();},),
+                InkWell(child: Icon(Icons.arrow_drop_down),onTap: (){
+                  setState(() {
+                    sort=true;
+                  });
+                  sortByMin();},)
               ],)
             ],),
           ),
           Container(
-            child: InkWell(child: Text("Filter"),onTap: (){},),
+            child: InkWell(child: Row(
+              children: <Widget>[
+                Text("Filter",style: style,),Icon(Icons.filter_list)
+              ],
+            ),onTap: (){},),
           ),
           Container(
             child: InkWell(child: Icon(Icons.menu),onTap: (){},),
@@ -179,19 +181,21 @@ class _SearchItemsState extends State<SearchItems> {
     );
   }
 
-  sortByMax(){
+  sortByMax()async{
     resultLists.sort((a, b) => a.priceValue.compareTo(b.priceValue));
     for (var item in resultLists) {
       print(item.priceValue.toString());
     }
+    sortList=resultLists;
     setState(() {
       
     });
   }
 
-  sortByMin(){
-    resultLists.reversed.toList();
-    for (var item in resultLists) {
+  sortByMin()async{
+    resultLists.sort((a, b) => a.priceValue.compareTo(b.priceValue));
+    sortList=resultLists.reversed.toList();
+    for (var item in sortList) {
       print(item.priceValue.toString());
     }
     setState(() {
@@ -200,8 +204,51 @@ class _SearchItemsState extends State<SearchItems> {
   }
 
   Widget itemsLists(){
+    onpress(){
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
+    }
+    resultLists=[
+    new CustomListItem(
+      image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
+      title: '1 High Waist thin denim shorts',
+      pricetext: 'Ks',
+      priceValue: 9800,
+      onpresses: onpress,
+    ),
+    new CustomListItem(
+      image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
+      title: '2 Point Shoe Wore By Kendall',
+      pricetext: 'Ks',
+      priceValue: 10000,
+      onpresses: onpress,
+    ),
+    new CustomListItem(
+      image: Image(image: AssetImage('images/bulb.jpg'),height: ScreenUtil().setHeight(150),),
+      title: '3 Long Sleeve long dreeses For ladies',
+      pricetext: 'Ks',
+      priceValue: 8900,
+      onpresses: onpress,
+    ),
+  ];
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
     return 
+    sort==true?
+    ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      physics: ScrollPhysics(),
+      itemCount: sortList.length,
+      itemBuilder: (context,i){
+        return CustomListItem(
+          image: sortList[i].image,
+          title: sortList[i].title,
+          pricetext: sortList[i].pricetext,
+          priceValue: sortList[i].priceValue,
+          onpresses: sortList[i].onpresses,
+        );
+      }
+    )
+    :
     searchResult.length!=0||searchItemsController.text.isNotEmpty?
     ListView.builder(
       scrollDirection: Axis.vertical,
