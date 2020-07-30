@@ -3,9 +3,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/Page/CloseOrder.dart';
+import 'package:ypay/Page/ManageOrder.dart';
 import 'package:ypay/Page/Message.dart';
 import 'package:ypay/Page/MyProfile.dart';
 import 'package:ypay/Page/ProfilePhotoChange.dart';
+import 'package:ypay/Page/TopUpBalance.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/dataService/userProfilePresenter.dart';
@@ -42,7 +45,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
         child: MaterialApp(
           home:loadingLogOut==true?
           SpinKitChasingDots(
-              color: Colors.blue[400],
+              color: Colors.orange[500],
               size: 50.0,
             ):
           Scaffold(
@@ -156,7 +159,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                             children: <Widget>[
                               Text(AppLocalizations.of(context).translate("manage"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
+                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>ManageOrder()));
+                              },)
                             ],
                           ),
                         ),
@@ -167,7 +172,22 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                             children: <Widget>[
                               Text(AppLocalizations.of(context).translate("close"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
                               Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
-                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){},)
+                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>CloseOrder()));
+                              },)
+                            ],
+                          ),
+                        ),
+                        Divider(color: Colors.grey,),
+                        Padding(
+                          padding: const EdgeInsets.only(top:0,bottom:0,left:10),
+                          child: Row(
+                            children: <Widget>[
+                              Text(AppLocalizations.of(context).translate("recharge"),style: TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold")),
+                              Expanded(child: SizedBox(width: ScreenUtil().setWidth(50),)),
+                              IconButton(icon:Icon(Icons.keyboard_arrow_right),onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>TopUpBalance()));
+                              },)
                             ],
                           ),
                         )
@@ -373,9 +393,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
       //await Future.delayed(Duration(seconds: 3));
-     setState(() {
-        loadingLogOut=false;
-      });
+     
   }
 
 

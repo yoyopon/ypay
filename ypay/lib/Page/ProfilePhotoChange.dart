@@ -59,7 +59,7 @@ class _ProfilePhotoChangeState extends State<ProfilePhotoChange> {
       db.updatePhoto(UserInfo.userInfo, _image);
     }
     _scaffoldKey.currentState.hideCurrentSnackBar();
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomTabBar()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomTabBar()));
     setState(() {
       
     });

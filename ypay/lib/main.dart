@@ -89,7 +89,6 @@ class _SplashscreenState extends State<Splashscreen> {
     var dbHelper = DBHelper();
     dbHelper.getUserInfo().then((res){
       info=res;
-      print(info.name);
     });
   }
 
@@ -112,7 +111,7 @@ class _SplashscreenState extends State<Splashscreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-            Image(image: AssetImage('images/bulb.jpg'),height: MediaQuery.of(context).size.width*1/4,),
+            Text("YPAY",style: TextStyle(fontSize: 30,fontFamily: "Roboto Slab Regular",color: Colors.orange[500])),
             SpinKitFadingFour(color: Colors.orange[400],size: 30.0,),
           ],)
         ),

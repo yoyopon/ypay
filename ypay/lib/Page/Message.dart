@@ -32,7 +32,18 @@ class _MessagePageState extends State<MessagePage> {
       home: SafeArea(
         child: Scaffold(
           appBar: appBarWidget(),
-          body: Center(child: Text(AppLocalizations.of(context).translate("msg")),),
+          body: Center(
+            child: Text(AppLocalizations.of(context).translate("msg")),
+            // child: FlatButton(child: Text("test"),
+            //   onPressed: (){
+            //     print(UserInfo.fileImage.path);
+            //     String text=UserInfo.fileImage.path.toString();
+            //     int fIndex=text.indexOf('/');
+            //     int lIndex=text.lastIndexOf("'");
+            //     print(text.substring(fIndex,lIndex));
+            //   },
+            // ),
+          ),
         ),
       ),
     );

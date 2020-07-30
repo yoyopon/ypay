@@ -142,14 +142,16 @@ class CustomListItem extends StatelessWidget {
         child: Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      ClipRRect(child: image,),
+      InkWell(onTap: onpresses,child: ClipRRect(child: image,)),
       SizedBox(width: ScreenUtil().setWidth(10),),
       Flexible(
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-          Text(title,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "normal","none","nobold"),),
+          InkWell(
+            onTap: onpresses,
+            child: Text(title,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "normal","none","nobold"),)),
           SizedBox(height: ScreenUtil().setHeight(20),),
           Text(pricetext+","+priceValue.toString(),style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none",""),),
           SizedBox(height: ScreenUtil().setHeight(4),),
@@ -163,13 +165,6 @@ class CustomListItem extends StatelessWidget {
                 Padding(padding: EdgeInsets.only(left:5),),
                 Icon(Icons.keyboard_arrow_right)
               ],),
-             // onTap: (){
-                //  Navigator.of(context).push(MaterialPageRoute<Null>(builder: (BuildContext context) {
-                //   return new DetailsPage();
-                // }));
-                //Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
-                
-             // },
              onTap: onpresses
             ),
           )

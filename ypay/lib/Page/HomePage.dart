@@ -96,7 +96,7 @@ class HomePageState extends State<HomePage> {
                 padding: EdgeInsets.symmetric(vertical:8.0,horizontal: 10.0),
                 decoration: BoxDecoration(color: Colors.orange[500]),
                 child: InkWell(child: Text("View Detail >>",style: styleWhite,),onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
                 },),
               )
             ],),
@@ -133,7 +133,7 @@ class HomePageState extends State<HomePage> {
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(color: Colors.black45),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(50.0)),
@@ -170,23 +170,6 @@ class HomePageState extends State<HomePage> {
   //   String barcode = await scanner.scanPath(path);
   //   this._searchtext.text = barcode;
   // }
-    Widget fltbuttons(){
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Expanded(
-            child: Wrap(
-            //spacing: 10.0,
-            crossAxisAlignment: WrapCrossAlignment.start,
-            runAlignment: WrapAlignment.spaceAround,
-            alignment: WrapAlignment.spaceEvenly,
-            children: <Widget>[
-              getTextWidgets()
-          ],),
-          ),
-        ],
-      );
-    }
     List<String> keywords=["Clothing","Cosmetics","Stationaries","Shoes","Baby Wears","Steele","Electrical Devices"];
     Widget getTextWidgets()
     {
@@ -205,7 +188,15 @@ class HomePageState extends State<HomePage> {
             )
           );
       }
-      return new Wrap(children: list); 
+      return new Row(children: list); 
+    }
+    Widget fltbuttons(){
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child:Row(children: <Widget>[
+          getTextWidgets()
+        ],)
+      );
     }
 
   ///For Image Box

@@ -32,18 +32,33 @@ class _DetailsPageState extends State<DetailsPage> {
     }
 
   List<Sizes> sizes=[
-    Sizes(name: "Small",color: Colors.grey),
-    Sizes(name: "Medium",color: Colors.grey),
-    Sizes(name: "Large",color: Colors.grey),
-    Sizes(name: "XL",color: Colors.grey),
-    Sizes(name: "XXL",color: Colors.grey),
-    Sizes(name: "XXXL",color: Colors.grey),];
+    Sizes(name: "Small",color: Colors.orange[500],isSelected: true),
+    Sizes(name: "Medium",color: Colors.grey,isSelected: false),
+    Sizes(name: "Large",color: Colors.grey,isSelected: false),
+    Sizes(name: "XL",color: Colors.grey,isSelected: false),
+    Sizes(name: "XXL",color: Colors.grey,isSelected: false),
+    Sizes(name: "XXXL",color: Colors.grey,isSelected: false),];
+  List<Sizes> unSelectedSizes=[];
   @override
   Widget build(BuildContext context) {
     TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
     TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"black", "header","none","");
     var provider = Provider.of<DetailsProvider>(context);
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
+
+    void sizeSelection(Sizes sizesObj){
+      for (var item in sizes) {
+        if(item==sizesObj){
+          item.isSelected=true;
+        }
+        else{
+          item.isSelected=false;
+        }
+      }
+      setState(() {
+        
+      });
+    }
 
     Widget getTextWidgets()
     {
@@ -53,12 +68,10 @@ class _DetailsPageState extends State<DetailsPage> {
             Padding(padding: const EdgeInsets.all(10.0),
               child: Container(
                 padding: const EdgeInsets.all(7.0),
-                decoration: BoxDecoration(border: Border.all(color: sizes[i].color)),
+                decoration: BoxDecoration(border: Border.all(color: sizes[i].isSelected?Colors.orange[500]:Colors.grey)),
                 child: InkWell(child:
                   Text(sizes[i].name,style: style,),onTap: (){
-                    setState(() {
-                      sizes[i].color=Colors.orange[500];
-                    });
+                    sizeSelection(sizes[i]);
                   },)
               ),
             )
@@ -338,5 +351,6 @@ class _DetailsPageState extends State<DetailsPage> {
 class Sizes{
   String name;
   Color color;
-  Sizes({this.name,this.color});
+  bool isSelected;
+  Sizes({this.name,this.color,this.isSelected});
 }

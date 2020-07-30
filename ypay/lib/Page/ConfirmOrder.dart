@@ -20,11 +20,12 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   var commentText = TextEditingController();
   final formKey=new GlobalKey<FormState>();
   List<PayMentDelivery> deliMethods=<PayMentDelivery>[
-    PayMentDelivery(1,"Kbzpay"),
-    PayMentDelivery(2,"Ayapay"),
-    PayMentDelivery(3,"Cash on Deliver"),
+    PayMentDelivery(id:1,name:"Kbzpay"),
+    PayMentDelivery(id:2,name:"Ayapay"),
+    PayMentDelivery(id:3,name:"Cash on Deliver"),
+    PayMentDelivery(id:4,name:"Balance"),
   ];
-  bool visible=false;
+  bool visible=false;bool balanceVisible=false;
   
   @override
   void initState() {
@@ -40,12 +41,12 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   Widget build(BuildContext context) {
     ScreenUtil.init(width: 1000, height: 1334, allowFontScaling: true);
 
-    Widget getClearButton(){
-      if(!visible){
-        return null;
-      }
-      return IconButton(icon: Icon(Icons.clear,color: Colors.grey,),onPressed: (){commentText.clear();},);
-    }
+    // Widget getClearButton(){
+    //   if(!visible){
+    //     return null;
+    //   }
+    //   return IconButton(icon: Icon(Icons.clear,color: Colors.grey,),onPressed: (){commentText.clear();},);
+    // }
 
     return MaterialApp(home: SafeArea(child: Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -81,6 +82,13 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     onChanged: (PayMentDelivery value) {
                       setState(() {
                         selectedValue = value;
+                        // if(selectedValue.name.contains("Balance")){
+                        //   balanceVisible=true;
+                        // }
+                        // else{
+                        //   balanceVisible=false;
+                        // }
+                         balanceVisible=selectedValue.name.contains("Balance")?true:false;
                       });
                     },
                     style: styleBlue,
@@ -92,18 +100,21 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     }).toList()
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top:6,left: 5,right: 5),
-                  child: Container(
-                    width: ScreenUtil().setWidth(1000),
-                    decoration: BoxDecoration(
-                      border: Border.all(color:Colors.grey),borderRadius: BorderRadius.circular(10.0)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Balance(Fee0.0)"),
-                    ),
-                  )
+                Visibility(
+                  visible: balanceVisible,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top:6,left: 5,right: 5),
+                    child: Container(
+                      width: ScreenUtil().setWidth(1000),
+                      decoration: BoxDecoration(
+                        border: Border.all(color:Colors.grey),borderRadius: BorderRadius.circular(10.0)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Balance(Fee0.0)"),
+                      ),
+                    )
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
@@ -303,6 +314,6 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
 }
 
 class PayMentDelivery{
-  PayMentDelivery(this.id,this.name);
+  PayMentDelivery({this.id,this.name});
   final int id;final String name;
 }

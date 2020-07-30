@@ -35,6 +35,12 @@
     "order":"Order",
     "manage":"Manage Order",
     "close":"Close Order",
+    "recharge":"Top Up Balance",
+    "accbal":"Account Balance",
+    "curbal":"Current Balance",
+    "rechargeamt":"Recharge Amount",
+    "payments":"Payments",
+    "re":"Recharge",
     "myprofile":"My Profile",
     "editphone":"Edit Phone Number",
     "changepass":"Change Password",
@@ -45,5 +51,9 @@
     "pic":"Profile Photo",
     "changepic":"Change Profile Photo",
     "takepic":"Take Photo",
-    "choosepic":"Choose From Gallery"
+    "choosepic":"Choose From Gallery",
+    "orderNo":"Order No",
+    "orderName":"Name",
+    "action":"Action",
+    "orderdetails":"Order Details"
 }

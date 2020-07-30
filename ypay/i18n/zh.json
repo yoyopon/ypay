@@ -35,6 +35,12 @@
     "order":"命令",
     "manage":"管理订单",
     "close":"关闭订单",
+    "recharge":"充值余额",
+    "accbal":"账户余额",
+    "curbal":"当前余额",
+    "rechargeamt":"充值金额",
+    "payments":"付款方式",
+    "re":"充值",
     "myprofile":"我的简历",
     "editphone":"编辑电话号码",
     "changepass":"更改密码",
@@ -45,5 +51,9 @@
     "pic":"头像照片",
     "changepic":"更改个人资料照片",
     "takepic":"拍照",
-    "choosepic":"从图库中选择"
+    "choosepic":"从图库中选择",
+    "orderNo":"订单号",
+    "orderName":"名称",
+    "action":"行动",
+    "orderdetails":"订单详细信息"
 }

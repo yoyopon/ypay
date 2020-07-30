@@ -17,7 +17,7 @@ class _SearchItemsState extends State<SearchItems> {
   TextEditingController searchItemsController=TextEditingController();
   bool isVisible = false;
   TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "bottomtab","none","nobold");
-  TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold");
+  TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","nobold");
   String dropdownValue="All";
   List<String> dropdownItems1=["All","One","Two","Three","Four"];
   List<CustomListItem> resultLists=[];
@@ -61,12 +61,12 @@ class _SearchItemsState extends State<SearchItems> {
   Widget searchSectionHeader(){
     return Container(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
             Container(
               //height: 40.0,
-              width: MediaQuery.of(context).size.width*3/4,
+              width: MediaQuery.of(context).size.width*2.7/4,
               child: TextField(
                 autofocus: true,
                 controller: searchItemsController,
@@ -92,14 +92,12 @@ class _SearchItemsState extends State<SearchItems> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top:15,left: 10),
-              child: Container(
-                height: 20,
-                child: InkWell(
-                  child: Text(AppLocalizations.of(context).translate("cancel"),style: styleBlack,),
-                  onTap: (){Navigator.of(context).pop();},
-                ),
+            Container(
+             // height: 20,
+              width: MediaQuery.of(context).size.width*1/4,
+              child: InkWell(
+                child: Text(AppLocalizations.of(context).translate("cancel"),style: styleBlack,),
+                onTap: (){Navigator.of(context).pop();},
               ),
             )
           ],),

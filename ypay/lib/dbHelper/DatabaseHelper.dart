@@ -41,6 +41,12 @@ class DBHelper {
       userInfo.name=list[0]["name"];
       userInfo.email=list[0]["email"];
       userInfo.imageUrl=list[0]["imageUrl"];
+      if(userInfo.imageUrl.contains("file")||userInfo.imageUrl.contains("File")){
+        int fIndex=userInfo.imageUrl.indexOf('/');
+        int lIndex=userInfo.imageUrl.lastIndexOf("'");
+        String filePath=userInfo.imageUrl.substring(fIndex,lIndex);
+        UserInfo.fileImage=File(filePath);
+      }
       userInfo.msg=list[0]["msg"];
       userInfo.loginWith=list[0]["loginWith"];
       userInfo.phone=list[0]["phone"];
