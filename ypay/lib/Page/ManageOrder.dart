@@ -22,22 +22,20 @@ class _ManageOrderState extends State<ManageOrder> {
 
     List<OrderItems> orderLists=[
       new OrderItems(
-        orderNo:111111111111111,
+        orderNo:123456789012345,
         orderImage:Image(image: AssetImage('images/bulb.jpg'),height: 100),
-        name: "Blue Shirt",
+        name: "LOLOKI",
         amount: 100.0,
         orderDate: "22/10/2019",
         status: "Pending Shipping",
-        action: InkWell(child: Text("Order Details",style: styleBlue,),onTap: onpress,),
       ),
       new OrderItems(
-        orderNo:222222222222222,
+        orderNo:123456789012345,
         orderImage:Image(image: AssetImage('images/bulb.jpg'),height: 100),
-        name: "White Shirt",
+        name: "LOLOKI",
         amount: 200.0,
         orderDate: "22/07/2020",
         status: "Pending Shipping",
-        action: InkWell(child: Text("Order Details",style: styleBlue,),onTap: onpress,),
       )
     ];
     return MaterialApp(
@@ -55,19 +53,26 @@ class _ManageOrderState extends State<ManageOrder> {
                 child: Text(AppLocalizations.of(context).translate("manage"),style: styleBlack,),
               ),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(5.0),
                 child: DataTable(
-                  
+                 // dataRowHeight: MediaQuery.of(context).size.height*1/12,
                   columns: [
                     DataColumn(label: Text(AppLocalizations.of(context).translate("orderNo"),style: styleBlack,)),
                     DataColumn(label: Text(AppLocalizations.of(context).translate("orderName"),style: styleBlack,)),
                     DataColumn(label: Text(AppLocalizations.of(context).translate("action"),style: styleBlack,)),
                   ],
                   rows: orderLists.map((obj)=>
-                    DataRow(cells: <DataCell>[
-                      DataCell(Text(obj.orderNo.toString())),
-                      DataCell(Text(obj.name)),
-                      DataCell(obj.action)
+                    DataRow(
+                      cells: <DataCell>[
+                      DataCell(Container(
+                        width: MediaQuery.of(context).size.width*1/7,
+                        child: Text(obj.orderNo.toString()))),
+                      DataCell(Container(
+                        width: MediaQuery.of(context).size.width*1/7,
+                        child: Text(obj.name))),
+                      DataCell(Container(
+                        width: MediaQuery.of(context).size.width*1/7,
+                        child: Icon(Icons.view_list,color: Colors.orange[400],)),onTap: onpress)
                     ])
                   ).toList()
                 ),
@@ -87,6 +92,5 @@ class OrderItems{
   final double amount;
   final String orderDate;
   final String status;
-  final InkWell action;
-  OrderItems({this.orderNo,this.orderImage,this.name,this.amount,this.orderDate,this.status,this.action}); 
+  OrderItems({this.orderNo,this.orderImage,this.name,this.amount,this.orderDate,this.status}); 
 }

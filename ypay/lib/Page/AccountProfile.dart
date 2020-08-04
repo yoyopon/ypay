@@ -322,6 +322,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                           onTap: () {
                             Navigator.of(context).pop();
                             logout();
+                            setState(() {
+                              UserInfo.hideBottomBar=true;
+                            });
                           },
                           child: Text(
                             AppLocalizations.of(context).translate("logout"),

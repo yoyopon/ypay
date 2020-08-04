@@ -82,7 +82,9 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
           [HomePage(),Categories(),MessagePage(),Cart(),UserProfile()][provider.currentIndex],
           bottomNavigationBar: Padding(
             padding: EdgeInsets.only(bottom: 0,left: 0,right: 0,top: 8),
-            child: BottomNavigationBar(
+            child: 
+            UserInfo.hideBottomBar==false?
+            BottomNavigationBar(
               showUnselectedLabels: true,
               selectedItemColor: Color(0xff4AB055),
               unselectedItemColor: Colors.grey,
@@ -113,7 +115,7 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
                   title: new Text(AppLocalizations.of(context).translate("acc"),style: style),
                 ),
               ],
-            ),
+            ):Container()
           ),
         ),
       );

@@ -129,18 +129,43 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                     ),
                   )
                 ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
+                //   child: Container(
+                //     width: ScreenUtil().setWidth(1000),
+                //     decoration: BoxDecoration(
+                //       border: Border.all(color:Colors.grey),borderRadius: BorderRadius.circular(10.0)
+                //     ),
+                //     child: Padding(
+                //       padding: const EdgeInsets.all(15.0),
+                //       child: Text("Not Invoicing"),
+                //     ),
+                //   )
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
-                  child: Container(
-                    width: ScreenUtil().setWidth(1000),
-                    decoration: BoxDecoration(
-                      border: Border.all(color:Colors.grey),borderRadius: BorderRadius.circular(10.0)
+                  child: TextFormField(style: styleGrey,
+                  controller: commentText,
+                  maxLines: 2,
+                    decoration: InputDecoration(
+                      hintText: ("Not Invoicing"),
+                      hintStyle: styleGrey,
+                      //suffixIcon: getClearButton(),
+                      suffixIcon:Visibility(
+                        visible: visible,
+                        child: IconButton(icon: Icon(Icons.clear,color: Colors.grey,),
+                          onPressed: (){commentText.clear();},
+                        ),
+                      ),
+                      border: new OutlineInputBorder(
+                        borderRadius: new BorderRadius.circular(10.0),
+                        borderSide: new BorderSide(),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.green)
+                      )
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Not Invoicing"),
-                    ),
-                  )
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
@@ -171,7 +196,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                   padding: const EdgeInsets.only(top:6,left: 5,right: 5),
                   child: TextFormField(style: styleGrey,
                   controller: commentText,
-                  maxLines: 4,
+                  //maxLines: 4,
                     decoration: InputDecoration(
                       hintText: ("Enter Comment"),
                       hintStyle: styleGrey,

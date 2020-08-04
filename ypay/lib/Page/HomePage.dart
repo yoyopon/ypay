@@ -34,7 +34,8 @@ class HomePageState extends State<HomePage> {
     if (!currentFocus.hasPrimaryFocus) {
       currentFocus.unfocus();
     }
-    ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
+    //ScreenUtil.init(width: 750, height: 1334, allowFontScaling: false);
+    ScreenUtil.init(width: 1100, height: 1334, allowFontScaling: true);
     return MaterialApp(home: SafeArea(
       child:Scaffold (body:
       ShowList()
@@ -152,6 +153,7 @@ class HomePageState extends State<HomePage> {
                   ),
                   onPressed: () {
                     _scan();
+                   //Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailsPage()));
                   })
             ],
           ),

@@ -12,6 +12,7 @@ class CloseOrder extends StatefulWidget {
 class _CloseOrderState extends State<CloseOrder> {
   TextStyle styleWhite=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","");
   TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
+  
   @override
   Widget build(BuildContext context) {
 
@@ -19,20 +20,18 @@ class _CloseOrderState extends State<CloseOrder> {
       new OrderItems(
         orderNo:111111111111111,
         orderImage:Image(image: AssetImage('images/bulb.jpg'),height: 100),
-        name: "Blue Shirt",
+        name: "LOLOKI",
         amount: 100.0,
         orderDate: "22/10/2019",
         status: "Pending Shipping",
-        action: InkWell(child: Icon(Icons.delete,color: Colors.red,)),
       ),
       new OrderItems(
         orderNo:222222222222222,
         orderImage:Image(image: AssetImage('images/bulb.jpg'),height: 100),
-        name: "White Shirt",
+        name: "LOLOKI",
         amount: 200.0,
         orderDate: "22/07/2020",
         status: "Pending Shipping",
-        action: InkWell(child: Icon(Icons.delete,color: Colors.red,)),
       )
     ];
     
@@ -50,7 +49,7 @@ class _CloseOrderState extends State<CloseOrder> {
                 child: Text(AppLocalizations.of(context).translate("close"),style: styleBlack,),
               ),
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: EdgeInsets.all(5.0),
                 child: DataTable(
                   
                   columns: [
@@ -60,9 +59,17 @@ class _CloseOrderState extends State<CloseOrder> {
                   ],
                   rows: orderLists.map((obj)=>
                     DataRow(cells: <DataCell>[
-                      DataCell(Text(obj.orderNo.toString())),
-                      DataCell(Text(obj.name)),
-                      DataCell(obj.action)
+                      DataCell(Container(
+                        width: MediaQuery.of(context).size.width*1/7,
+                        child: Text(obj.orderNo.toString()))),
+                      DataCell(Container(
+                        width: MediaQuery.of(context).size.width*1/7,
+                        child: Text(obj.name))),
+                      DataCell(Container(
+                        width: MediaQuery.of(context).size.width*1/7,
+                        child: Icon(Icons.delete,color: Colors.red,)),onTap: (){
+                           
+                        })
                     ])
                   ).toList()
                 ),

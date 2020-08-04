@@ -94,6 +94,7 @@ class _SplashscreenState extends State<Splashscreen> {
 
   @override
   void initState() {
+    UserInfo.hideBottomBar=false;
     getUserInfo();
     super.initState();
     Timer(

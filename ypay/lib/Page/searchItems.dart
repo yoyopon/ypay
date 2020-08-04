@@ -16,8 +16,8 @@ class _SearchItemsState extends State<SearchItems> {
 
   TextEditingController searchItemsController=TextEditingController();
   bool isVisible = false;
-  TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "bottomtab","none","nobold");
-  TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "bottomtab","none","nobold");
+  TextStyle styleGrey=TextStylePage.getStyle(UserInfo.currentLocale,"grey", "normal","none","nobold");
+  TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold");
   String dropdownValue="All";
   List<String> dropdownItems1=["All","One","Two","Three","Four"];
   List<CustomListItem> resultLists=[];
@@ -92,13 +92,13 @@ class _SearchItemsState extends State<SearchItems> {
                 },
               ),
             ),
-            Container(
-             // height: 20,
-              width: MediaQuery.of(context).size.width*1/4,
-              child: InkWell(
-                child: Text(AppLocalizations.of(context).translate("cancel"),style: styleBlack,),
-                onTap: (){Navigator.of(context).pop();},
+            InkWell(
+              child: Container(
+               padding: EdgeInsets.symmetric(vertical:10),
+                width: MediaQuery.of(context).size.width*1/4,
+                child: Center(child: Text(AppLocalizations.of(context).translate("cancel"),style: styleBlack,)),
               ),
+              onTap: (){Navigator.pop(context);},
             )
           ],),
         );
