@@ -153,10 +153,13 @@ class CustomListItem extends StatelessWidget {
             onTap: onpresses,
             child: Text(title,style: TextStylePage.getStyle(UserInfo.currentLocale, "black", "normal","none","nobold"),)),
           SizedBox(height: ScreenUtil().setHeight(20),),
-          Text(pricetext+","+priceValue.toString(),style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none",""),),
+          Container(
+            width: MediaQuery.of(context).size.width*1/4,
+            child: Text(pricetext+","+priceValue.toString(),style: TextStylePage.getStyle(UserInfo.currentLocale, "red", "normal","none",""),)),
           SizedBox(height: ScreenUtil().setHeight(4),),
           Container(
-            width: ScreenUtil().setWidth(250),
+           // width: ScreenUtil().setWidth(250),
+           width: MediaQuery.of(context).size.width*1/4,
             child: InkWell(
                 child: Row(children: <Widget>[
                 Icon(Icons.view_list),

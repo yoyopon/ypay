@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
 import 'package:ypay/Page/CloseOrder.dart';
+import 'package:ypay/Page/ConfirmOrder.dart';
 import 'package:ypay/Page/ManageOrder.dart';
 import 'package:ypay/Page/Message.dart';
 import 'package:ypay/Page/MyProfile.dart';
@@ -393,6 +394,7 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   void deleteSuccess(){
    UserInfo.userInfo=null;
     UserInfo.currentLocale=null;
+    AddressCheckBoxList.addressCheckBoxList=null;
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
       //await Future.delayed(Duration(seconds: 3));

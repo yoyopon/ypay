@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 
@@ -137,7 +138,9 @@ class _ConfirmPayMentState extends State<ConfirmPayMent> {
                     padding: const EdgeInsets.only(left: 10,right: 10,top:5,bottom:5),
                     child: Text("Confirm Payment",style: style,),
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BottomTabBar()));
+                  },
                 ),
               )
             ],

@@ -40,32 +40,60 @@ class _OrderDetailsState extends State<OrderDetails> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical:20,horizontal: 5),
                 child: Container(
-                  decoration: BoxDecoration(border: Border.all(color:Colors.transparent)),
+                  decoration: BoxDecoration(border: Border.all(color:Colors.transparent),
+                    color: Colors.grey  
+                  ),
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     children: <Widget>[
+                    CustomPaint(
+                      painter: BorderPainter(),
+                      child: ClipPath(
+                        clipper: CustomClipPath(),
+                        child: Container(
+                          color: Colors.green,
+                          padding: const EdgeInsets.symmetric(vertical:10),
+                          width: MediaQuery.of(context).size.width*0.9/5,
+                          child: Center(child: Text(AppLocalizations.of(context).translate("order1"),style: styleWhite,)),),
+                      ),
+                    ),
+                    //Container(child: Icon(Icons.arrow_forward_ios),),
+                    CustomPaint(
+                      painter: BorderPainter(),
+                      child: ClipPath(
+                        clipper: CustomClipPath(),
+                        child: Container(
+                          color: status=="Pay Complete"||status=="Pending Shipping"||status=="Complete"?Colors.green:Colors.grey,
+                          padding: const EdgeInsets.symmetric(vertical:10),
+                          width: MediaQuery.of(context).size.width*0.9/5,
+                          child: Center(child: Text(AppLocalizations.of(context).translate("pay"),style: styleWhite,)),),
+                      ),
+                    ),
+                    CustomPaint(
+                      painter: BorderPainter(),
+                      child: ClipPath(
+                        child: Container(
+                          color: status=="Pay Complete"||status=="Pending Shipping"||status=="Complete"?Colors.green:Colors.grey,
+                          padding: const EdgeInsets.symmetric(vertical:10),
+                          width: MediaQuery.of(context).size.width*0.9/5,
+                          child: Center(child: Text(AppLocalizations.of(context).translate("confirm1"),style: styleWhite,))),
+                          clipper: CustomClipPath(),
+                      ),
+                    ),
+                    CustomPaint(
+                      painter: BorderPainter(),
+                      child: ClipPath(
+                        clipper: CustomClipPath(),
+                        child: Container(
+                          color: status=="Complete"?Colors.green: Colors.grey,
+                          padding: const EdgeInsets.symmetric(vertical:10),
+                          width: MediaQuery.of(context).size.width*1.015/5,
+                          child: Center(child: Text(AppLocalizations.of(context).translate("delivery"),style: styleWhite,)),),
+                      ),
+                    ),
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical:10),color: Colors.green,
-                      width: MediaQuery.of(context).size.width*0.9/5,
-                      child: Center(child: Text(AppLocalizations.of(context).translate("order1"),style: styleWhite,)),),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical:10),
-                      color: status=="Pay Complete"||status=="Pending Shipping"||status=="Complete"?Colors.green:Colors.grey,
-                      width: MediaQuery.of(context).size.width*0.9/5,
-                      child: Center(child: Text(AppLocalizations.of(context).translate("pay"),style: styleWhite,)),),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical:10),
-                      color: status=="Pay Complete"||status=="Pending Shipping"||status=="Complete"?Colors.green:Colors.grey,
-                      width: MediaQuery.of(context).size.width*0.9/5,
-                      child: Center(child: Text(AppLocalizations.of(context).translate("confirm1"),style: styleWhite,))),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical:10),
                       color: status=="Complete"?Colors.green: Colors.grey,
-                      width: MediaQuery.of(context).size.width*1.015/5,
-                      child: Center(child: Text(AppLocalizations.of(context).translate("delivery"),style: styleWhite,)),),
-                    Container(
                       padding: const EdgeInsets.symmetric(vertical:10),
-                      color: status=="Complete"? Colors.green:Colors.grey,
                       width: MediaQuery.of(context).size.width*1/5,
                       child: Center(child: Text(AppLocalizations.of(context).translate("complete"),style: styleWhite,)),),
                   ],)
@@ -318,10 +346,82 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],),
                   ),),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*1/7,)
+              //SizedBox(height: MediaQuery.of(context).size.height*1/7,),
+              Container(
+                width: 100,height: 50,
+                color: Colors.grey,
+                child: ClipPath(
+                  clipper: CustomClipPath1(),
+                  child: Container(color: Colors.green,),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height*1/7,),
           ],),
         ),
       ),),
     );
   }
+}
+
+class CustomClipPath1 extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+  
+    // path.lineTo(size.width*1/3, size.height/2);
+    // path.lineTo(size.width*1/3, size.height);
+    // path.lineTo(size.width*2/3, 0);
+    // path.moveTo(size.width*2/3, 0);
+    // path.lineTo(size.width*2/3, size.height);
+    // path.lineTo(size.width, size.height/2);
+    path.lineTo(0, size.height/2);
+    
+    path.close();
+
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  var radius=40.0;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    // path.moveTo(size.width/2, 0);
+    // path.lineTo(size.width/2, size.height);
+    // path.lineTo(size.width, size.height/2);
+    // path.close();
+
+    path.addRect(Rect.fromLTRB(0, size.height, size.width*2/3, 0));
+    path.moveTo(size.width*2/3, 0);
+    path.lineTo(size.width*2/3, size.height);
+    path.lineTo(size.width, size.height/2);
+    path.close();
+
+    return path;
+  }
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class BorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..color = Colors.white;
+    Path path = Path();
+    path.addRect(Rect.fromLTRB(0, size.height, size.width*2/3, 0));
+    path.moveTo(size.width*2/3, 0);
+    path.lineTo(size.width*2/3, size.height);
+    path.lineTo(size.width, size.height/2);
+    path.close();
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

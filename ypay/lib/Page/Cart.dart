@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,12 +19,22 @@ class CartPage extends StatefulWidget {
 
 class _CartState extends State<CartPage> {
 
-  static bool isSelected=false;static bool isChecked=false;
+  
+  int selectedItem=0;
+  
 
-  List<ExampleList> exampleList=[
-    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelected,1),
-    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelected,3),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    getSelectedItems();
+  }
+
+  getSelectedItems()async{
+    selectedItem=0;
+    for (var item in ExampleList.exampleList) {
+      selectedItem+=item.currentIndex;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,25 +64,26 @@ class _CartState extends State<CartPage> {
                    itemBuilder: (context,i){
                      return Row(children: <Widget>[
                        Checkbox(
-                         value: exampleList[i].isSelected,
+                         value: ExampleList.exampleList[i].isSelected,
                          onChanged: (bool value) {
                          setState(() {
-                           exampleList[i].isSelected=value;
+                           ExampleList.exampleList[i].isSelected=value;
                          });
                        },),
-                       Container(width: ScreenUtil().setWidth(200),height: ScreenUtil().setHeight(200),child: exampleList[i].image,),
+                       Container(width: ScreenUtil().setWidth(200),height: ScreenUtil().setHeight(200),
+                        child: ExampleList.exampleList[i].image,),
                        Padding(
                          padding: const EdgeInsets.only(left:8.0),
                          child: Column(
                            crossAxisAlignment: CrossAxisAlignment.start,
                            children: <Widget>[
-                           Text(exampleList[i].title,style: textblue,),
+                           Text(ExampleList.exampleList[i].title,style: textblue,),
                            SizedBox(height: ScreenUtil().setHeight(50),),
                            Row(
                              children: <Widget>[
                                Padding(
                                  padding: const EdgeInsets.only(right:10.0),
-                                 child: Text(exampleList[i].price.toString(),style: textPrice,),
+                                 child: Text(ExampleList.exampleList[i].price.toString(),style: textPrice,),
                                ),
                                Padding(
                                  padding: const EdgeInsets.only(left:20.0),
@@ -82,7 +95,9 @@ class _CartState extends State<CartPage> {
                                          child: Text("-",style: textBlack,),
                                        ),onTap: (){
                                          setState(() {
-                                           exampleList[i].currentIndex--;
+                                           ExampleList.exampleList[i].currentIndex--;
+                                           if(ExampleList.exampleList[i].currentIndex<=0){ExampleList.exampleList[i].currentIndex=1;}
+                                           getSelectedItems();
                                          });
                                        },),
                                      ),
@@ -91,7 +106,7 @@ class _CartState extends State<CartPage> {
                                        child: InkWell(child: Padding(
                                          padding: const EdgeInsets.only(left:8,right:8,top:3,bottom:3),
                                          child: Text(
-                                         exampleList[i].currentIndex.toString(),
+                                         ExampleList.exampleList[i].currentIndex.toString(),
                                          style: textBlack,),
                                        ),onTap: (){
                                        },),
@@ -103,7 +118,9 @@ class _CartState extends State<CartPage> {
                                          child: Text("+",style: textBlack,),
                                        ),onTap: (){
                                          setState(() {
-                                           exampleList[i].currentIndex++;
+                                           ExampleList.exampleList[i].currentIndex++;
+                                           if(ExampleList.exampleList[i].currentIndex<=0){ExampleList.exampleList[i].currentIndex=1;}
+                                           getSelectedItems();
                                          });
                                        },),
                                      ),
@@ -124,7 +141,7 @@ class _CartState extends State<CartPage> {
                        )
                      ],);
                    },
-                   itemCount: exampleList.length,
+                   itemCount: ExampleList.exampleList.length,
                    separatorBuilder: (context,index){
                      return Divider(color: Colors.grey,);
                    },
@@ -146,7 +163,7 @@ class _CartState extends State<CartPage> {
                         child: Row(
                           children: <Widget>[
                             Text("Your selected items:",style: textBlack,),
-                            Text("0",style: styleBold,),
+                            Text(selectedItem.toString(),style: styleBold,),
                             Text("items",style: textBlack,),
                             SizedBox(width: ScreenUtil().setWidth(50),),
                             Text("Total Amount:",style: textBlack,),
@@ -182,11 +199,4 @@ class _CartState extends State<CartPage> {
   }
 }
 
-class ExampleList{
-  ExampleList(this.image,this.title,this.price,this.isSelected,this.currentIndex);
-  final Image image;
-  final String title;
-  final double price;
-  bool isSelected;
-  int currentIndex;
-}
+

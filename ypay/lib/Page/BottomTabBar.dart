@@ -25,13 +25,15 @@ class BottomTabBar extends StatefulWidget {
 class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
    bool userLoading=false;
    BottomBarPresenter _presenter;
-
+   int cartItemCount=0;
+   
   @override
   void initState() {
     _presenter=new BottomBarPresenter(this, context);
     getUserInfo();
     getStoredLocale();
     super.initState();
+    getItemCount();
   }
 
   getUserInfo(){
@@ -45,6 +47,16 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
     var prefs = await SharedPreferences.getInstance();
     setState(() {
       UserInfo.currentLocale=prefs.getString("language_code")==null?Locale('en'):Locale(prefs.getString("language_code"));
+    });
+  }
+
+  getItemCount()async{
+    cartItemCount=0;
+    for (var i = 0; i < ExampleList.exampleList.length; i++) {
+      cartItemCount+=ExampleList.exampleList[i].currentIndex;
+    }
+    setState(() {
+      
     });
   }
 
@@ -108,7 +120,7 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.shopping_cart,),
-                  title: Text(AppLocalizations.of(context).translate("cart"),style: style),
+                  title: Text(AppLocalizations.of(context).translate("cart")+"(${cartItemCount.toString()})",style: style),
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.person,),
@@ -138,5 +150,20 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
   void showError(String msg) {
     MessageHandel.showError(context, "", msg.toString());
   }
+}
+
+class ExampleList{
+  ExampleList(this.image,this.title,this.price,this.isSelected,this.currentIndex);
+  final Image image;
+  final String title;
+  final double price;
+  bool isSelected;
+  int currentIndex;
+
+  static bool isSelectedField=true;
+  static List<ExampleList> exampleList=[
+    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelectedField,1),
+    new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelectedField,3),
+  ];
 }
 

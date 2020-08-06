@@ -113,7 +113,7 @@ class _SearchItemsState extends State<SearchItems> {
       return;
     }else{
       resultLists.forEach((item){
-        if(item.title.contains(text)){
+        if(item.title.contains(text)||item.title.toLowerCase().contains(text.toLowerCase())||item.title.toUpperCase().contains(text.toUpperCase())){
           searchResult.add(item);
         }
       });
@@ -129,7 +129,7 @@ class _SearchItemsState extends State<SearchItems> {
             value: dropdownValue,
             icon: Icon(Icons.arrow_drop_down),
             iconSize: 24,
-            style: style,
+            style: styleBlack,
             onChanged: (String newValue) {
               setState(() {
                 dropdownValue = newValue;
@@ -143,11 +143,11 @@ class _SearchItemsState extends State<SearchItems> {
             }).toList(),
           ),
           Container(
-            child: InkWell(child: Text("Sale",style: style,),onTap: (){},),
+            child: InkWell(child: Text("Sale",style: styleBlack,),onTap: (){},),
           ),
           Container(
             child: Row(children: <Widget>[
-              Text("Price",style: style,),
+              Text("Price",style: styleBlack,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,7 +168,7 @@ class _SearchItemsState extends State<SearchItems> {
           Container(
             child: InkWell(child: Row(
               children: <Widget>[
-                Text("Filter",style: style,),Icon(Icons.filter_list)
+                Text("Filter",style: styleBlack,),Icon(Icons.filter_list)
               ],
             ),onTap: (){},),
           ),

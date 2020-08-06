@@ -87,14 +87,14 @@ class _MyProfileState extends State<MyProfile> {
           height: ScreenUtil().setHeight(70),
           child: Row(
             children: <Widget>[
-              Icon(
-                Icons.account_circle,
-                size: 30,
-                color: Colors.green,
-              ),
-              SizedBox(
-                width: 20.0,
-              ),
+              // Icon(
+              //   Icons.account_circle,
+              //   size: 30,
+              //   color: Colors.green,
+              // ),
+              // SizedBox(
+              //   width: 20.0,
+              // ),
               Container(
                   width: ScreenUtil().setWidth(200), child: Text(AppLocalizations.of(context).translate("fullName"),style: styleBlack,)),
               SizedBox(
@@ -116,14 +116,14 @@ class _MyProfileState extends State<MyProfile> {
           height: ScreenUtil().setHeight(70),
           child: Row(
             children: <Widget>[
-              Icon(
-                Icons.mail,
-                size: 30,
-                color: Colors.green,
-              ),
-              SizedBox(
-                width: 20.0,
-              ),
+              // Icon(
+              //   Icons.mail,
+              //   size: 30,
+              //   color: Colors.green,
+              // ),
+              // SizedBox(
+              //   width: 20.0,
+              // ),
               Container(
                   width: ScreenUtil().setWidth(200),
                   child: Text(AppLocalizations.of(context).translate("email"),style: styleBlack,)),
@@ -146,14 +146,14 @@ class _MyProfileState extends State<MyProfile> {
           height: ScreenUtil().setHeight(70),
           child: Row(
             children: <Widget>[
-              Icon(
-                Icons.phone_android,
-                size: 30,
-                color: Colors.green,
-              ),
-              SizedBox(
-                width: 20.0,
-              ),
+              // Icon(
+              //   Icons.phone_android,
+              //   size: 30,
+              //   color: Colors.green,
+              // ),
+              // SizedBox(
+              //   width: 20.0,
+              // ),
               Container(
                   width: ScreenUtil().setWidth(200),
                   child: Text(AppLocalizations.of(context).translate("username"),style: styleBlack,)),

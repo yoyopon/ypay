@@ -126,6 +126,42 @@ class DBHelper {
     }
   }
 
+  // Future<bool> insertAddress(String address) async{
+  //   var dbClient=await db;
+  //   String sql="Select id from AddressTable where id =0";
+  //   List<Map> list;
+  //   try {
+  //     list = await dbClient.rawQuery(sql);
+  //   }catch(ex){
+  //     String sql="CREATE TABLE AddressTable (Id INTEGER PRIMARY KEY,Address TEXT)";
+  //     await _db.execute(sql);
+  //   }
+  //   // int delete=await dbClient.delete('AddressTable');
+  //   // int res=0;
+  //   // var batch= await dbClient.batch();
+  //   // batch.rawInsert('INSERT INTO AddressTable (Address) VALUES (?)',[address]);
+  //   // await batch.commit(noResult: true);
+  //   // bool result=true;
+  //   // return result;
+  //   int insertQuery=await dbClient.rawInsert('INSERT INTO AddressTable (Address) VALUES (?)',[address]);
+  //   return insertQuery>0?true:false;
+  // }
+
+  // Future<List<String>> getAddress()async{
+  //   var dbClient = await db;
+  //   List<Map> list = await dbClient.rawQuery('SELECT * FROM AddressTable');
+  //   List<String> address;
+  //   if(list.length>0){
+  //     for (var i = 0; i < list.length; i++) {
+  //       address.add(list[i]["Address"]);
+  //     }
+  //     print(list.length);
+  //     return address;
+  //   }
+  //   else{
+  //     return null;
+  //   }
+  // }
   
 
 }

@@ -60,7 +60,7 @@ class _CloseOrderState extends State<CloseOrder> {
                   rows: orderLists.map((obj)=>
                     DataRow(cells: <DataCell>[
                       DataCell(Container(
-                        width: MediaQuery.of(context).size.width*1/7,
+                        width: MediaQuery.of(context).size.width*1.5/7,
                         child: Text(obj.orderNo.toString()))),
                       DataCell(Container(
                         width: MediaQuery.of(context).size.width*1/7,

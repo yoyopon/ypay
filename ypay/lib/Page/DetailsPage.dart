@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ypay/Page/ConfirmOrder.dart';
 import 'package:ypay/Providers/DetailsProvider.dart';
+import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,7 +39,14 @@ class _DetailsPageState extends State<DetailsPage> {
     Sizes(name: "XL",color: Colors.grey,isSelected: false),
     Sizes(name: "XXL",color: Colors.grey,isSelected: false),
     Sizes(name: "XXXL",color: Colors.grey,isSelected: false),];
-  List<Sizes> unSelectedSizes=[];
+
+  List<ColorLists> color=
+    [
+      ColorLists(color: Colors.yellow,isSelected: true),
+      ColorLists(color: Colors.green,isSelected: false),
+      ColorLists(color: Colors.blue,isSelected: false),
+      ColorLists(color: Colors.black,isSelected: false),
+    ];
   @override
   Widget build(BuildContext context) {
     TextStyle style=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","");
@@ -49,6 +57,19 @@ class _DetailsPageState extends State<DetailsPage> {
     void sizeSelection(Sizes sizesObj){
       for (var item in sizes) {
         if(item==sizesObj){
+          item.isSelected=true;
+        }
+        else{
+          item.isSelected=false;
+        }
+      }
+      setState(() {
+        
+      });
+    }
+    void colorSelection(ColorLists colorObj){
+      for (var item in color) {
+        if(item==colorObj){
           item.isSelected=true;
         }
         else{
@@ -73,6 +94,30 @@ class _DetailsPageState extends State<DetailsPage> {
                   Text(sizes[i].name,style: style,),onTap: (){
                     sizeSelection(sizes[i]);
                   },)
+              ),
+            )
+          );
+      }
+      return new Wrap(children: list); 
+    }
+
+    Widget getColorWidgets()
+    {
+      List<Widget> list = new List<Widget>();
+      for(var i = 0; i < color.length; i++){
+          list.add(
+            Padding(padding: const EdgeInsets.all(10.0),
+              child: InkWell(
+                child: Container(
+                  width: MediaQuery.of(context).size.width*1/10,
+                  height: MediaQuery.of(context).size.width*1/10,
+                  decoration: BoxDecoration(border: Border.all(
+                    color: color[i].isSelected?Colors.orange[500]:color[i].color,width: 3.0),
+                    color: color[i].color,),
+                ),
+                onTap: (){
+                  colorSelection(color[i]);
+                },
               ),
             )
           );
@@ -154,6 +199,20 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 ],
               ),//size end
+              //color section
+              Row(//size
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left:10,right:40),
+                    child: Text("Color",style: style,),
+                  ),
+                  Expanded(
+                      child: Wrap(children: <Widget>[ 
+                      getColorWidgets()
+                    ],),
+                  ),
+                ],
+              ),
               Row(//quantity 
                 children: <Widget>[
                   Padding(
@@ -171,6 +230,9 @@ class _DetailsPageState extends State<DetailsPage> {
                               child: Text("-",style: style,),
                             ),onTap: (){
                               provider.decrement();
+                              if(provider.showError==1){
+                                MessageHandel.showError(context, "Error", "Quantity must be at least one item");
+                              }
                             },),
                           ),
                           Container(
@@ -353,4 +415,10 @@ class Sizes{
   Color color;
   bool isSelected;
   Sizes({this.name,this.color,this.isSelected});
+}
+
+class ColorLists{
+  Color color;
+  bool isSelected;
+  ColorLists({this.color,this.isSelected});
 }
