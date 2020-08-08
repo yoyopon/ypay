@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Login/PhoneAuthfromF&G.dart';
 import 'package:ypay/Login/ResetPassword.dart';
+import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/Page/CloseOrder.dart';
 import 'package:ypay/Page/ConfirmOrder.dart';
 import 'package:ypay/Page/ManageOrder.dart';
@@ -11,6 +12,7 @@ import 'package:ypay/Page/MyProfile.dart';
 import 'package:ypay/Page/ProfilePhotoChange.dart';
 import 'package:ypay/Page/TopUpBalance.dart';
 import 'package:ypay/Providers/AppLocalization.dart';
+import 'package:ypay/dbHelper/NotificationHelper.dart';
 import 'package:ypay/designUI/MessageHandel.dart';
 import 'package:ypay/dataService/userProfilePresenter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,12 +33,32 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
   UserProfilePresenter _presenter;
   TextStyle style1=TextStylePage.getStyle(UserInfo.currentLocale,"white", "normal","none","nobold");
   TextStyle styleBlack=TextStylePage.getStyle(UserInfo.currentLocale,"black", "normal","none","nobold");
-  bool loadingLogOut=false;
+  bool loadingLogOut=false;String msgCountShow="";
 
   @override
   void initState() {
     _presenter=new UserProfilePresenter(this, context);
+    getUnreadMsgCount();
     super.initState();
+  }
+
+  getUnreadMsgCount(){
+    if(MessageCount.messageList==null||MessageCount.messageList.length==null)
+    {
+      msgCountShow=msgCountShow;
+    }
+    else{
+      int unreadList=0;
+      for (var i = 0; i < MessageCount.messageList.length; i++) {
+        if(MessageCount.messageList[i].isRead==false){
+          unreadList++;
+        }
+      }
+      msgCountShow=unreadList.toString();
+      setState(() {
+        
+      });
+    }
   }
 
   @override
@@ -120,9 +142,15 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                 padding: const EdgeInsets.symmetric(horizontal:10),
                                 child: Container(
                                   //width: ScreenUtil().setWidth(125.0),
-                                  child: Column(children: <Widget>[
-                                    Text(AppLocalizations.of(context).translate("order"),style: style1),Text("000",style: style1)
-                                  ],),
+                                  child: InkWell(
+                                    child: Column(children: <Widget>[
+                                      Text(AppLocalizations.of(context).translate("order"),style: style1),
+                                      Text("000",style: style1)
+                                    ],),
+                                    onTap: (){
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>MyApp1()));
+                                    },
+                                  ),
                                 ),
                               ),
                               Container(height: ScreenUtil().setHeight(70.0), child: VerticalDivider(color: Colors.white)),
@@ -132,7 +160,9 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
                                  // width: ScreenUtil().setWidth(150.0),
                                   child: InkWell(
                                     child: Column(children: <Widget>[
-                                      Text(AppLocalizations.of(context).translate("msg"),style: style1,),Text("000",style: style1)
+                                      Text(AppLocalizations.of(context).translate("msg"),style: style1,),
+                                      Text(msgCountShow,style: style1,),
+                                      //Text(,style: style1)
                                     ],),
                                     onTap: (){
                                       UserInfo.prevFormsgPage="acc";
@@ -395,6 +425,8 @@ class _UserProfileState extends State<UserProfile> with UserProfileContract{
    UserInfo.userInfo=null;
     UserInfo.currentLocale=null;
     AddressCheckBoxList.addressCheckBoxList=null;
+    MessageCount.messageList=null;UserInfo.fileImage=null;
+    UserInfo.locationData=null;
     Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => MyApp()));
       //await Future.delayed(Duration(seconds: 3));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ypay/Page/AccountProfile.dart';
@@ -34,6 +35,7 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
     getStoredLocale();
     super.initState();
     getItemCount();
+    getCurrentLocationData();
   }
 
   getUserInfo(){
@@ -57,6 +59,37 @@ class _BottomTabBarState extends State<BottomTabBar> with BottomBarContract{
     }
     setState(() {
       
+    });
+  }
+
+  //getLocation
+  Location location = new Location();
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
+
+  void getCurrentLocationData()async{
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+    _locationData = await location.getLocation();
+    location.onLocationChanged.listen((LocationData currentLocation) {
+      setState(() {
+        _locationData=currentLocation;
+        UserInfo.locationData="${_locationData.latitude.toString()},${_locationData.longitude.toString()}";
+      });
     });
   }
 
@@ -165,5 +198,17 @@ class ExampleList{
     new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelectedField,1),
     new ExampleList(Image(image: AssetImage('images/bulb.jpg'),), "Crop tops and High Waist shirts", 10000.00,isSelectedField,3),
   ];
+}
+
+class MessageCount{
+  //static int messageCount=0;
+  String action;
+  String title;
+  String contents;
+  String dateTime;
+  // int readCount;
+  bool isRead;
+  MessageCount({this.action,this.title,this.contents,this.dateTime,this.isRead});
+  static List<MessageCount> messageList;
 }
 

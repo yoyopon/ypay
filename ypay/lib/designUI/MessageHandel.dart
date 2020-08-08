@@ -22,6 +22,29 @@ class MessageHandel{
    )..show(context);
  }
 
+ static showNotificationMessage(BuildContext context,String title,String msg){
+   Flushbar(
+     flushbarPosition: FlushbarPosition.TOP,
+      padding: EdgeInsets.all(20),
+      borderRadius: 8,
+      backgroundGradient: LinearGradient(
+        colors: [Colors.orange.shade800, Colors.orange.shade700],
+        stops: [0.6, 1],
+      ),
+      boxShadows: [
+        BoxShadow(
+          color: Colors.black45,
+          offset: Offset(3, 3),
+          blurRadius: 3,
+        ),
+      ],
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      forwardAnimationCurve: Curves.fastLinearToSlowEaseIn,
+      title: title,
+      message: msg,
+    )..show(context);
+ }
+
  static hideDialog(BuildContext context){
 
     

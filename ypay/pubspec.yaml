@@ -49,6 +49,10 @@ dependencies:
   image_picker: ^0.6.7+4
   image_gallery_saver: '^1.5.0'
   image_cropper: ^1.2.3
+  imei_plugin: ^1.2.0
+  location: ^3.0.2
+  flutter_local_notifications: ^1.4.4+2
+  rxdart: ^0.23.1
 
 dev_dependencies:
   flutter_test:

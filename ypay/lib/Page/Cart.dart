@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:imei_plugin/imei_plugin.dart';
 import 'package:ypay/Page/BottomTabBar.dart';
 import 'package:ypay/designUI/TextStyle.dart';
 import 'package:ypay/model/userInfo.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart';
 
 class Cart extends StatelessWidget {
   @override
@@ -27,6 +28,7 @@ class _CartState extends State<CartPage> {
   void initState() {
     super.initState();
     getSelectedItems();
+    initPlatformState();
   }
 
   getSelectedItems()async{
@@ -34,6 +36,35 @@ class _CartState extends State<CartPage> {
     for (var item in ExampleList.exampleList) {
       selectedItem+=item.currentIndex;
     }
+  }
+
+  //IMEI plugin
+  String _platformImei = 'Unknown';
+  String uniqueId = "Unknown";
+
+  Future<void> initPlatformState() async {
+    String platformImei;
+    String idunique;
+    try {
+      platformImei =
+          await ImeiPlugin.getImei(shouldShowRequestPermissionRationale: false);
+      List<String> multiImei = await ImeiPlugin.getImeiMulti();
+      print(multiImei);
+      idunique = await ImeiPlugin.getId();
+    } 
+    catch(ex){
+      print(ex.toString());
+    }
+    // on PlatformException {
+    //   platformImei = 'Failed to get platform version.';
+    // }
+    
+    if (!mounted) return;
+
+    setState(() {
+      _platformImei = platformImei;
+      uniqueId = idunique;
+    });
   }
 
   @override
@@ -49,7 +80,19 @@ class _CartState extends State<CartPage> {
           child: Scaffold(
           appBar: AppBar(title: Center(child: Text("Cart",style: textWhite,)),
             actions: <Widget>[
-              Icon(Icons.menu)
+              IconButton(icon: Icon(Icons.menu),onPressed: (){
+                showDialog(context: context,
+                  builder: (context){
+                    return AlertDialog(
+                      actions: <Widget>[
+                        FlatButton(child: Text("OK"),onPressed: (){Navigator.pop(context);},)
+                      ],
+                      content:
+                      Text('Running on: $_platformImei\n is equal to : $uniqueId\nCurrent Location:${UserInfo.locationData}'),
+                    );
+                  }
+                );
+              },)
             ],
             backgroundColor: Colors.blue[400],
           ),

@@ -99,11 +99,16 @@ class _SplashscreenState extends State<Splashscreen> {
     super.initState();
     Timer(
         Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+        () => 
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
             builder: (BuildContext context) => 
             info!=null?BottomTabBar():LoginPage()
-        )));
+        ))
+    );
   }
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

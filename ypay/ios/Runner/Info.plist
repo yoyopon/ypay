@@ -73,5 +73,11 @@
 	<string>YPay needs to access photos.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>YPay needs to access camera.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Needed to access location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Needed to access location</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Needed to access location</string>
 </dict>
 </plist>

@@ -16,6 +16,7 @@ class UserInfo{
   static Locale currentLocale;
   static File fileImage;
   static bool hideBottomBar=false;
+  static String locationData;
 
   Map<String, dynamic> toMapForDb() {
   var map = Map<String, dynamic>();

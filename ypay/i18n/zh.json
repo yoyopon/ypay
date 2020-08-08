@@ -75,5 +75,6 @@
     "deliveryaddress":"邮寄地址",
     "comments":"注释",
     "invoiced":"开票",
-    "invoice":"发票"
+    "invoice":"发票",
+    "notidetail":"通知详情"
 }
